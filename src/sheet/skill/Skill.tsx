@@ -1,0 +1,18 @@
+export enum Skill {
+    Agriculture,
+    Arts,
+    Boating,
+    Defense,
+    Engineering,
+    Exploration,
+    Folklore,
+    Industry,
+    Intrigue,
+    Magic,
+    Politics,
+    Scholarship,
+    Statecraft,
+    Trade,
+    Warfare,
+    Wilderness,
+}
