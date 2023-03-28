@@ -26,29 +26,29 @@ export class Structure {
         level: number;
         description: string;
         effects: string;
-        residential: boolean;
-        edifice: boolean;
-        famous: boolean;
-        infamous: boolean;
+        residential: string;
+        edifice: string;
+        famous: string;
+        infamous: string;
         lots: number;
         cost: string;
         build: string;
         upgradeFrom: string;
-        itemBonus: number;
+        itemBonus: string;
         activities: string;
     }) {
         this.name = data.name;
         this.level = data.level;
         this.description = data.description;
         this.effects = data.effects;
-        this.residential = data.residential;
-        this.edifice = data.edifice;
-        this.famous = data.famous;
-        this.infamous = data.infamous;
+        this.residential = data.residential === "TRUE";
+        this.edifice = data.edifice === "TRUE";
+        this.famous = data.famous === "TRUE";
+        this.infamous = data.infamous === "TRUE";
         this.lots = data.lots;
         this.cost = new StructureCost(data.cost);
 
-        const regex = /^(?<skill>\w+)\s+\((?<proficiency>\w+)\)\s+DC\s+(?<dc>\d+)$/;
+        const regex = /^(?<skill>[A-Za-z]+)(?: \((?<proficiency>trained|expert|master|legendary)\))? DC (?<dc>\d+)$/;
         const match = data.build.match(regex);
         if (match) {
             const { skill, proficiency, } = match.groups as {
@@ -58,13 +58,13 @@ export class Structure {
             };
 
             this.buildSkill = Skill[skill];
-            this.buildProficiency = Proficiency[proficiency];
+            this.buildProficiency = Proficiency[proficiency] || Proficiency.Untrained;
         } else {
             throw new TypeError(`Unparsable string for build: ${data.build}`)
         }
 
         this.upgradeFrom = data.upgradeFrom;
-        this.itemBonus = data.itemBonus;
+        this.itemBonus = parseInt(data.itemBonus);
         this.activities = data.activities.split("\n");
 
         if (this.name === "Thieves' Guild" || this.name === "Illicit Market") {
