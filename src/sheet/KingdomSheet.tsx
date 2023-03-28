@@ -5,24 +5,26 @@ import { getAbilityForSkill } from "./skill/AbilitySkill";
 import { Proficiency } from "./skill/Proficiency";
 import { Skill } from "./skill/Skill";
 
-class KingdomSheet {
+export class KingdomSheet {
     name: string;
     level: number = 1;
     xp: number = 0;
     fame: number = 0;
+    unrest: number = 0;
     usesFame: boolean = true;
+    atWar: boolean = false;
 
     abilityScore: Map<Ability, AbilityScore> = new Map<Ability, AbilityScore>();
     ruins: Map<RuinType, Ruin> = new Map<RuinType, Ruin>();
+    proficiencies: Map<Skill, Proficiency>;
 
     // cities: Array<City> = new Array<City>();
     // feats: Array<Feat> = new Array<Feats>();
 
-    proficiencies: Map<Skill, Proficiency>;
-
     constructor() {
         this.name = "";
         this.proficiencies = new Map<Skill, Proficiency>();
+
         this.abilityScore.set(Ability.Culture, new AbilityScore(0));
         this.abilityScore.set(Ability.Economy, new AbilityScore(0));
         this.abilityScore.set(Ability.Loyalty, new AbilityScore(0));

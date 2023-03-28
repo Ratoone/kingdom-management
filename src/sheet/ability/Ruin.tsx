@@ -1,4 +1,5 @@
 enum RuinType {
+    Any,
     Corruption,
     Crime,
     Decay,
@@ -22,11 +23,6 @@ class Ruin {
             this.score -= this.threshold;
             this.penalty = 0;
         }
-    }
-
-    public increaseResistance() {
-        this.penalty = 0;
-        this.threshold += 2;
     }
 }
 
