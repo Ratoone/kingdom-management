@@ -1,6 +1,7 @@
 import { RuinType } from "../sheet/ability/Ruin";
 import { Proficiency } from "../sheet/skill/Proficiency";
 import { Skill } from "../sheet/skill/Skill";
+import { StructureCost } from "../turn/StructureCost";
 
 export class Structure {
     name: string;
@@ -17,7 +18,7 @@ export class Structure {
     buildProficiency: Proficiency;
     upgradeFrom: string;
     itemBonus: number = 0;
-    activities: Array<Activity> = [];
+    activities: Array<string> = [];
     ruin?: RuinType;
 
     constructor(data: {
@@ -31,8 +32,7 @@ export class Structure {
         infamous: boolean;
         lots: number;
         cost: string;
-        buildSkill: string;
-        buildProficiency: string;
+        build: string;
         upgradeFrom: string;
         itemBonus: number;
         activities: string;
@@ -46,11 +46,31 @@ export class Structure {
         this.famous = data.famous;
         this.infamous = data.infamous;
         this.lots = data.lots;
-        this.cost = data.cost;
-        this.buildSkill = data.buildSkill;
-        this.buildProficiency = data.buildProficiency;
+        this.cost = new StructureCost(data.cost);
+
+        const regex = /^(?<skill>\w+)\s+\((?<proficiency>\w+)\)\s+DC\s+(?<dc>\d+)$/;
+        const match = data.build.match(regex);
+        if (match) {
+            const { skill, proficiency, } = match.groups as {
+                skill: keyof typeof Skill;
+                proficiency: keyof typeof Proficiency;
+                dc: string;
+            };
+
+            this.buildSkill = Skill[skill];
+            this.buildProficiency = Proficiency[proficiency];
+        } else {
+            throw new TypeError(`Unparsable string for build: ${data.build}`)
+        }
+
         this.upgradeFrom = data.upgradeFrom;
         this.itemBonus = data.itemBonus;
         this.activities = data.activities.split("\n");
+
+        if (this.name === "Thieves' Guild" || this.name === "Illicit Market") {
+            this.ruin = RuinType.Crime;
+        } else if (this.name === "Tenement") {
+            this.ruin = RuinType.Any;
+        }
     }
 }
