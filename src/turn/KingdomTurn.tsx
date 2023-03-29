@@ -1,8 +1,8 @@
 import { CommodityType } from "../map/CommodityType";
 import { KingdomMap } from "../map/KingdomMap";
-import { getBaseComodityStorage, getResourceDie } from "../map/SizeTable";
+import { getBaseComodityStorage, getResourceDie } from "../tables/SizeTable";
 import { KingdomSheet } from "../sheet/KingdomSheet";
-import { rollDice } from "../util/DiceRoller";
+import { rollDice } from "../tables/DiceRoller";
 
 class KingdomTurn {
     resourcePoints: number = 0;
