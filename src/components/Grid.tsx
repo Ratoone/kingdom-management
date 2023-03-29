@@ -1,5 +1,4 @@
-import React from 'react';
-import { UrbanGrid } from './UrbanGrid';
+import { UrbanGrid } from "../settlement/UrbanGrid";
 import "./Grid.css";
 
 function Grid() {
@@ -10,6 +9,7 @@ function Grid() {
     const cells = [];
     for (let i = 0; i < urbanGrid.blocks.length; i++) {
         for (let j = 0; j < 4; j++) {
+            const building = urbanGrid.blocks[i].built.reduce((struct, structureBuild) => structureBuild[1].includes(j) ? structureBuild[0] : struct, "");
             cells.push(
                 <div
                     key={`${i}-${j}`}
@@ -21,7 +21,7 @@ function Grid() {
                         left: `${(i % 3) * 2 * cellSize + (j % 2) * cellSize + (i % 3) * marginSize}px`,
                     }}
                 >
-                    {`${i}-${j}`}
+                    {building || `${i}-${j}`}
                 </div>
             );
         }

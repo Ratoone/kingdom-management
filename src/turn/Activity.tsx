@@ -1,6 +1,6 @@
 import { Skill } from "../sheet/skill/Skill";
 
-export class Activity {
+export interface Activity {
     name: string;
     skills: Array<Skill>;
     trainedOnly: boolean;

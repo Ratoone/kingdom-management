@@ -40,8 +40,4 @@ export class KingdomTurn {
             this.commodities.set(commodity, Math.min(maxStorage, this.commodities.get(commodity) || 0 + production))
         }
     }
-
-    public calculateBaseConsumption(kingdomMap: KingdomMap): number {
-        return kingdomMap.getConsumption()
-    }
 }

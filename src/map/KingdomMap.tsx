@@ -1,10 +1,8 @@
 import { CommodityType } from "./CommodityType";
 
 export class KingdomMap {
-    hexes: Array<Hex> = new Array<Hex>();
-
     public getSize(): number {
-        return this.hexes.length;
+        return 1;
     }
 
     public getCommodityProduction(commodity: CommodityType) {
