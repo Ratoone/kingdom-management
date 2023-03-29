@@ -13,7 +13,7 @@ test('Parses structure correctly', () => {
         "itemBonus": "+1",
         "activities": "Establish Trade Agreement",
         "cost": "6 RP, 2 Lumber",
-        "build": "Agriculture DC 15",
+        "build": "Agriculture DC 15\nDefense (trained) DC 15",
         "edifice": "FALSE",
         "famous": "FALSE",
         "infamous": "FALSE",
@@ -21,6 +21,6 @@ test('Parses structure correctly', () => {
     };
     const structure = new Structure(structureJson);
     expect(structure.itemBonus).toEqual(1);
-    expect(structure.buildSkill).toEqual(Skill.Agriculture);
-    expect(structure.buildProficiency).toEqual(Proficiency.Untrained);
+    expect(structure.build[0][0]).toEqual(Skill.Agriculture);
+    expect(structure.build[0][1]).toEqual(Proficiency.Untrained);
 });

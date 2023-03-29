@@ -1,3 +1,4 @@
+import { CommodityType } from "../map/CommodityType";
 import { RuinType } from "../sheet/ability/Ruin";
 import { Proficiency } from "../sheet/skill/Proficiency";
 import { Skill } from "../sheet/skill/Skill";
@@ -14,12 +15,10 @@ export class Structure {
     infamous: boolean = false;
     lots: number;
     cost: StructureCost;
-    buildSkill: Skill;
-    buildProficiency: Proficiency;
+    build: [Skill, Proficiency][];
     upgradeFrom: string;
     itemBonus: number = 0;
     activities: Array<string> = [];
-    ruin?: RuinType;
 
     constructor(data: {
         name: string;
@@ -49,28 +48,42 @@ export class Structure {
         this.cost = new StructureCost(data.cost);
 
         const regex = /^(?<skill>[A-Za-z]+)(?: \((?<proficiency>trained|expert|master|legendary)\))? DC (?<dc>\d+)$/;
-        const match = data.build.match(regex);
-        if (match) {
-            const { skill, proficiency, } = match.groups as {
-                skill: keyof typeof Skill;
-                proficiency: keyof typeof Proficiency;
-                dc: string;
-            };
-
-            this.buildSkill = Skill[skill];
-            this.buildProficiency = Proficiency[proficiency] || Proficiency.Untrained;
-        } else {
-            throw new TypeError(`Unparsable string for build: ${data.build}`)
-        }
+        this.build = [];
+        data.build.split("\n").forEach((value) => {
+            const match = value.match(regex);
+            if (match) {
+                const { skill, proficiency, } = match.groups as {
+                    skill: keyof typeof Skill;
+                    proficiency: keyof typeof Proficiency;
+                    dc: string;
+                };
+                this.build.push([Skill[skill], Proficiency[proficiency] || Proficiency.Untrained]);
+            } else {
+                throw new TypeError(`Unparsable string for build: ${data.build}`)
+            }
+        });
 
         this.upgradeFrom = data.upgradeFrom;
         this.itemBonus = parseInt(data.itemBonus);
         this.activities = data.activities.split("\n");
 
+    }
+
+    public getRuin(): RuinType | undefined {
         if (this.name === "Thieves' Guild" || this.name === "Illicit Market") {
-            this.ruin = RuinType.Crime;
-        } else if (this.name === "Tenement") {
-            this.ruin = RuinType.Any;
+            return RuinType.Crime;
         }
+
+        if (this.name === "Tenement") {
+            return RuinType.Any;
+        }
+    }
+
+    public alternativeCost(): CommodityType | undefined {
+        if (this.name === "Bridge" || this.name === "Watchtower") {
+            return CommodityType.Stone;
+        }
+
+        return undefined;
     }
 }

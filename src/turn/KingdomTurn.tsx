@@ -4,7 +4,7 @@ import { getBaseComodityStorage, getResourceDie } from "../tables/SizeTable";
 import { KingdomSheet } from "../sheet/KingdomSheet";
 import { rollDice } from "../tables/DiceRoller";
 
-class KingdomTurn {
+export class KingdomTurn {
     resourcePoints: number = 0;
     commodities: Map<CommodityType, number>;
 
