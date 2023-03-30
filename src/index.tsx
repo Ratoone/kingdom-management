@@ -8,6 +8,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <HexagonalGrid width={800} height={600} />
+    <HexagonalGrid />
   </React.StrictMode>
 );

@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
 import { HexGrid, Layout, Hexagon, GridGenerator, Hex } from 'react-hexgrid';
 import "./HexagonalGrid.css";
-interface HexagonalGridProps {
-  width: number;
-  height: number;
-}
+import map from '../database/map_no_label.jpg';
 
-const HexagonalGrid: React.FC<HexagonalGridProps> = ({ width, height }) => {
-  const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
-
-  const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
-    setSelectedHex(hex);
-  };
-
-  const hexagonLayout = GridGenerator.hexagon(3);
+const HexagonalGrid: React.FC = () => {
+  const hexagonLayout = GridGenerator.rectangle(29, 12);
+  const hexagonSize = 2.787;
 
   return (
-    <HexGrid width={width} height={height}>
-      <Layout size={{ x: 10, y: 10 }} flat={false}>
-        {hexagonLayout.map((hex, index) => (
-          <Hexagon
-            key={index}
-            q={hex.q}
-            r={hex.r}
-            s={hex.s}
-            fill={selectedHex?.q === hex.q && selectedHex?.r === hex.r ? '#00ff00' : '#ffffff'}
-            onClick={(event) => handleHexClick(event, hex)}
-            className="custom-hexagon"
-          />
-        ))}
-      </Layout>
-    </HexGrid>
+    <div className='map-container'>
+      <img src={map} alt="Kingdom Map" className='kingdom-image' />
+      <HexGrid className='kingdom-map'>
+        <Layout
+          size={{ x: hexagonSize, y: hexagonSize }}
+          flat={false}>
+          {hexagonLayout.map((hex, index) => (
+            <Hexagon
+              key={index}
+              q={hex.q}
+              r={hex.r}
+              s={hex.s}
+              fill={'transparent'}
+              className="custom-hexagon"
+            />
+          ))}
+        </Layout>
+      </HexGrid>
+    </div>
   );
 };
 
