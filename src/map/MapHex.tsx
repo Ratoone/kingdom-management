@@ -1,7 +1,8 @@
 import { HexplorationState } from "./HexplorationState";
 import { TerrainFeature } from "./TerrainFeature";
 
-export interface MapHex {
+export interface MapHexData {
+    level: number;
     cleared: boolean;
     state: HexplorationState;
     feature: TerrainFeature;
