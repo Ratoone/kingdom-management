@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { MapHexData } from "../map/MapHex"
 import { HexplorationState } from "../map/HexplorationState";
 import { TerrainFeature } from "../map/TerrainFeature";
+import { MapHexData } from "./MapHex";
 import {
     Popover,
     DialogTitle,
@@ -19,6 +19,7 @@ import {
     DialogActions,
     Stack
 } from '@mui/material';
+
 
 interface EditHexDataDialogProps {
     style: { top: number, left: number };

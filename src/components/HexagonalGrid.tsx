@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { HexGrid, Layout, GridGenerator, Hex } from 'react-hexgrid';
 import "./HexagonalGrid.css";
 import map from '../database/map_no_label.jpg';
-import { MapHexData } from '../map/MapHex';
-import { MapHexagon } from './MapHex';
+import { MapHexData, MapHexagon } from './MapHex';
 import EditHexDataDialog from './HexEdit';
 
 const HexagonalGrid: React.FC = () => {

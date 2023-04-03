@@ -1,6 +1,15 @@
 import { Hexagon } from "react-hexgrid";
-import { MapHexData } from "../map/MapHex";
 import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
+import { HexplorationState } from "../map/HexplorationState";
+import { TerrainFeature } from "../map/TerrainFeature";
+
+interface MapHexData {
+    level: number;
+    cleared: boolean;
+    state: HexplorationState;
+    feature: TerrainFeature;
+    roads: boolean;
+}
 
 interface MapHexProps extends HexagonProps {
     hexData: MapHexData;
@@ -8,8 +17,9 @@ interface MapHexProps extends HexagonProps {
 
 const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
     return (
-        <Hexagon {...rest} />
+        <Hexagon fill="#fff" {...rest} />
     );
 };
 
-export { MapHexagon }
+export { MapHexagon };
+export type { MapHexData };
