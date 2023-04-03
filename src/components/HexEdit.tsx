@@ -2,27 +2,48 @@ import { useState } from "react";
 import { MapHexData } from "../map/MapHex"
 import { HexplorationState } from "../map/HexplorationState";
 import { TerrainFeature } from "../map/TerrainFeature";
+import {
+    Popover,
+    DialogTitle,
+    DialogContent,
+    Button,
+    TextField,
+    FormControl,
+    InputLabel,
+    Select,
+    FormGroup,
+    SelectChangeEvent,
+    MenuItem,
+    FormControlLabel,
+    Checkbox,
+    DialogActions,
+    Stack
+} from '@mui/material';
 
 interface EditHexDataDialogProps {
-    style: Object;
+    style: { top: number, left: number };
     hexData: MapHexData;
     key: string;
+    open: boolean;
     onSave: (newHexData: MapHexData) => void;
     onClose: () => void;
 }
 
-const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ style, hexData, onSave, onClose }) => {
+const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexData, onSave, onClose }) => {
     const [formData, setFormData] = useState(hexData);
 
-    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleFormChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        console.log(name + "  " + value);
+        setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+    };
+
+    const handleSelectChange = (event: SelectChangeEvent<HexplorationState | TerrainFeature>,) => {
+        const { name, value } = event.target;
         setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
     };
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = event.target;
-        console.log(name + "  " + checked);
         setFormData(prevFormData => ({ ...prevFormData, [name]: checked }));
     };
 
@@ -31,70 +52,81 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ style, hexData, o
     };
 
     return (
-        <div className="dialog-overlay" style={style}>
-            <h2>Edit Hex Data</h2>
-            <form>
-                <label>
-                    Cleared:
-                    <input
-                        type="checkbox"
+        <Popover open={open} onClose={onClose}
+            anchorReference="anchorPosition"
+            anchorPosition={style}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+            }}>
+            <DialogTitle>Edit Hex Data</DialogTitle>
+            <DialogContent>
+                <Stack spacing={2}>
+                    <FormControlLabel
                         name="cleared"
-                        checked={formData.cleared}
-                        onChange={handleCheckboxChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    State:
-                    <select name="state" value={formData.state} onChange={handleFormChange}>
-                        {(Object.keys(HexplorationState) as Array<keyof typeof HexplorationState>)
-                            .filter(key => !isNaN(Number(HexplorationState[key])))
-                            .map((state) => (
-                                <option key={state} value={state}>
-                                    {state}
-                                </option>
-                            ))}
-                    </select>
-                </label>
-                <br />
-                <label>
-                    Feature:
-                    <select name="feature" value={formData.feature} onChange={handleFormChange}>
-                        {(Object.keys(TerrainFeature) as Array<keyof typeof TerrainFeature>)
-                            .filter(key => !isNaN(Number(TerrainFeature[key])))
-                            .map((feature) => (
-                                <option key={feature} value={feature}>
-                                    {feature}
-                                </option>
-                            ))}
-                    </select>
-                </label>
-                <br />
-                <label>
-                    Roads:
-                    <input
-                        type="checkbox"
+                        control={<Checkbox onChange={handleCheckboxChange} />}
+                        label="Cleared"
+                        checked={formData.cleared} />
+                    <FormControl fullWidth>
+                        <InputLabel id="state-label">State</InputLabel>
+                        <Select
+                            labelId="state-label"
+                            id="state"
+                            name="state"
+                            value={formData.state}
+                            onChange={handleSelectChange}
+                        >
+                            {(Object.keys(HexplorationState) as Array<keyof typeof HexplorationState>)
+                                .filter(key => !isNaN(Number(HexplorationState[key])))
+                                .map((state) => (
+                                    <MenuItem key={state} value={state}>
+                                        {state}
+                                    </MenuItem >
+                                ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id="feature-label">Feature</InputLabel>
+                        <Select
+                            labelId="feature-label"
+                            id="feature"
+                            name="feature"
+                            value={formData.feature}
+                            onChange={handleSelectChange}
+                        >
+                            {(Object.keys(TerrainFeature) as Array<keyof typeof TerrainFeature>)
+                                .filter(key => !isNaN(Number(TerrainFeature[key])))
+                                .map((feature) => (
+                                    <MenuItem key={feature} value={feature}>
+                                        {feature}
+                                    </MenuItem >
+                                ))}
+                        </Select>
+                    </FormControl>
+                    <FormControlLabel
                         name="roads"
-                        checked={formData.roads}
-                        onChange={handleCheckboxChange}
-                    />
-                </label>
-                <br />
-                <label>
-                    Level:
-                    <input
+                        control={<Checkbox onChange={handleCheckboxChange} />}
+                        label="Roads"
+                        checked={formData.roads} />
+                    <TextField
+                        label="Level"
                         type="number"
-                        min={1}
-                        max={20}
+                        InputProps={{ inputProps: { min: 1, max: 20 } }}
                         name="level"
                         value={formData.level}
                         onChange={handleFormChange}
                     />
-                </label>
-            </form>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={onClose}>Cancel</button>
-        </div>
+                    <DialogActions sx={{ justifyContent: "center" }}>
+                        <Button variant="outlined" onClick={handleSave}>Save</Button>
+                        <Button variant="outlined" onClick={onClose}>Cancel</Button>
+                    </DialogActions>
+                </Stack>
+            </DialogContent>
+        </Popover >
     );
 };
 

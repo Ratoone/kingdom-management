@@ -26,6 +26,7 @@ const HexagonalGrid: React.FC = () => {
       ...prevData,
       [selectedHex!.q + ',' + selectedHex!.r]: data
     }));
+    console.log(hexData);
     setSelectedHex(null);
   };
 
@@ -54,10 +55,10 @@ const HexagonalGrid: React.FC = () => {
       </HexGrid>
       {selectedHex && (
         <EditHexDataDialog
+          open={true}
           style={{
-            position: "absolute",
-            top: 50 * (selectedHex.r * hexagonSize * Math.sqrt(3) / 2),
-            left: 50 * (selectedHex.q * hexagonSize + selectedHex.r * hexagonSize / 2)
+            top: 50 * (selectedHex.r * hexagonSize * Math.sqrt(3) / 2) + 50,
+            left: 50 * (selectedHex.q * hexagonSize + selectedHex.r * hexagonSize / 2) + 50
           }}
           key={selectedHex.q + ',' + selectedHex.r}
           hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? { level: 1, cleared: false, state: '', feature: '', roads: false }}
