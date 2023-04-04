@@ -82,7 +82,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                             onChange={handleSelectChange}
                         >
                             {(Object.keys(HexplorationState) as Array<keyof typeof HexplorationState>)
-                                .filter(key => !isNaN(Number(HexplorationState[key])))
+                                .filter(key => isNaN(Number(HexplorationState[key])))
                                 .map((state) => (
                                     <MenuItem key={state} value={state}>
                                         {state}
@@ -100,7 +100,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                             onChange={handleSelectChange}
                         >
                             {(Object.keys(TerrainFeature) as Array<keyof typeof TerrainFeature>)
-                                .filter(key => !isNaN(Number(TerrainFeature[key])))
+                                .filter(key => isNaN(Number(TerrainFeature[key])))
                                 .map((feature) => (
                                     <MenuItem key={feature} value={feature}>
                                         {feature}

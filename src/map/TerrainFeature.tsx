@@ -1,13 +1,13 @@
 export enum TerrainFeature {
-    None,
-    Bridge,
-    Farmland,
-    Freehold,
-    Landmark,
-    Refuge,
-    Resource,
-    Ruins,
-    Settlement,
-    Structure,
-    WorkSite
+    None = "None",
+    Bridge = "Bridge",
+    Farmland = "Farmland",
+    Freehold = "Freehold",
+    Landmark = "Landmark",
+    Refuge = "Refuge",
+    Resource = "Resource",
+    Ruins = "Ruins",
+    Settlement = "Settlement",
+    Structure = "Structure",
+    WorkSite = "WorkSite"
 }

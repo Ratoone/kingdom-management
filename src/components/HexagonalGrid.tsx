@@ -4,6 +4,8 @@ import "./HexagonalGrid.css";
 import map from '../database/map_no_label.jpg';
 import { MapHexData, MapHexagon } from './MapHex';
 import EditHexDataDialog from './HexEdit';
+import { HexplorationState } from '../map/HexplorationState';
+import { TerrainFeature } from '../map/TerrainFeature';
 
 const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
@@ -25,7 +27,6 @@ const HexagonalGrid: React.FC = () => {
       ...prevData,
       [selectedHex!.q + ',' + selectedHex!.r]: data
     }));
-    console.log(hexData);
     setSelectedHex(null);
   };
 
@@ -37,17 +38,21 @@ const HexagonalGrid: React.FC = () => {
           size={{ x: hexagonSize, y: hexagonSize }}
           flat={false}>
           {hexagonLayout.map((hex, index) => {
-            const data = hexData[hex.q + ',' + hex.r] ?? { level: 1, cleared: false, state: '', feature: '', roads: false };
+            const data = hexData[hex.q + ',' + hex.r] ?? {
+              level: 1,
+              cleared: false,
+              state: HexplorationState.Unexplored,
+              feature: TerrainFeature.None,
+              roads: false
+            };
 
             return <MapHexagon
-              key={index}
+              key={index + JSON.stringify(data)}
               q={hex.q}
               r={hex.r}
               s={hex.s}
               hexData={data}
-              fill={'transparent'}
               onClick={(event) => handleHexClick(event, hex)}
-              className="custom-hexagon"
             />
           })}
         </Layout>
@@ -60,7 +65,13 @@ const HexagonalGrid: React.FC = () => {
             left: 50 * (selectedHex.q * hexagonSize + selectedHex.r * hexagonSize / 2) + 50
           }}
           key={selectedHex.q + ',' + selectedHex.r}
-          hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? { level: 1, cleared: false, state: '', feature: '', roads: false }}
+          hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? {
+            level: 1,
+            cleared: false,
+            state: HexplorationState.Unexplored,
+            feature: TerrainFeature.None,
+            roads: false
+          }}
           onClose={handleDialogClose}
           onSave={handleSave}
         />
