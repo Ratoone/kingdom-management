@@ -11,10 +11,13 @@ const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
   const hexagonSize = 2.787;
 
+  const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
   const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
 
   const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
+    const clickedHex = event.target as SVGElement;
+    setDialogPosition(clickedHex.getBoundingClientRect());
     setSelectedHex(hex);
   };
 
@@ -61,8 +64,8 @@ const HexagonalGrid: React.FC = () => {
         <EditHexDataDialog
           open={true}
           style={{
-            top: 50 * (selectedHex.r * hexagonSize * Math.sqrt(3) / 2) + 50,
-            left: 50 * (selectedHex.q * hexagonSize + selectedHex.r * hexagonSize / 2) + 50
+            top: dialogPosition.top + 40 * hexagonSize,
+            left: dialogPosition.left + 40 * hexagonSize
           }}
           key={selectedHex.q + ',' + selectedHex.r}
           hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? {

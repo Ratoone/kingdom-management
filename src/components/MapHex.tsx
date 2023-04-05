@@ -1,4 +1,4 @@
-import { Hexagon } from "react-hexgrid";
+import { Hexagon, Text } from "react-hexgrid";
 import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
 import { HexplorationState, hexplorationStateColor } from "../map/HexplorationState";
 import { TerrainFeature } from "../map/TerrainFeature";
@@ -28,8 +28,13 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
     `;
 
     return (
-        <StyledHexagon
-            {...rest} />
+        <StyledHexagon {...rest}>
+            {
+                hexData.feature !== TerrainFeature.None ?
+                    (<Text fontSize={"5px"}>{hexData.feature}</Text>)
+                    : undefined
+            }
+        </StyledHexagon>
     );
 };
 

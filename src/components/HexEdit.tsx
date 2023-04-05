@@ -116,7 +116,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                     <TextField
                         label="Level"
                         type="number"
-                        InputProps={{ inputProps: { min: 1, max: 20 } }}
+                        InputProps={{ inputProps: { min: 0, max: 20 } }}
                         name="level"
                         value={formData.level}
                         onChange={handleFormChange}
