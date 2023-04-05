@@ -29,11 +29,8 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
 
     return (
         <StyledHexagon {...rest}>
-            {
-                hexData.feature !== TerrainFeature.None ?
-                    (<Text fontSize={"5px"}>{hexData.feature}</Text>)
-                    : undefined
-            }
+            {hexData.feature !== TerrainFeature.None ? (<Text className="hex-text">{hexData.feature}</Text>) : undefined}
+            {!hexData.safe ? (<Text className="hex-text">Danger!</Text>) : undefined}
         </StyledHexagon>
     );
 };
