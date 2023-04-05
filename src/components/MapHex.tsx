@@ -3,11 +3,10 @@ import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
 import { HexplorationState, hexplorationStateColor } from "../map/HexplorationState";
 import { TerrainFeature } from "../map/TerrainFeature";
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
 
 interface MapHexData {
     level: number;
-    cleared: boolean;
+    safe: boolean;
     state: HexplorationState;
     feature: TerrainFeature;
     roads: boolean;
@@ -18,19 +17,11 @@ interface MapHexProps extends HexagonProps {
 }
 
 const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
-    const [fillColor, setFillColor] = useState<string>();
-    useEffect(() => {
-        const color = hexplorationStateColor[hexData.state];
-        if (color) {
-            setFillColor(color);
-        }
-    }, [hexData]);
-
     const StyledHexagon = styled(Hexagon)`
         stroke: rgb(243, 0, 0);
         stroke-width: 0.1%;
         fill-opacity: 0.6;
-        fill: ${fillColor};
+        fill: ${hexplorationStateColor[hexData.state]};
         &:hover {
             fill: #4499a9;
         }

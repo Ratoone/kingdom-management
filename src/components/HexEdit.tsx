@@ -68,10 +68,10 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
             <DialogContent>
                 <Stack spacing={2}>
                     <FormControlLabel
-                        name="cleared"
+                        name="safe"
                         control={<Checkbox onChange={handleCheckboxChange} />}
-                        label="Cleared"
-                        checked={formData.cleared} />
+                        label="Safe"
+                        checked={formData.safe} />
                     <FormControl fullWidth>
                         <InputLabel id="state-label">State</InputLabel>
                         <Select

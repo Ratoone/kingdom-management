@@ -40,7 +40,7 @@ const HexagonalGrid: React.FC = () => {
           {hexagonLayout.map((hex, index) => {
             const data = hexData[hex.q + ',' + hex.r] ?? {
               level: 1,
-              cleared: false,
+              safe: false,
               state: HexplorationState.Unexplored,
               feature: TerrainFeature.None,
               roads: false
@@ -67,7 +67,7 @@ const HexagonalGrid: React.FC = () => {
           key={selectedHex.q + ',' + selectedHex.r}
           hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? {
             level: 1,
-            cleared: false,
+            safe: false,
             state: HexplorationState.Unexplored,
             feature: TerrainFeature.None,
             roads: false
