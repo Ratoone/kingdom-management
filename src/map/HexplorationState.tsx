@@ -5,9 +5,15 @@ enum HexplorationState {
 }
 
 const hexplorationStateColor: { [key in keyof typeof HexplorationState]: string } = {
-    [HexplorationState.Unexplored]: "#000",
-    [HexplorationState.Explored]: "transparent",
+    [HexplorationState.Unexplored]: "black",
+    [HexplorationState.Explored]: "black",
     [HexplorationState.Claimed]: "#4169e1"
 }
 
-export { HexplorationState, hexplorationStateColor }
+const hexplorationStateOpacity: { [key in keyof typeof HexplorationState]: number } = {
+    [HexplorationState.Unexplored]: 0.8,
+    [HexplorationState.Explored]: 0.125,
+    [HexplorationState.Claimed]: 0.3
+}
+
+export { HexplorationState, hexplorationStateColor, hexplorationStateOpacity }

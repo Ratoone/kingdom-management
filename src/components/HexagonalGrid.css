@@ -18,16 +18,18 @@
   height: 100%;
 }
 
-.hex-text {
-  stroke-width: 0;
+.hex-icon {
+  stroke-width: 4%;
+  stroke: black;
+  stroke-opacity: 0.6;
+  scale: 0.02;
   fill-opacity: 1;
-  font: italic 4px serif;
-  fill: red;
 }
 
-.hex-icon {
-  stroke-width: 0;
-  scale: 0.025;
-  fill-opacity: 1;
+.hex-danger {
   transform: translate(-100%, -100%);
+}
+
+.hex-feature {
+  transform: translateX(-100%);
 }
