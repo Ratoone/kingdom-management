@@ -1,7 +1,7 @@
 import { Hexagon, Text } from "react-hexgrid";
 import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
 import { HexplorationState, hexplorationStateColor, hexplorationStateOpacity } from "../map/HexplorationState";
-import { TerrainFeature } from "../map/TerrainFeature";
+import { TerrainFeature, featureToIcon } from "../map/TerrainFeature";
 import styled from "@emotion/styled";
 import { TerrainType, terrainToIcon } from "../map/TerrainType";
 
@@ -31,6 +31,7 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
         fill: ${hexplorationStateColor[hexData.state]};
         &:hover {
             fill: #4499a9;
+            fill-opacity: 0.6;
         }
     `;
 
@@ -41,7 +42,11 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
             )}
 
             {hexData.state !== HexplorationState.Unexplored && hexData.feature !== TerrainFeature.None && (
-                <FontAwesomeIcon icon={icon({ name: "city" })} className="hex-icon hex-feature" color="lightblue" />
+                <FontAwesomeIcon
+                    icon={featureToIcon[hexData.feature][0]}
+                    className="hex-icon hex-feature"
+                    color={featureToIcon[hexData.feature][1]}
+                />
             )}
 
             <FontAwesomeIcon
