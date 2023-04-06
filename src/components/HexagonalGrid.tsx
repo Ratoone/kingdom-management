@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HexGrid, Layout, GridGenerator, Hex } from 'react-hexgrid';
 import "./HexagonalGrid.css";
 import map from '../database/map_no_label.jpg';
@@ -6,10 +6,11 @@ import { MapHexData, MapHexagon } from './MapHex';
 import EditHexDataDialog from './HexEdit';
 import { HexplorationState } from '../map/HexplorationState';
 import { TerrainFeature } from '../map/TerrainFeature';
+import { TerrainType } from '../map/TerrainType';
 
 const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
-  const hexagonSize = 11.155;
+  const hexagonSize = 11.144;
 
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
@@ -33,20 +34,34 @@ const HexagonalGrid: React.FC = () => {
     setSelectedHex(null);
   };
 
+  useEffect(() => {
+    if (Object.keys(hexData).length === 0) {
+      setHexData(JSON.parse(localStorage.getItem("hexMapData") || "{}"))
+    }
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(hexData).length !== 0) {
+      localStorage.setItem("hexMapData", JSON.stringify(hexData))
+    }
+  }, [hexData]);
+
   return (
     <div className='map-container'>
       <img src={map} alt="Kingdom Map" className='kingdom-image' />
       <HexGrid viewBox='179.73 -12.2 200 200' className='kingdom-map'>
         <Layout
           size={{ x: hexagonSize, y: hexagonSize }}
-          flat={false}>
+          flat={false}
+          spacing={1.001}>
           {hexagonLayout.map((hex, index) => {
             const data = hexData[hex.q + ',' + hex.r] ?? {
               level: 1,
               safe: false,
               state: HexplorationState.Unexplored,
               feature: TerrainFeature.None,
-              roads: false
+              roads: false,
+              terrainType: TerrainType.Forest
             };
 
             return <MapHexagon
@@ -73,7 +88,8 @@ const HexagonalGrid: React.FC = () => {
             safe: false,
             state: HexplorationState.Unexplored,
             feature: TerrainFeature.None,
-            roads: false
+            roads: false,
+            terrainType: TerrainType.Forest
           }}
           onClose={handleDialogClose}
           onSave={handleSave}

@@ -3,6 +3,10 @@ import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
 import { HexplorationState, hexplorationStateColor } from "../map/HexplorationState";
 import { TerrainFeature } from "../map/TerrainFeature";
 import styled from "@emotion/styled";
+import { TerrainType } from "../map/TerrainType";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 
 interface MapHexData {
     level: number;
@@ -10,6 +14,7 @@ interface MapHexData {
     state: HexplorationState;
     feature: TerrainFeature;
     roads: boolean;
+    terrainType: TerrainType;
 }
 
 interface MapHexProps extends HexagonProps {
@@ -29,8 +34,16 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
 
     return (
         <StyledHexagon {...rest}>
-            {hexData.feature !== TerrainFeature.None ? (<Text className="hex-text">{hexData.feature}</Text>) : undefined}
-            {!hexData.safe ? (<Text className="hex-text">Danger!</Text>) : undefined}
+            {hexData.state !== HexplorationState.Unexplored && !hexData.safe && (
+                <FontAwesomeIcon icon={icon({ name: 'skull-crossbones' })} className="hex-icon" color="red" />
+            )}
+
+            {hexData.state !== HexplorationState.Unexplored && (
+                <Text className="hex-text">
+                    {hexData.feature !== TerrainFeature.None && (<tspan x="0" y="1.25mm">{hexData.feature}</tspan>)}
+                </Text>
+            )}
+
         </StyledHexagon>
     );
 };

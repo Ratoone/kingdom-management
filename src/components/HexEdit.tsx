@@ -11,7 +11,6 @@ import {
     FormControl,
     InputLabel,
     Select,
-    FormGroup,
     SelectChangeEvent,
     MenuItem,
     FormControlLabel,
@@ -19,6 +18,7 @@ import {
     DialogActions,
     Stack
 } from '@mui/material';
+import { TerrainType } from "../map/TerrainType";
 
 
 interface EditHexDataDialogProps {
@@ -38,7 +38,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
         setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
     };
 
-    const handleSelectChange = (event: SelectChangeEvent<HexplorationState | TerrainFeature>,) => {
+    const handleSelectChange = (event: SelectChangeEvent<HexplorationState | TerrainFeature | TerrainType>,) => {
         const { name, value } = event.target;
         setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
     };
@@ -121,6 +121,24 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                         value={formData.level}
                         onChange={handleFormChange}
                     />
+                    <FormControl fullWidth>
+                        <InputLabel id="type-label">Terrain Type</InputLabel>
+                        <Select
+                            labelId="type-label"
+                            id="type"
+                            name="terrainType"
+                            value={formData.terrainType}
+                            onChange={handleSelectChange}
+                        >
+                            {(Object.keys(TerrainType) as Array<keyof typeof TerrainType>)
+                                .filter(key => isNaN(Number(TerrainType[key])))
+                                .map((feature) => (
+                                    <MenuItem key={feature} value={feature}>
+                                        {feature}
+                                    </MenuItem >
+                                ))}
+                        </Select>
+                    </FormControl>
                     <DialogActions sx={{ justifyContent: "center" }}>
                         <Button variant="outlined" onClick={handleSave}>Save</Button>
                         <Button variant="outlined" onClick={onClose}>Cancel</Button>

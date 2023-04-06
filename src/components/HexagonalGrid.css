@@ -18,8 +18,16 @@
   height: 100%;
 }
 
-.hex-text{
+.hex-text {
+  stroke-width: 0;
+  fill-opacity: 1;
   font: italic 4px serif;
   fill: red;
-  color: aquamarine;
+}
+
+.hex-icon {
+  stroke-width: 0;
+  scale: 0.025;
+  fill-opacity: 1;
+  transform: translate(-100%, -100%);
 }
