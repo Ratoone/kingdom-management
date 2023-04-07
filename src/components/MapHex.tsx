@@ -16,13 +16,15 @@ interface MapHexData {
     roads: boolean;
     terrainType: TerrainType;
     hidden: boolean;
+    reference: string;
 }
 
 interface MapHexProps extends HexagonProps {
     hexData: MapHexData;
+    debugging?: boolean;
 }
 
-const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
+const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
     const StyledHexagon = styled(Hexagon)`
         stroke: rgb(${(255 - hexData.level * 24) % 256}, ${(hexData.level * 24) % 256}, ${hexData.level * 12});
         stroke-width: 0.11%;
@@ -34,13 +36,17 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
         }
     `;
 
+    const displayData = (state: HexplorationState): boolean => {
+        return state !== HexplorationState.Unexplored || debugging;
+    }
+
     return (
         <StyledHexagon {...rest}>
-            {hexData.state !== HexplorationState.Unexplored && !hexData.safe && (
+            {displayData(hexData.state) && !hexData.safe && (
                 <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
             )}
 
-            {hexData.state !== HexplorationState.Unexplored && hexData.feature !== TerrainFeature.None && (
+            {displayData(hexData.state) && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
                     icon={featureToIcon[hexData.feature][0]}
                     className="hex-icon hex-feature"

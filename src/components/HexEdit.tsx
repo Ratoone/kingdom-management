@@ -24,7 +24,6 @@ import { TerrainType } from "../map/TerrainType";
 interface EditHexDataDialogProps {
     style: { top: number, left: number };
     hexData: MapHexData;
-    key: string;
     open: boolean;
     onSave: (newHexData: MapHexData) => void;
     onClose: () => void;
@@ -144,6 +143,13 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                         control={<Checkbox onChange={handleCheckboxChange} />}
                         label="Hidden"
                         checked={formData.hidden} />
+                    <TextField
+                        label="Reference"
+                        type="text"
+                        name="reference"
+                        value={formData.reference}
+                        onChange={handleFormChange}
+                    />
                     <DialogActions sx={{ justifyContent: "center" }}>
                         <Button variant="outlined" onClick={handleSave}>Save</Button>
                         <Button variant="outlined" onClick={onClose}>Cancel</Button>

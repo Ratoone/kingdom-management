@@ -42,7 +42,7 @@ const HexagonalGrid: React.FC = () => {
 
   useEffect(() => {
     if (Object.keys(hexData).length !== 0) {
-      localStorage.setItem("hexMapData", JSON.stringify(hexData))
+      localStorage.setItem("hexMapData", JSON.stringify(hexData, null, 4))
     }
   }, [hexData]);
 
@@ -52,8 +52,9 @@ const HexagonalGrid: React.FC = () => {
     state: HexplorationState.Unexplored,
     feature: TerrainFeature.None,
     roads: false,
-    terrainType: TerrainType.Aquatic,
-    hidden: false
+    terrainType: TerrainType.Hills,
+    hidden: false,
+    reference: ""
   }
 
   return (
@@ -85,7 +86,6 @@ const HexagonalGrid: React.FC = () => {
             top: dialogPosition.top + 10 * hexagonSize,
             left: dialogPosition.left + 10 * hexagonSize
           }}
-          key={selectedHex.q + ',' + selectedHex.r}
           hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? defaultHex}
           onClose={handleDialogClose}
           onSave={handleSave}
