@@ -26,7 +26,7 @@ interface MapHexProps extends HexagonProps {
 
 const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
     const StyledHexagon = styled(Hexagon)`
-        stroke: rgb(${(255 - hexData.level * 24) % 256}, ${(hexData.level * 24) % 256}, ${hexData.level * 12});
+        stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
         stroke-width: 0.11%;
         fill-opacity: ${hexplorationStateOpacity[hexData.state]};
         fill: ${hexplorationStateColor[hexData.state]};
@@ -36,17 +36,34 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
         }
     `;
 
-    const displayData = (state: HexplorationState): boolean => {
-        return state !== HexplorationState.Unexplored || debugging;
+    const shouldDisplayDanger = (state: HexplorationState, terrain: TerrainType): boolean => {
+        if (state === HexplorationState.Unexplored && !debugging) {
+            return false;
+        }
+
+        return state === HexplorationState.Travelled && terrain === TerrainType.Plains;
+    }
+
+    const shouldDisplayFeature = (state: HexplorationState, feature: TerrainFeature): boolean => {
+        if (state === HexplorationState.Unexplored && !debugging) {
+            return false;
+        }
+
+        if (state === HexplorationState.Travelled) {
+            return [TerrainFeature.Landmark, TerrainFeature.Settlement].some(item => item === feature);
+        }
+
+        return true;
+
     }
 
     return (
         <StyledHexagon {...rest}>
-            {displayData(hexData.state) && !hexData.safe && (
+            {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
                 <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
             )}
 
-            {displayData(hexData.state) && hexData.feature !== TerrainFeature.None && (
+            {shouldDisplayFeature(hexData.state, hexData.feature) && !hexData.hidden && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
                     icon={featureToIcon[hexData.feature][0]}
                     className="hex-icon hex-feature"

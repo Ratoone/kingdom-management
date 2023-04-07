@@ -52,7 +52,7 @@ const HexagonalGrid: React.FC = () => {
     state: HexplorationState.Unexplored,
     feature: TerrainFeature.None,
     roads: false,
-    terrainType: TerrainType.Hills,
+    terrainType: TerrainType.Aquatic,
     hidden: false,
     reference: ""
   }
