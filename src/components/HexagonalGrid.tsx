@@ -10,7 +10,7 @@ import { TerrainType } from '../map/TerrainType';
 
 const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
-  const hexagonSize = 11.144;
+  const hexagonSize = 11.0445;
 
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
@@ -53,7 +53,7 @@ const HexagonalGrid: React.FC = () => {
         <Layout
           size={{ x: hexagonSize, y: hexagonSize }}
           flat={false}
-          spacing={1.001}>
+          spacing={1.01}>
           {hexagonLayout.map((hex, index) => {
             const data = hexData[hex.q + ',' + hex.r] ?? {
               level: 1,

@@ -1,4 +1,4 @@
-import { Hexagon, Text } from "react-hexgrid";
+import { Hexagon } from "react-hexgrid";
 import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
 import { HexplorationState, hexplorationStateColor, hexplorationStateOpacity } from "../map/HexplorationState";
 import { TerrainFeature, featureToIcon } from "../map/TerrainFeature";
@@ -6,8 +6,6 @@ import styled from "@emotion/styled";
 import { TerrainType, terrainToIcon } from "../map/TerrainType";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
-import { IconName } from "@fortawesome/fontawesome-svg-core";
 import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
 interface MapHexData {
@@ -25,8 +23,8 @@ interface MapHexProps extends HexagonProps {
 
 const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
     const StyledHexagon = styled(Hexagon)`
-        stroke: rgb(243, 0, 0);
-        stroke-width: 0.1%;
+        stroke: rgb(${(255 - hexData.level * 24) % 256}, ${(hexData.level * 24) % 256}, ${hexData.level * 12});
+        stroke-width: 0.11%;
         fill-opacity: ${hexplorationStateOpacity[hexData.state]};
         fill: ${hexplorationStateColor[hexData.state]};
         &:hover {
@@ -37,11 +35,11 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
 
     return (
         <StyledHexagon {...rest}>
-            {hexData.state !== HexplorationState.Unexplored && !hexData.safe && (
+            {hexData.state !== HexplorationState.Claimed && !hexData.safe && (
                 <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
             )}
 
-            {hexData.state !== HexplorationState.Unexplored && hexData.feature !== TerrainFeature.None && (
+            {hexData.state !== HexplorationState.Claimed && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
                     icon={featureToIcon[hexData.feature][0]}
                     className="hex-icon hex-feature"

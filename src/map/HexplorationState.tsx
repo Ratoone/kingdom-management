@@ -11,7 +11,7 @@ const hexplorationStateColor: { [key in keyof typeof HexplorationState]: string 
 }
 
 const hexplorationStateOpacity: { [key in keyof typeof HexplorationState]: number } = {
-    [HexplorationState.Unexplored]: 0.8,
+    [HexplorationState.Unexplored]: 0.6,
     [HexplorationState.Explored]: 0.125,
     [HexplorationState.Claimed]: 0.3
 }
