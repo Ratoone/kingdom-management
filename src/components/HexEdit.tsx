@@ -139,6 +139,11 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                 ))}
                         </Select>
                     </FormControl>
+                    <FormControlLabel
+                        name="hidden"
+                        control={<Checkbox onChange={handleCheckboxChange} />}
+                        label="Hidden"
+                        checked={formData.hidden} />
                     <DialogActions sx={{ justifyContent: "center" }}>
                         <Button variant="outlined" onClick={handleSave}>Save</Button>
                         <Button variant="outlined" onClick={onClose}>Cancel</Button>

@@ -12,7 +12,7 @@ enum TerrainType {
 const terrainToIcon: { [key in keyof typeof TerrainType]: [IconDefinition, string] } = {
     Aquatic: [faWater, "skyblue"],
     Forest: [faTree, "darkgreen"],
-    Plains: [faSeedling, "yellow"],
+    Plains: [faSeedling, "lightgreen"],
     Mountains: [faMountain, "gray"],
     Hills: [faMound, "saddlebrown"],
     Swamp: [faFrog, "yellowgreen"]

@@ -46,6 +46,16 @@ const HexagonalGrid: React.FC = () => {
     }
   }, [hexData]);
 
+  const defaultHex = {
+    level: 20,
+    safe: false,
+    state: HexplorationState.Unexplored,
+    feature: TerrainFeature.None,
+    roads: false,
+    terrainType: TerrainType.Aquatic,
+    hidden: false
+  }
+
   return (
     <div className='map-container'>
       <img src={map} alt="Kingdom Map" className='kingdom-image' />
@@ -55,14 +65,7 @@ const HexagonalGrid: React.FC = () => {
           flat={false}
           spacing={1.01}>
           {hexagonLayout.map((hex, index) => {
-            const data = hexData[hex.q + ',' + hex.r] ?? {
-              level: 1,
-              safe: false,
-              state: HexplorationState.Unexplored,
-              feature: TerrainFeature.None,
-              roads: false,
-              terrainType: TerrainType.Forest
-            };
+            const data = hexData[hex.q + ',' + hex.r] ?? defaultHex;
 
             return <MapHexagon
               key={index + JSON.stringify(data)}
@@ -83,14 +86,7 @@ const HexagonalGrid: React.FC = () => {
             left: dialogPosition.left + 10 * hexagonSize
           }}
           key={selectedHex.q + ',' + selectedHex.r}
-          hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? {
-            level: 1,
-            safe: false,
-            state: HexplorationState.Unexplored,
-            feature: TerrainFeature.None,
-            roads: false,
-            terrainType: TerrainType.Forest
-          }}
+          hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? defaultHex}
           onClose={handleDialogClose}
           onSave={handleSave}
         />

@@ -15,6 +15,7 @@ interface MapHexData {
     feature: TerrainFeature;
     roads: boolean;
     terrainType: TerrainType;
+    hidden: boolean;
 }
 
 interface MapHexProps extends HexagonProps {
@@ -35,11 +36,11 @@ const MapHexagon = ({ hexData, ...rest }: MapHexProps) => {
 
     return (
         <StyledHexagon {...rest}>
-            {hexData.state !== HexplorationState.Claimed && !hexData.safe && (
+            {hexData.state !== HexplorationState.Unexplored && !hexData.safe && (
                 <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
             )}
 
-            {hexData.state !== HexplorationState.Claimed && hexData.feature !== TerrainFeature.None && (
+            {hexData.state !== HexplorationState.Unexplored && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
                     icon={featureToIcon[hexData.feature][0]}
                     className="hex-icon hex-feature"

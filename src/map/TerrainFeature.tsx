@@ -1,4 +1,15 @@
-import { IconDefinition, faBridgeWater, faBuilding, faBuildingCircleXmark, faCity, faDollarSign, faHandHoldingDollar, faLandmark, faShield, faWheatAwn } from "@fortawesome/free-solid-svg-icons";
+import {
+    IconDefinition,
+    faBridgeWater,
+    faBuildingCircleXmark,
+    faDollarSign,
+    faHouse,
+    faIndustry,
+    faLandmark,
+    faPeopleRoof,
+    faTowerObservation,
+    faWheatAwn
+} from "@fortawesome/free-solid-svg-icons";
 
 enum TerrainFeature {
     None = "None",
@@ -15,16 +26,16 @@ enum TerrainFeature {
 }
 
 const featureToIcon: { [key in keyof Omit<typeof TerrainFeature, "None">]: [IconDefinition, string] } = {
-    Bridge: [faBridgeWater, "yellow"],
+    Bridge: [faBridgeWater, "gray"],
     Farmland: [faWheatAwn, "yellow"],
-    Freehold: [faCity, "grey"],
+    Freehold: [faHouse, "grey"],
     Landmark: [faLandmark, "white"],
-    Refuge: [faShield, "green"],
-    Resource: [faDollarSign, "yellow"],
-    Ruins: [faBuildingCircleXmark, "black"],
-    Settlement: [faCity, "blue"],
-    Structure: [faBuilding, "blue"],
-    WorkSite: [faHandHoldingDollar, "yellow"]
+    Refuge: [faPeopleRoof, "green"],
+    Resource: [faDollarSign, "goldenrod"],
+    Ruins: [faBuildingCircleXmark, "darkslategray"],
+    Settlement: [faHouse, "royalblue"],
+    Structure: [faTowerObservation, "powderblue"],
+    WorkSite: [faIndustry, "silver"]
 }
 
 export { TerrainFeature, featureToIcon }
