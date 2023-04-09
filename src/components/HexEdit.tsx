@@ -89,6 +89,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                 ))}
                         </Select>
                     </FormControl>
+
                     <FormControl fullWidth>
                         <InputLabel id="feature-label">Feature</InputLabel>
                         <Select
@@ -107,11 +108,14 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                 ))}
                         </Select>
                     </FormControl>
-                    <FormControlLabel
+
+                    <TextField
                         name="roads"
-                        control={<Checkbox onChange={handleCheckboxChange} />}
+                        onChange={handleFormChange}
+                        inputProps={{ pattern: "^(?=\d{0,6}$)0?1?2?3?4?5?$" }}
                         label="Roads"
-                        checked={formData.roads} />
+                        value={formData.roads} />
+
                     <TextField
                         label="Level"
                         type="number"
@@ -120,6 +124,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                         value={formData.level}
                         onChange={handleFormChange}
                     />
+
                     <FormControl fullWidth>
                         <InputLabel id="type-label">Terrain Type</InputLabel>
                         <Select
@@ -138,11 +143,13 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                 ))}
                         </Select>
                     </FormControl>
+
                     <FormControlLabel
                         name="hidden"
                         control={<Checkbox onChange={handleCheckboxChange} />}
                         label="Hidden"
                         checked={formData.hidden} />
+
                     <TextField
                         label="Reference"
                         type="text"
@@ -150,6 +157,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                         value={formData.reference}
                         onChange={handleFormChange}
                     />
+
                     <DialogActions sx={{ justifyContent: "center" }}>
                         <Button variant="outlined" onClick={handleSave}>Save</Button>
                         <Button variant="outlined" onClick={onClose}>Cancel</Button>

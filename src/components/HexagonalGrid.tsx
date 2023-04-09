@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { HexGrid, Layout, GridGenerator, Hex } from 'react-hexgrid';
-import "./HexagonalGrid.css";
+import { HexGrid, Layout, GridGenerator, Hex, HexUtils } from 'react-hexgrid';
+import "./HexagonalGrid.scss";
 import map from '../database/map_no_label.jpg';
 import { MapHexData, MapHexagon } from './MapHex';
 import EditHexDataDialog from './HexEdit';
@@ -18,6 +18,7 @@ const HexagonalGrid: React.FC = () => {
 
   const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
     const clickedHex = event.target as SVGElement;
+    console.log(hex);
     setDialogPosition(clickedHex.getBoundingClientRect());
     setSelectedHex(hex);
   };
@@ -33,6 +34,10 @@ const HexagonalGrid: React.FC = () => {
     }));
     setSelectedHex(null);
   };
+
+  const hexToHexData = (hex: Hex): MapHexData => {
+    return hexData[hex.q + ',' + hex.r] ?? defaultHex;
+  }
 
   useEffect(() => {
     if (Object.keys(hexData).length === 0) {
@@ -51,7 +56,7 @@ const HexagonalGrid: React.FC = () => {
     safe: false,
     state: HexplorationState.Unexplored,
     feature: TerrainFeature.None,
-    roads: false,
+    roads: "",
     terrainType: TerrainType.Aquatic,
     hidden: false,
     reference: ""
@@ -66,14 +71,22 @@ const HexagonalGrid: React.FC = () => {
           flat={false}
           spacing={1.01}>
           {hexagonLayout.map((hex, index) => {
-            const data = hexData[hex.q + ',' + hex.r] ?? defaultHex;
+            const data = hexToHexData(hex);
+            let roads = "";
+            for (let i = 0; i < 5 && data.roads; i++) {
+              const neighbor = HexUtils.neighbor(hex, i);
+              if (hexToHexData(neighbor).roads) {
+                roads += i;
+              }
+            }
 
             return <MapHexagon
-              key={index + JSON.stringify(data)}
+              key={index}
               q={hex.q}
               r={hex.r}
               s={hex.s}
               hexData={data}
+              roads={roads}
               onClick={(event) => handleHexClick(event, hex)}
             />
           })}

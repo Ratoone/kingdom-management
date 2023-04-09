@@ -8,12 +8,15 @@ import { TerrainType, terrainToIcon } from "../map/TerrainType";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
+import map from "../database/tiles/01234.png";
+import { tileByRoadString } from "./RoadConfiguration";
+
 interface MapHexData {
     level: number;
     safe: boolean;
     state: HexplorationState;
     feature: TerrainFeature;
-    roads: boolean;
+    roads: string;
     terrainType: TerrainType;
     hidden: boolean;
     reference: string;
@@ -21,10 +24,11 @@ interface MapHexData {
 
 interface MapHexProps extends HexagonProps {
     hexData: MapHexData;
+    roads?: string;
     debugging?: boolean;
 }
 
-const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
+const MapHexagon = ({ roads = "", debugging = false, hexData, ...rest }: MapHexProps) => {
     const StyledHexagon = styled(Hexagon)`
         stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
         stroke-width: 0.11%;
@@ -41,7 +45,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
             return false;
         }
 
-        return state === HexplorationState.Travelled && terrain === TerrainType.Plains;
+        return state !== HexplorationState.Travelled || terrain === TerrainType.Plains;
     }
 
     const shouldDisplayFeature = (state: HexplorationState, feature: TerrainFeature): boolean => {
@@ -57,8 +61,22 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
 
     }
 
+    const renderRoads = () => {
+        if (hexData.roads.length === 0) {
+            return "";
+        }
+
+        const [roadTile, rotation] = tileByRoadString(hexData.roads);
+        return (
+            <image href={roadTile} className={`hex-roads hex-roads-${rotation}`} />
+        );
+
+    }
+
     return (
         <StyledHexagon {...rest}>
+            {renderRoads()}
+
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
                 <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
             )}
@@ -70,6 +88,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
                     color={featureToIcon[hexData.feature][1]}
                 />
             )}
+
 
             <FontAwesomeIcon
                 icon={terrainToIcon[hexData.terrainType][0]}

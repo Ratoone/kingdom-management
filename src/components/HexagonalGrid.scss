@@ -26,6 +26,18 @@
   fill-opacity: 1;
 }
 
+.hex-roads {
+  display: block;
+  scale: 0.095;
+  opacity: 0.5;
+}
+
+@for $i from 0 through 5 {
+  .hex-roads-#{$i} {
+    transform: rotate(calc(30deg + $i*60deg)) translate(-57.8%, -50%);
+  }
+}
+
 .hex-danger {
   transform: translate(-100%, -100%);
 }
