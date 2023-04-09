@@ -30,8 +30,13 @@ const tileByRoadString = (road: string): [string, number] => {
 
         case 2: {
             const roadParsed = parseInt(road);
-            const difference = roadParsed % 10 - Math.floor(roadParsed / 10);
-            return [length2Tiles[difference - 1], Math.floor(roadParsed / 10)];
+            let direction = Math.floor(roadParsed / 10)
+            let difference = roadParsed % 10 - direction;
+            if (difference > 3) {
+                difference = 6 - difference;
+                direction = roadParsed % 10;
+            }
+            return [length2Tiles[difference - 1], direction];
         }
 
         case 3: {
@@ -54,8 +59,14 @@ const tileByRoadString = (road: string): [string, number] => {
 
         case 4: {
             const missingRoadParsed = parseInt(findMissingValues(road));
-            const difference = missingRoadParsed % 10 - Math.floor(missingRoadParsed / 10);
-            return [length4Tiles[difference - 1], (Math.floor(missingRoadParsed % 10) + 1) % 6];
+            let direction = Math.floor(missingRoadParsed % 10)
+            let difference = missingRoadParsed % 10 - Math.floor(missingRoadParsed / 10);
+            if (difference > 3) {
+                difference = 6 - difference;
+                direction = Math.floor(missingRoadParsed / 10);
+            }
+
+            return [length4Tiles[difference - 1], (direction + 1) % 6];
         }
 
         case 5: {
