@@ -72,13 +72,6 @@ const HexagonalGrid: React.FC = () => {
           spacing={1.01}>
           {hexagonLayout.map((hex, index) => {
             const data = hexToHexData(hex);
-            let roads = "";
-            for (let i = 0; i < 5 && data.roads; i++) {
-              const neighbor = HexUtils.neighbor(hex, i);
-              if (hexToHexData(neighbor).roads) {
-                roads += i;
-              }
-            }
 
             return <MapHexagon
               key={index}
@@ -86,7 +79,6 @@ const HexagonalGrid: React.FC = () => {
               r={hex.r}
               s={hex.s}
               hexData={data}
-              roads={roads}
               onClick={(event) => handleHexClick(event, hex)}
             />
           })}

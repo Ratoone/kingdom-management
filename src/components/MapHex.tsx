@@ -8,7 +8,6 @@ import { TerrainType, terrainToIcon } from "../map/TerrainType";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
-import map from "../database/tiles/01234.png";
 import { tileByRoadString } from "./RoadConfiguration";
 
 interface MapHexData {
@@ -24,11 +23,10 @@ interface MapHexData {
 
 interface MapHexProps extends HexagonProps {
     hexData: MapHexData;
-    roads?: string;
     debugging?: boolean;
 }
 
-const MapHexagon = ({ roads = "", debugging = false, hexData, ...rest }: MapHexProps) => {
+const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
     const StyledHexagon = styled(Hexagon)`
         stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
         stroke-width: 0.11%;

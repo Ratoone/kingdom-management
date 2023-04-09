@@ -29,7 +29,8 @@
 .hex-roads {
   display: block;
   scale: 0.095;
-  opacity: 0.5;
+  opacity: 0.4;
+  filter: hue-rotate(5deg) saturate(120%);
 }
 
 @for $i from 0 through 5 {
