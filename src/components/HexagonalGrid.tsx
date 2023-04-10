@@ -10,7 +10,7 @@ import { TerrainType } from '../map/TerrainType';
 
 const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
-  const hexagonSize = 11.0445;
+  const hexagonSize = 79.92;
 
   const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
   const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
@@ -65,7 +65,7 @@ const HexagonalGrid: React.FC = () => {
   return (
     <div className='map-container'>
       <img src={map} alt="Kingdom Map" className='kingdom-image' />
-      <HexGrid viewBox='179.73 -12.2 200 200' className='kingdom-map'>
+      <HexGrid viewBox='-23.6 -87 4096 1447' className='kingdom-map'>
         <Layout
           size={{ x: hexagonSize, y: hexagonSize }}
           flat={false}
@@ -88,8 +88,8 @@ const HexagonalGrid: React.FC = () => {
         <EditHexDataDialog
           open={true}
           style={{
-            top: dialogPosition.top + 10 * hexagonSize,
-            left: dialogPosition.left + 10 * hexagonSize
+            top: dialogPosition.top + 1.5 * hexagonSize,
+            left: dialogPosition.left + 1.5 * hexagonSize
           }}
           hexData={hexData[selectedHex.q + ',' + selectedHex.r] ?? defaultHex}
           onClose={handleDialogClose}

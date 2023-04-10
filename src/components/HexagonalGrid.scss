@@ -24,25 +24,26 @@
   stroke-opacity: 0.6;
   scale: 0.02;
   fill-opacity: 1;
+  transform: translateX(-25%);
 }
 
 .hex-roads {
   display: block;
-  scale: 0.095;
+  scale: 0.675;
   opacity: 0.4;
   filter: hue-rotate(5deg) saturate(120%);
 }
 
 @for $i from 0 through 5 {
   .hex-roads-#{$i} {
-    transform: rotate(calc(30deg + $i*60deg)) translate(-57.8%, -50%);
+    transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7%);
   }
 }
 
 .hex-danger {
-  transform: translate(-100%, -100%);
+  transform: translate(-75%, -100%);
 }
 
 .hex-feature {
-  transform: translateX(-100%);
+  transform: translateX(-75%);
 }
