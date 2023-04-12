@@ -27,6 +27,7 @@ interface MapHexProps extends HexagonProps {
 }
 
 const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
+    const iconSize = 25;
     const StyledHexagon = styled(Hexagon)`
         stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
         stroke-width: 0.11%;
@@ -75,26 +76,37 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
         <StyledHexagon {...rest}>
             {renderRoads()}
 
+
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
-                <FontAwesomeIcon icon={faSkullCrossbones} className="hex-icon hex-danger" color="orangered" />
+                <FontAwesomeIcon
+                    width={iconSize}
+                    height={iconSize}
+                    icon={faSkullCrossbones}
+                    transform={{ x: -iconSize, y: -iconSize }}
+                    className="hex-icon hex-danger"
+                    color="orangered" />
             )}
 
             {shouldDisplayFeature(hexData.state, hexData.feature) && !hexData.hidden && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
+                    width={iconSize}
+                    height={iconSize}
                     icon={featureToIcon[hexData.feature][0]}
+                    transform={{ x: -iconSize }}
                     className="hex-icon hex-feature"
                     color={featureToIcon[hexData.feature][1]}
                 />
             )}
 
-
             <FontAwesomeIcon
+                width={iconSize}
+                height={iconSize}
                 icon={terrainToIcon[hexData.terrainType][0]}
                 className="hex-icon hex-terrain"
                 color={terrainToIcon[hexData.terrainType][1]}
             />
 
-        </StyledHexagon>
+        </StyledHexagon >
     );
 };
 

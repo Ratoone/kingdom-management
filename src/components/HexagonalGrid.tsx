@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HexGrid, Layout, GridGenerator, Hex, HexUtils } from 'react-hexgrid';
+import { HexGrid, Layout, GridGenerator, Hex } from 'react-hexgrid';
 import "./HexagonalGrid.scss";
 import map from '../database/map_no_label.jpg';
 import { MapHexData, MapHexagon } from './MapHex';
@@ -18,7 +18,6 @@ const HexagonalGrid: React.FC = () => {
 
   const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
     const clickedHex = event.target as SVGElement;
-    console.log(hex);
     setDialogPosition(clickedHex.getBoundingClientRect());
     setSelectedHex(hex);
   };
@@ -57,7 +56,7 @@ const HexagonalGrid: React.FC = () => {
     state: HexplorationState.Unexplored,
     feature: TerrainFeature.None,
     roads: "",
-    terrainType: TerrainType.Aquatic,
+    terrainType: TerrainType.Plains,
     hidden: false,
     reference: ""
   }
@@ -65,7 +64,7 @@ const HexagonalGrid: React.FC = () => {
   return (
     <div className='map-container'>
       <img src={map} alt="Kingdom Map" className='kingdom-image' />
-      <HexGrid viewBox='-23.6 -87 4096 1447' className='kingdom-map'>
+      <HexGrid width="100%" height="100%" viewBox='-23.6 -87 4096 1447' className='kingdom-map'>
         <Layout
           size={{ x: hexagonSize, y: hexagonSize }}
           flat={false}

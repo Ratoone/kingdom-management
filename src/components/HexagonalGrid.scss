@@ -22,10 +22,16 @@
   stroke-width: 4%;
   stroke: black;
   stroke-opacity: 0.6;
-  scale: 0.02;
   fill-opacity: 1;
-  transform: translateX(-25%);
 }
+
+// .hex-danger {
+//   transform: translate(-25px, -25px);
+// }
+
+// .hex-feature {
+//   transform: translateX(-25px);
+// }
 
 .hex-roads {
   display: block;
@@ -38,12 +44,4 @@
   .hex-roads-#{$i} {
     transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7%);
   }
-}
-
-.hex-danger {
-  transform: translate(-75%, -100%);
-}
-
-.hex-feature {
-  transform: translateX(-75%);
 }
