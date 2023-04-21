@@ -1,0 +1,28 @@
+.map-hex {
+    stroke-width: 0.11%;
+}
+
+.map-hex:hover {
+    fill: #4499a9;
+    fill-opacity: 0.6;
+}
+
+.hex-icon {
+    stroke-width: 4%;
+    stroke: black;
+    stroke-opacity: 0.6;
+    fill-opacity: 1;
+}
+
+.hex-roads {
+    display: block;
+    scale: 0.675;
+    opacity: 0.4;
+    filter: hue-rotate(5deg) saturate(120%);
+}
+
+@for $i from 0 through 5 {
+    .hex-roads-#{$i} {
+        transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7%);
+    }
+}

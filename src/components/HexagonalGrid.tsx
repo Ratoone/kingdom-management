@@ -73,6 +73,7 @@ const HexagonalGrid: React.FC = () => {
             const data = hexToHexData(hex);
 
             return <MapHexagon
+              className="map-hex"
               key={index}
               q={hex.q}
               r={hex.r}

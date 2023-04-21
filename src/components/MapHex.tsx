@@ -10,6 +10,8 @@ import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
 import { tileByRoadString } from "../features/map/RoadConfiguration";
 
+import "../assets/MapHex.scss";
+
 interface MapHexData {
     level: number;
     safe: boolean;
@@ -30,13 +32,8 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
     const iconSize = 25;
     const StyledHexagon = styled(Hexagon)`
         stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
-        stroke-width: 0.11%;
         fill-opacity: ${hexplorationStateOpacity[hexData.state]};
         fill: ${hexplorationStateColor[hexData.state]};
-        &:hover {
-            fill: #4499a9;
-            fill-opacity: 0.6;
-        }
     `;
 
     const shouldDisplayDanger = (state: HexplorationState, terrain: TerrainType): boolean => {
