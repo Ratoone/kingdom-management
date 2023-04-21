@@ -1,4 +1,4 @@
-import structuresData from "../database/structures.json"
+import structuresData from "../../assets/structures.json"
 import { Structure } from "./Structure";
 
 const structuresMap = structuresData.reduce((map, data) => {

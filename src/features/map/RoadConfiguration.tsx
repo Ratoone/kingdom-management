@@ -1,16 +1,16 @@
-import tile_1 from "../database/tiles/0.png";
-import tile_2_0 from "../database/tiles/01.png";
-import tile_2_1 from "../database/tiles/02.png";
-import tile_2_2 from "../database/tiles/03.png";
-import tile_3_0 from "../database/tiles/012.png";
-import tile_3_1 from "../database/tiles/013.png";
-import tile_3_2 from "../database/tiles/014.png";
-import tile_3_3 from "../database/tiles/024.png";
-import tile_4_0 from "../database/tiles/0123.png";
-import tile_4_1 from "../database/tiles/0124.png";
-import tile_4_2 from "../database/tiles/0134.png";
-import tile_5 from "../database/tiles/01234.png";
-import tile_6 from "../database/tiles/012345.png";
+import tile_1 from "../../assets/tiles/0.png";
+import tile_2_0 from "../../assets/tiles/01.png";
+import tile_2_1 from "../../assets/tiles/02.png";
+import tile_2_2 from "../../assets/tiles/03.png";
+import tile_3_0 from "../../assets/tiles/012.png";
+import tile_3_1 from "../../assets/tiles/013.png";
+import tile_3_2 from "../../assets/tiles/014.png";
+import tile_3_3 from "../../assets/tiles/024.png";
+import tile_4_0 from "../../assets/tiles/0123.png";
+import tile_4_1 from "../../assets/tiles/0124.png";
+import tile_4_2 from "../../assets/tiles/0134.png";
+import tile_5 from "../../assets/tiles/01234.png";
+import tile_6 from "../../assets/tiles/012345.png";
 
 const length2Tiles = [tile_2_0, tile_2_1, tile_2_2];
 const length4Tiles = [tile_4_0, tile_4_1, tile_4_2]

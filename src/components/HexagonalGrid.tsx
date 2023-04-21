@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { HexGrid, Layout, GridGenerator, Hex } from 'react-hexgrid';
-import "./HexagonalGrid.scss";
-import map from '../database/map_no_label.jpg';
+import "../assets/HexagonalGrid.scss";
+import map from '../assets/images/map_no_label.jpg';
 import { MapHexData, MapHexagon } from './MapHex';
 import EditHexDataDialog from './HexEdit';
-import { HexplorationState } from '../map/HexplorationState';
-import { TerrainFeature } from '../map/TerrainFeature';
-import { TerrainType } from '../map/TerrainType';
+import { HexplorationState } from '../features/map/HexplorationState';
+import { TerrainFeature } from '../features/map/TerrainFeature';
+import { TerrainType } from '../features/map/TerrainType';
 
 const HexagonalGrid: React.FC = () => {
   const hexagonLayout = GridGenerator.rectangle(29, 12);
