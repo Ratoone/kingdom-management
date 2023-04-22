@@ -1,0 +1,11 @@
+#party-token {
+    position: absolute;
+    color: red;
+    cursor: move;
+    display: flex;
+    translate: -50% -50%;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.6;
+    transition: all 1s ease-in-out;
+}

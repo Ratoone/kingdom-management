@@ -73,7 +73,6 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
         <StyledHexagon {...rest}>
             {renderRoads()}
 
-
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
                 <FontAwesomeIcon
                     width={iconSize}

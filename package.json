@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "kingdom-management",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,7 +17,6 @@
     "@types/node": "^16.18.19",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
-    "babel-plugin-macros": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hexgrid": "^2.0.1",
@@ -32,10 +31,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "./.eslintrc.json"
   },
   "browserslist": {
     "production": [
