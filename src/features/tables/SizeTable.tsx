@@ -26,4 +26,4 @@ function getResourceDie(size: number): number {
     return getControlModifier(size) * 2 + 4;
 }
 
-export { getControlModifier, getBaseComodityStorage, getResourceDie }
+export { getControlModifier, getBaseComodityStorage, getResourceDie };

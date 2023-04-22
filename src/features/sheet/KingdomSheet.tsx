@@ -43,7 +43,7 @@ export class KingdomSheet {
     private getAbilityScoreForSkill(skill: Skill) {
         let score = this.abilityScore.get(getAbilityForSkill(skill));
         if (!score) {
-            throw new TypeError(`No ability score found for skill ${skill}`)
+            throw new TypeError(`No ability score found for skill ${skill}`);
         }
 
         return score;

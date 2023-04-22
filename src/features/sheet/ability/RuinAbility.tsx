@@ -26,4 +26,4 @@ function getAbilityFromRuin(abilityType: Ability): RuinType {
     return ruin;
 }
 
-export { getAbilityFromRuin, getRuinFromAbility }
+export { getAbilityFromRuin, getRuinFromAbility };

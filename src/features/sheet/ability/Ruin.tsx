@@ -12,9 +12,9 @@ class Ruin {
     threshold: number;
 
     constructor(score: number = 0, penalty: number = 0, threshold: number = 10) {
-        this.score = score
-        this.penalty = penalty
-        this.threshold = threshold
+        this.score = score;
+        this.penalty = penalty;
+        this.threshold = threshold;
     }
 
     public increaseRuin(value: number) {
@@ -26,4 +26,4 @@ class Ruin {
     }
 }
 
-export { Ruin, RuinType }
+export { Ruin, RuinType };

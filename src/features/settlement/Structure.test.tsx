@@ -2,7 +2,7 @@ import { Proficiency } from "../sheet/skill/Proficiency";
 import { Skill } from "../sheet/skill/Skill";
 import { Structure } from "./Structure";
 
-test('Parses structure correctly', () => {
+test("Parses structure correctly", () => {
     const structureJson = {
         "name": "Brewery",
         "level": 1,

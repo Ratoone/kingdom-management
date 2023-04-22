@@ -5,7 +5,7 @@ import { TerrainFeature, featureToIcon } from "../features/map/TerrainFeature";
 import styled from "@emotion/styled";
 import { TerrainType, terrainToIcon } from "../features/map/TerrainType";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
 import { tileByRoadString } from "../features/map/RoadConfiguration";
@@ -42,7 +42,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
         }
 
         return state !== HexplorationState.Travelled || terrain === TerrainType.Plains;
-    }
+    };
 
     const shouldDisplayFeature = (state: HexplorationState, feature: TerrainFeature): boolean => {
         if (state === HexplorationState.Unexplored && !debugging) {
@@ -55,7 +55,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
 
         return true;
 
-    }
+    };
 
     const renderRoads = () => {
         if (hexData.roads.length === 0) {
@@ -67,7 +67,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
             <image href={roadTile} className={`hex-roads hex-roads-${rotation}`} />
         );
 
-    }
+    };
 
     return (
         <StyledHexagon {...rest}>

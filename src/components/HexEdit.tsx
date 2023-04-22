@@ -17,7 +17,7 @@ import {
     Checkbox,
     DialogActions,
     Stack
-} from '@mui/material';
+} from "@mui/material";
 
 
 interface EditHexDataDialogProps {
@@ -46,12 +46,12 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
             anchorReference="anchorPosition"
             anchorPosition={style}
             anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
+                vertical: "bottom",
+                horizontal: "right",
             }}
             transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
             }}>
             <DialogTitle>Edit Hex Data</DialogTitle>
             <DialogContent>
@@ -162,4 +162,4 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
     );
 };
 
-export default EditHexDataDialog
+export default EditHexDataDialog;

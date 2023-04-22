@@ -1,5 +1,5 @@
-import { Ability } from "../ability/Ability"
-import { Skill } from "./Skill"
+import { Ability } from "../ability/Ability";
+import { Skill } from "./Skill";
 
 const skillMapping = new Map<Skill, Ability>([
     [Skill.Agriculture, Ability.Stability],

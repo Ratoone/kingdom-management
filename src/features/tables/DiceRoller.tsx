@@ -1,5 +1,5 @@
 function rollDie(value: number): number {
-    return Math.floor(Math.random() * value + 1)
+    return Math.floor(Math.random() * value + 1);
 }
 
 function rollDice(count: number, value: number): number {
@@ -11,4 +11,4 @@ function rollDice(count: number, value: number): number {
     return sum;
 }
 
-export { rollDice, rollDie }
+export { rollDice, rollDie };

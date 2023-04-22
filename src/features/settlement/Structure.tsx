@@ -59,7 +59,7 @@ export class Structure {
                 };
                 this.build.push([Skill[skill], Proficiency[proficiency] || Proficiency.Untrained]);
             } else {
-                throw new TypeError(`Unparsable string for build: ${data.build}`)
+                throw new TypeError(`Unparsable string for build: ${data.build}`);
             }
         });
 

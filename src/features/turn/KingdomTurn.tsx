@@ -37,7 +37,7 @@ export class KingdomTurn {
             const production = kingdomMap.getCommodityProduction(commodity);
             const maxStorage = getBaseComodityStorage(kingdomSize) + kingdomMap.getCommodityStorage(commodity);
 
-            this.commodities.set(commodity, Math.min(maxStorage, this.commodities.get(commodity) || 0 + production))
+            this.commodities.set(commodity, Math.min(maxStorage, this.commodities.get(commodity) || 0 + production));
         }
     }
 }

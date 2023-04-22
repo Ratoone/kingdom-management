@@ -1,4 +1,4 @@
-import { IconDefinition, faFrog, faMound, faMountain, faSeedling, faTree, faWater } from "@fortawesome/free-solid-svg-icons"
+import { IconDefinition, faFrog, faMound, faMountain, faSeedling, faTree, faWater } from "@fortawesome/free-solid-svg-icons";
 
 enum TerrainType {
     Aquatic = "Aquatic",
@@ -16,6 +16,6 @@ const terrainToIcon: { [key in keyof typeof TerrainType]: [IconDefinition, strin
     Mountains: [faMountain, "gray"],
     Hills: [faMound, "saddlebrown"],
     Swamp: [faFrog, "yellowgreen"]
-}
+};
 
-export { TerrainType, terrainToIcon }
+export { TerrainType, terrainToIcon };

@@ -2,7 +2,7 @@ function getMaxBlocks(size: number) {
     return size * size;
 }
 
-const naming = ["Village", "Town", "City", "Metropolis"]
+const naming = ["Village", "Town", "City", "Metropolis"];
 
 function getName(size: number) {
     return naming[size - 1];

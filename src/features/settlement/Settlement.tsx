@@ -23,7 +23,7 @@ export class Settlement {
     }
 
     public isOverCrowded(): boolean {
-        return this.urbanGrids.reduce((residences, grid) => residences + grid.getResidentials() - grid.getNonEmptyBlockCount(), 0) > 0
+        return this.urbanGrids.reduce((residences, grid) => residences + grid.getResidentials() - grid.getNonEmptyBlockCount(), 0) > 0;
     }
 
     public canAdvance(): boolean {

@@ -36,6 +36,6 @@ const featureToIcon: { [key in keyof Omit<typeof TerrainFeature, "None">]: [Icon
     Settlement: [faHouse, "royalblue"],
     Structure: [faTowerObservation, "powderblue"],
     WorkSite: [faIndustry, "silver"]
-}
+};
 
-export { TerrainFeature, featureToIcon }
+export { TerrainFeature, featureToIcon };
