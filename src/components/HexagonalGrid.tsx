@@ -13,10 +13,15 @@ const HexagonalGrid: React.FC = () => {
     const hexagonLayout = GridGenerator.rectangle(29, 12);
     const hexagonSize = 79.92;
 
-    const [partyPosition, setPartyPosition] = useState({ x: 0, y: 0 });
+    const [partyPosition, setPartyPosition] = useState(() => {
+        const storedPosition = localStorage.getItem("partyPosition");
+        return !!storedPosition ? JSON.parse(storedPosition) : { x: 0, y: 0 };
+    });
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
-    const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
+    const [hexData, setHexData] = useState<Record<string, MapHexData>>(
+        JSON.parse(localStorage.getItem("hexMapData") || "{}")
+    );
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -79,6 +84,11 @@ const HexagonalGrid: React.FC = () => {
         if (Object.keys(hexData).length === 0) {
             setHexData(JSON.parse(localStorage.getItem("hexMapData") || "{}"));
         }
+        
+        const storedPosition = localStorage.getItem("partyPosition");
+        if (!!storedPosition) {
+            setPartyPosition(JSON.parse(storedPosition));
+        }
     }, []);
 
     useEffect(() => {
@@ -86,6 +96,10 @@ const HexagonalGrid: React.FC = () => {
             localStorage.setItem("hexMapData", JSON.stringify(hexData, null, 4));
         }
     }, [hexData]);
+
+    useEffect(() => {        
+        localStorage.setItem("partyPosition", JSON.stringify(partyPosition, null, 4));
+    }, [partyPosition]);
 
     return (
         <div className='map-container'>
