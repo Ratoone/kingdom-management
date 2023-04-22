@@ -19,8 +19,7 @@ const HexagonalGrid: React.FC = () => {
     const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
-        const clickedHex = event.target as SVGElement;
-        const boundingRect = clickedHex.getBoundingClientRect();
+        const boundingRect = event.currentTarget.getBoundingClientRect();
         setDialogPosition({
             top: boundingRect.top + boundingRect.height / 2,
             left: boundingRect.left + boundingRect.width / 2
@@ -33,18 +32,32 @@ const HexagonalGrid: React.FC = () => {
     };
 
     const handleSave = (data: MapHexData) => {
-        setHexData((prevData) => ({
-            ...prevData,
-            [selectedHex!.q + "," + selectedHex!.r]: data
-        }));
+        updateHexData(selectedHex!, data);
         setSelectedHex(null);
     };
 
+    const updateHexData = (hex: Hex, data: MapHexData) => {
+        setHexData((prevData) => ({
+            ...prevData,
+            [hex.q + "," + hex.r]: data
+        }));
+    };
+
     const hexToHexData = (hex: Hex): MapHexData => {
+        const defaultHex = {
+            level: 20,
+            safe: false,
+            state: HexplorationState.Unexplored,
+            feature: TerrainFeature.None,
+            roads: "",
+            terrainType: TerrainType.Plains,
+            hidden: false,
+            reference: ""
+        };
         return hexData[hex.q + "," + hex.r] ?? defaultHex;
     };
 
-    const handleDrop = (event: React.DragEvent<HTMLElement>) => {
+    const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
         const boundingRect = event.currentTarget.getBoundingClientRect();
         const scrollX = window.scrollX || window.pageXOffset;
@@ -53,6 +66,13 @@ const HexagonalGrid: React.FC = () => {
             x: boundingRect.x + scrollX + boundingRect.width / 2, 
             y: boundingRect.y + scrollY + boundingRect.height / 2 }
         );
+
+        const hexData = hexToHexData(hex);
+        if (hexData.state === HexplorationState.Unexplored) {
+            hexData.state = HexplorationState.Travelled;
+        }
+
+        updateHexData(hex, hexData);
     };
 
     useEffect(() => {
@@ -66,17 +86,6 @@ const HexagonalGrid: React.FC = () => {
             localStorage.setItem("hexMapData", JSON.stringify(hexData, null, 4));
         }
     }, [hexData]);
-
-    const defaultHex = {
-        level: 20,
-        safe: false,
-        state: HexplorationState.Unexplored,
-        feature: TerrainFeature.None,
-        roads: "",
-        terrainType: TerrainType.Plains,
-        hidden: false,
-        reference: ""
-    };
 
     return (
         <div className='map-container'>
@@ -98,7 +107,7 @@ const HexagonalGrid: React.FC = () => {
                             hexData={data}
                             onClick={(event) => handleHexClick(event, hex)}
                             onDragOver={e => e.preventDefault()}
-                            onDrop={handleDrop}
+                            onDrop={e => handleDrop(e, hex)}
                         />;
                     })}
                 </Layout>
@@ -110,7 +119,7 @@ const HexagonalGrid: React.FC = () => {
                         top: dialogPosition.top,
                         left: dialogPosition.left
                     }}
-                    hexData={hexData[selectedHex.q + "," + selectedHex.r] ?? defaultHex}
+                    hexData={hexToHexData(selectedHex)}
                     onClose={handleDialogClose}
                     onSave={handleSave}
                 />
