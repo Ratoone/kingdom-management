@@ -1,16 +1,16 @@
 import { Hexagon } from "react-hexgrid";
 import { HexagonProps } from "react-hexgrid/lib/Hexagon/Hexagon";
-import { HexplorationState, hexplorationStateColor, hexplorationStateOpacity } from "../features/map/HexplorationState";
-import { TerrainFeature, featureToIcon } from "../features/map/TerrainFeature";
+import { HexplorationState, hexplorationStateColor, hexplorationStateOpacity } from "../../features/map/HexplorationState";
+import { TerrainFeature, featureToIcon } from "../../features/map/TerrainFeature";
 import styled from "@emotion/styled";
-import { TerrainType, terrainToIcon } from "../features/map/TerrainType";
+import { TerrainType, terrainToIcon } from "../../features/map/TerrainType";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
-import { tileByRoadString } from "../features/map/RoadConfiguration";
+import { tileByRoadString } from "../../features/map/RoadConfiguration";
 
-import "../assets/MapHex.scss";
+import "../../assets/MapHex.scss";
 
 interface MapHexData {
     level: number;

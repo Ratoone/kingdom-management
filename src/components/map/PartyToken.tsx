@@ -1,12 +1,12 @@
-import token from "../assets/images/party_token.png";
-import "../assets/PartyToken.css";
+import token from "../../assets/images/party_token.png";
+import "../../assets/PartyToken.css";
 
-interface Position {
+interface PartyTokenProps {
     x: number;
     y: number;
 }
 
-const PartyToken: React.FC<Position> = ({ x, y }) => {
+const PartyToken: React.FC<PartyTokenProps> = ({ x, y }) => {
     const handleDragStart = (event: React.DragEvent<HTMLElement>) => {
         event.dataTransfer.setData("party-token", event.currentTarget.id);
         event.dataTransfer.setData("hexagon", "{}");

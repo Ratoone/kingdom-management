@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { HexGrid, Layout, GridGenerator, Hex } from "react-hexgrid";
-import "../assets/HexagonalGrid.scss";
-import map from "../assets/images/map_no_label.jpg";
+import "../../assets/HexagonalGrid.scss";
+import map from "../../assets/images/map_no_label.jpg";
 import { MapHexData, MapHexagon } from "./MapHex";
 import EditHexDataDialog from "./HexEdit";
-import { HexplorationState } from "../features/map/HexplorationState";
-import { TerrainFeature } from "../features/map/TerrainFeature";
-import { TerrainType } from "../features/map/TerrainType";
+import { HexplorationState } from "../../features/map/HexplorationState";
+import { TerrainFeature } from "../../features/map/TerrainFeature";
+import { TerrainType } from "../../features/map/TerrainType";
 import PartyToken from "./PartyToken";
+import { Role } from "../Role";
 
-const HexagonalGrid: React.FC = () => {
+interface MapProps {
+    role: Role;
+}
+
+const HexagonalGrid: React.FC<MapProps> = ({role}) => {
     const hexagonLayout = GridGenerator.rectangle(29, 12);
     const hexagonSize = 79.92;
 
@@ -121,12 +126,12 @@ const HexagonalGrid: React.FC = () => {
                             hexData={data}
                             onClick={(event) => handleHexClick(event, hex)}
                             onDragOver={e => e.preventDefault()}
-                            onDrop={e => handleDrop(e, hex)}
+                            onDrop={e => role === Role.GM && handleDrop(e, hex)}
                         />;
                     })}
                 </Layout>
             </HexGrid>
-            {!!selectedHex && (
+            {!!selectedHex && role === Role.GM && (
                 <EditHexDataDialog
                     open={true}
                     style={{

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { HexplorationState } from "../features/map/HexplorationState";
-import { TerrainFeature } from "../features/map/TerrainFeature";
+import { HexplorationState } from "../../features/map/HexplorationState";
+import { TerrainFeature } from "../../features/map/TerrainFeature";
 import { MapHexData } from "./MapHex";
-import { TerrainType } from "../features/map/TerrainType";
+import { TerrainType } from "../../features/map/TerrainType";
 import {
     Popover,
     DialogTitle,
