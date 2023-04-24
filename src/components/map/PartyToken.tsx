@@ -1,5 +1,5 @@
 import token from "../../assets/images/party_token.png";
-import "../../assets/PartyToken.css";
+import "./PartyToken.css";
 
 interface PartyTokenProps {
     x: number;

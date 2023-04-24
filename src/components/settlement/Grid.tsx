@@ -1,5 +1,5 @@
-import { UrbanGrid } from "../features/settlement/UrbanGrid";
-import "../assets/Grid.css";
+import { UrbanGrid } from "../../features/settlement/UrbanGrid";
+import "./Grid.css";
 
 function Grid() {
     const urbanGrid = new UrbanGrid();

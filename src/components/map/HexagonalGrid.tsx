@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HexGrid, Layout, GridGenerator, Hex } from "react-hexgrid";
-import "../../assets/HexagonalGrid.scss";
+import "./HexagonalGrid.scss";
 import map from "../../assets/images/map_no_label.jpg";
 import { MapHexData, MapHexagon } from "./MapHex";
 import EditHexDataDialog from "./HexEdit";
@@ -8,10 +8,11 @@ import { HexplorationState } from "../../features/map/HexplorationState";
 import { TerrainFeature } from "../../features/map/TerrainFeature";
 import { TerrainType } from "../../features/map/TerrainType";
 import PartyToken from "./PartyToken";
-import { Role } from "../Role";
+import { Role } from "../login/Role";
 
 interface MapProps {
     role: Role;
+    gameId: string;
 }
 
 const HexagonalGrid: React.FC<MapProps> = ({role}) => {

@@ -10,7 +10,7 @@ import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
 import { tileByRoadString } from "../../features/map/RoadConfiguration";
 
-import "../../assets/MapHex.scss";
+import "./MapHex.scss";
 
 interface MapHexData {
     level: number;
