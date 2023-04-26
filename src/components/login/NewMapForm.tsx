@@ -1,13 +1,13 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 
-import "./LoadGameForm.css";
+import "./LoadMapForm.css";
 
-interface NewGameFormProps {
+interface NewMapFormProps {
   onSubmit: (password: string) => void;
 }
 
-const NewGameForm: React.FC<NewGameFormProps> = ({ onSubmit }) => {
+const NewGameForm: React.FC<NewMapFormProps> = ({ onSubmit }) => {
     const [password, setPassword] = useState("");
 
     const handleLoad = (event: React.FormEvent<HTMLFormElement>) => {

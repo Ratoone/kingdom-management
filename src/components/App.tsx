@@ -5,23 +5,23 @@ import LoginRegister from "./login/LoginRegister";
 
 const App: React.FC = () => {
     const [role, setRole] = useState(Role.Unauthenticated);
-    const [gameId, setGameId] = useState("");
+    const [mapId, setMapId] = useState("");
 
-    const handleLoadGame = (gameId: string, password?: string) => {
+    const handleLoadMap = (MapId: string, password?: string) => {
         setRole(!!password ? Role.GM : Role.Player);
-        setGameId(gameId);
+        setMapId(MapId);
     };
 
-    const handleNewGame = (password: string) => {
+    const handleNewMap = (password: string) => {
         setRole(Role.GM);
     };
 
     return (
         <div>
             {role === Role.Unauthenticated ? (
-                <LoginRegister onLoadGame={handleLoadGame} onNewGame={handleNewGame} />
+                <LoginRegister onLoadMap={handleLoadMap} onNewMap={handleNewMap} />
             ) : (
-                <HexagonalGrid role={role} gameId={gameId} />
+                <HexagonalGrid role={role} mapId={mapId} />
             )}
         </div>
     );

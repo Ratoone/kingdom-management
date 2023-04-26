@@ -12,7 +12,7 @@ import { Role } from "../login/Role";
 
 interface MapProps {
     role: Role;
-    gameId: string;
+    mapId: string;
 }
 
 const HexagonalGrid: React.FC<MapProps> = ({role}) => {

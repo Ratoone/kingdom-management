@@ -1,9 +1,9 @@
 import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
-import LoadGameForm from "./LoadGameForm";
+import LoadMapForm from "./LoadMapForm";
 
 import "./LoginRegister.css";
-import NewGameForm from "./NewGameForm";
+import NewMapForm from "./NewMapForm";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -29,13 +29,17 @@ const TabPanel = (props: TabPanelProps) => {
     );
 };
 
-interface GameProps {
-    onLoadGame: (username: string, password?: string) => void;
-    onNewGame: (password: string) => void;
+interface MapProps {
+    onLoadMap: (username: string, password?: string) => void;
+    onNewMap: (password: string) => void;
   }
 
-const LoginRegister: React.FC<GameProps> = ({ onLoadGame, onNewGame }) => {
+const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
     const [tabIndex, setTabIndex] = useState(1);
+
+    const handleLoadMap = (username: string, password?: string) => {
+
+    };
     
     return (
         <Box sx={{ width: "100%", paddingTop: "20px" }}>
@@ -49,10 +53,10 @@ const LoginRegister: React.FC<GameProps> = ({ onLoadGame, onNewGame }) => {
                 <Tab label="Load Map" />
             </Tabs>
             <TabPanel value={tabIndex} index={0}>
-                <NewGameForm onSubmit={onNewGame} />
+                <NewMapForm onSubmit={onNewMap} />
             </TabPanel>
             <TabPanel value={tabIndex} index={1}>
-                <LoadGameForm onSubmit={onLoadGame} />
+                <LoadMapForm onSubmit={onLoadMap} />
             </TabPanel>
 
         </Box>

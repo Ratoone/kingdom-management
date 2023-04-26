@@ -7,20 +7,20 @@ import {
     TextField,
 } from "@mui/material";
 
-import "./LoadGameForm.css";
+import "./LoadMapForm.css";
 
 interface LoginFormProps {
   onSubmit: (username: string, password?: string) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-    const [gameId, setGameId] = useState("");
+    const [mapId, setMapId] = useState("");
     const [password, setPassword] = useState("");
     const [playerLogin, setPlayerLogin] = useState(false);
 
     const handleLoad = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onSubmit(gameId, !playerLogin ? password : undefined);
+        onSubmit(mapId, !playerLogin ? password : undefined);
     };
 
     return (
@@ -30,8 +30,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
                     label="Game ID"
                     variant="outlined"
                     required
-                    value={gameId}
-                    onChange={(e) => setGameId(e.target.value)}
+                    value={mapId}
+                    onChange={(e) => setMapId(e.target.value)}
                 />
                 <br />
                 <FormControlLabel
