@@ -7,9 +7,9 @@ const App: React.FC = () => {
     const [role, setRole] = useState(Role.Unauthenticated);
     const [mapId, setMapId] = useState("");
 
-    const handleLoadMap = (MapId: string, password?: string) => {
-        setRole(!!password ? Role.GM : Role.Player);
-        setMapId(MapId);
+    const handleLoadMap = (mapId: string, playerLogin: boolean) => {
+        setRole(!playerLogin ? Role.GM : Role.Player);
+        setMapId(mapId);
     };
 
     const handleNewMap = (password: string) => {

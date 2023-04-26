@@ -30,15 +30,35 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 interface MapProps {
-    onLoadMap: (username: string, password?: string) => void;
+    onLoadMap: (mapId: string, playerLogin: boolean) => void;
     onNewMap: (password: string) => void;
   }
 
 const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
     const [tabIndex, setTabIndex] = useState(1);
 
-    const handleLoadMap = (username: string, password?: string) => {
-
+    const handleLoadMap = (mapId: string, password?: string) => {
+        const requestBody = {
+            mapId,
+            passwordHash: password,
+            playerLogin: !password
+        };
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestBody)
+        };
+        fetch("http://localhost:3001/api/maps/load", requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    onLoadMap(mapId, password === null);
+                    return;
+                }
+                alert("Invalid mapId or password");
+            })
+            .catch(e => {
+                alert("Something went wrong, try again later");
+            });
     };
     
     return (
@@ -56,7 +76,7 @@ const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
                 <NewMapForm onSubmit={onNewMap} />
             </TabPanel>
             <TabPanel value={tabIndex} index={1}>
-                <LoadMapForm onSubmit={onLoadMap} />
+                <LoadMapForm onSubmit={handleLoadMap} />
             </TabPanel>
 
         </Box>
