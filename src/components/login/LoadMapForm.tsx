@@ -9,18 +9,39 @@ import {
 
 import "./LoadMapForm.css";
 
-interface LoginFormProps {
-  onSubmit: (username: string, password?: string) => void;
+interface LoadMapProps {
+  onSubmit: (mapId: string, playerLogin: boolean) => void
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
     const [mapId, setMapId] = useState("");
     const [password, setPassword] = useState("");
     const [playerLogin, setPlayerLogin] = useState(false);
 
     const handleLoad = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onSubmit(mapId, !playerLogin ? password : undefined);
+        const passwordHash = password === "" ? undefined : password;
+        const requestBody = {
+            mapId,
+            passwordHash,
+            playerLogin
+        };
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestBody)
+        };
+        fetch("http://localhost:3001/api/maps/load", requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    onSubmit(mapId, playerLogin);
+                    return;
+                }
+                alert("Invalid mapId or password");
+            })
+            .catch(e => {
+                alert("Something went wrong, try again later");
+            });
     };
 
     return (
@@ -63,4 +84,4 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     );
 };
 
-export default LoginForm;
+export default LoadMapForm;
