@@ -5,7 +5,7 @@ import LoginRegister from "./login/LoginRegister";
 
 const App: React.FC = () => {
     const [role, setRole] = useState(Role.Unauthenticated);
-    const [mapId, setMapId] = useState("");
+    const [mapId, setMapId] = useState("S7FVbPdByRIKQzggDFDb");
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
