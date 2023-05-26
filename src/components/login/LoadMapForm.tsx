@@ -20,17 +20,6 @@ const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
 
     const handleLoad = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const passwordHash = password === "" ? undefined : password;
-        const requestBody = {
-            mapId,
-            passwordHash,
-            playerLogin
-        };
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(requestBody)
-        };
 
         onSubmit(mapId, playerLogin);
     };

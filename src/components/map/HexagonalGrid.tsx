@@ -9,13 +9,14 @@ import { TerrainFeature } from "../../features/map/TerrainFeature";
 import { TerrainType } from "../../features/map/TerrainType";
 import PartyToken from "./PartyToken";
 import { Role } from "../login/Role";
+import { readMapData, updateMapData } from "../../features/firestore/MapDataDao";
 
 interface MapProps {
     role: Role;
     mapId: string;
 }
 
-const HexagonalGrid: React.FC<MapProps> = ({role}) => {
+const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
     const hexagonLayout = GridGenerator.rectangle(29, 12);
     const hexagonSize = 79.92;
 
@@ -25,9 +26,7 @@ const HexagonalGrid: React.FC<MapProps> = ({role}) => {
     });
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
-    const [hexData, setHexData] = useState<Record<string, MapHexData>>(
-        JSON.parse(localStorage.getItem("hexMapData") || "{}")
-    );
+    const [hexData, setHexData] = useState<Record<string, MapHexData>>(JSON.parse(localStorage.getItem("hexMapData") || "{}"));
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -88,7 +87,7 @@ const HexagonalGrid: React.FC<MapProps> = ({role}) => {
 
     useEffect(() => {
         if (Object.keys(hexData).length === 0) {
-            setHexData(JSON.parse(localStorage.getItem("hexMapData") || "{}"));
+            readMapData(mapId).then(result => setHexData(result as Record<string, MapHexData>));
         }
         
         const storedPosition = localStorage.getItem("partyPosition");
@@ -99,7 +98,7 @@ const HexagonalGrid: React.FC<MapProps> = ({role}) => {
 
     useEffect(() => {
         if (Object.keys(hexData).length !== 0) {
-            localStorage.setItem("hexMapData", JSON.stringify(hexData, null, 4));
+            updateMapData(mapId, hexData).catch(console.error);
         }
     }, [hexData]);
 
