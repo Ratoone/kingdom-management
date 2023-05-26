@@ -30,16 +30,12 @@ const TabPanel = (props: TabPanelProps) => {
 };
 
 interface MapProps {
-    onLoadMap: (username: string, password?: string) => void;
+    onLoadMap: (mapId: string, playerLogin: boolean) => void;
     onNewMap: (password: string) => void;
   }
 
 const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
     const [tabIndex, setTabIndex] = useState(1);
-
-    const handleLoadMap = (username: string, password?: string) => {
-
-    };
     
     return (
         <Box sx={{ width: "100%", paddingTop: "20px" }}>
