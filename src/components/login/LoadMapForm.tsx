@@ -31,17 +31,8 @@ const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(requestBody)
         };
-        fetch("http://localhost:3001/api/maps/load", requestOptions)
-            .then(response => {
-                if (response.status === 200) {
-                    onSubmit(mapId, playerLogin);
-                    return;
-                }
-                alert("Invalid mapId or password");
-            })
-            .catch(e => {
-                alert("Something went wrong, try again later");
-            });
+
+        onSubmit(mapId, playerLogin);
     };
 
     return (

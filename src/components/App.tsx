@@ -18,11 +18,11 @@ const App: React.FC = () => {
 
     return (
         <div>
-            {role === Role.Unauthenticated ? (
+            {/* {role === Role.Unauthenticated ? (
                 <LoginRegister onLoadMap={handleLoadMap} onNewMap={handleNewMap} />
-            ) : (
-                <HexagonalGrid role={role} mapId={mapId} />
-            )}
+            ) : ( */}
+            <HexagonalGrid role={Role.GM} mapId={mapId} />
+            {/* )} */}
         </div>
     );
 };
