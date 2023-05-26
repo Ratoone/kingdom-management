@@ -1,4 +1,4 @@
-import { doc, documentId, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {db} from "./FirestoreDB";
 
 const updateMapData = async (documentId: string, mapData: object) => {
@@ -10,12 +10,23 @@ const updateMapData = async (documentId: string, mapData: object) => {
     console.log("Map data successfully updated!");    
 };
 
-const readMapData = async (documentId: string) : Promise<object> => {
+const readMapData = async (documentId: string) : Promise<Array<object>> => {
     const mapDataSnap = await getDoc(doc(db, "mapData", documentId));
     if (mapDataSnap.exists()) {
-        return mapDataSnap.data().hexMapData;
+        const data = mapDataSnap.data();
+        return [data.hexMapData, {x: data.x, y: data.y}];
     }
-    return {};
+    return [{}, {x: 0, y: 0}];
 };
 
-export {updateMapData, readMapData};
+const updatePartyPosition = async (documentId: string, x: number, y: number) => {
+    setDoc(doc(db, "mapData", documentId), {
+        x,
+        y
+    },
+    { merge: true }
+    );
+    console.log("Party position successfully updated!");    
+};
+
+export {updateMapData, readMapData, updatePartyPosition};
