@@ -71,6 +71,7 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
 
     return (
         <StyledHexagon {...rest}>
+            <title>{`${hexData.state}, Area #${hexData.level}`}</title>
             {renderRoads()}
 
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (

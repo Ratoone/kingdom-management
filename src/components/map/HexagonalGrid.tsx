@@ -93,13 +93,13 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
     }, []);
 
     useEffect(() => {
-        if (Object.keys(hexData).length !== 0) {
+        if (role === Role.GM && Object.keys(hexData).length !== 0) {
             updateMapData(mapId, hexData).catch(console.error);
         }
     }, [hexData]);
 
     useEffect(() => {   
-        if (partyPosition.x !== 0 && partyPosition.y !==0){
+        if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !==0){
             updatePartyPosition(mapId, partyPosition.x, partyPosition.y).catch(console.log);
         }     
     }, [partyPosition]);
