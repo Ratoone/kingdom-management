@@ -3,7 +3,6 @@ import { useState } from "react";
 import LoadMapForm from "./LoadMapForm";
 
 import "./LoginRegister.css";
-import NewMapForm from "./NewMapForm";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -31,11 +30,10 @@ const TabPanel = (props: TabPanelProps) => {
 
 interface MapProps {
     onLoadMap: (mapId: string, playerLogin: boolean) => void;
-    onNewMap: (password: string) => void;
   }
 
-const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
-    const [tabIndex, setTabIndex] = useState(1);
+const LoginRegister: React.FC<MapProps> = ({ onLoadMap }) => {
+    const [tabIndex, setTabIndex] = useState(0);
     
     return (
         <Box sx={{ width: "100%", paddingTop: "20px" }}>
@@ -45,13 +43,9 @@ const LoginRegister: React.FC<MapProps> = ({ onLoadMap, onNewMap }) => {
                 className="login-tabs"
                 centered
             >
-                <Tab label="New Map" />
                 <Tab label="Load Map" />
             </Tabs>
             <TabPanel value={tabIndex} index={0}>
-                <NewMapForm onSubmit={onNewMap} />
-            </TabPanel>
-            <TabPanel value={tabIndex} index={1}>
                 <LoadMapForm onSubmit={onLoadMap} />
             </TabPanel>
 
