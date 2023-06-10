@@ -19,6 +19,15 @@ const readMapData = async (documentId: string) : Promise<Array<object>> => {
     return [{}, {x: 0, y: 0}];
 };
 
+const getPassword = async (documentId: string) : Promise<String> => {
+    const mapDataSnap = await getDoc(doc(db, "mapData", documentId));
+    if (mapDataSnap.exists()) {
+        const data = mapDataSnap.data();
+        return data.password;
+    }
+    return "";
+};
+
 const updatePartyPosition = async (documentId: string, x: number, y: number) => {
     setDoc(doc(db, "mapData", documentId), {
         x,
@@ -29,4 +38,4 @@ const updatePartyPosition = async (documentId: string, x: number, y: number) => 
     console.log("Party position successfully updated!");    
 };
 
-export {updateMapData, readMapData, updatePartyPosition};
+export {updateMapData, readMapData, updatePartyPosition, getPassword};

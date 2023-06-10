@@ -8,20 +8,23 @@ import {
 } from "@mui/material";
 
 import "./LoadMapForm.css";
+import {getPassword} from "../../features/firestore/MapDataDao";
 
 interface LoadMapProps {
   onSubmit: (mapId: string, playerLogin: boolean) => void
 }
 
 const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
-    const [mapId, setMapId] = useState("");
+    const [mapId, setMapId] = useState("S7FVbPdByRIKQzggDFDb");
     const [password, setPassword] = useState("");
     const [playerLogin, setPlayerLogin] = useState(false);
 
-    const handleLoad = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleLoad = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        onSubmit(mapId, playerLogin);
+        if (playerLogin || await getPassword(mapId) === password) {
+            onSubmit(mapId, playerLogin);
+        }
     };
 
     return (
@@ -31,6 +34,7 @@ const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
                     label="Game ID"
                     variant="outlined"
                     required
+                    disabled
                     value={mapId}
                     onChange={(e) => setMapId(e.target.value)}
                 />
