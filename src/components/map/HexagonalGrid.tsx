@@ -122,6 +122,7 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
                             r={hex.r}
                             s={hex.s}
                             hexData={data}
+                            role={role}
                             onClick={(event) => handleHexClick(event, hex)}
                             onDragOver={e => e.preventDefault()}
                             onDrop={e => role === Role.GM && handleDrop(e, hex)}

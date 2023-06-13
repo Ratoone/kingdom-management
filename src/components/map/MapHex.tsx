@@ -11,6 +11,7 @@ import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 import { tileByRoadString } from "../../features/map/RoadConfiguration";
 
 import "./MapHex.scss";
+import { Role } from "../login/Role";
 
 interface MapHexData {
     level: number;
@@ -21,14 +22,16 @@ interface MapHexData {
     terrainType: TerrainType;
     hidden: boolean;
     reference: string;
+    playerRef?: string;
 }
 
 interface MapHexProps extends HexagonProps {
     hexData: MapHexData;
     debugging?: boolean;
+    role: Role;
 }
 
-const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
+const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) => {
     const iconSize = 25;
     const StyledHexagon = styled(Hexagon)`
         stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
@@ -73,6 +76,14 @@ const MapHexagon = ({ debugging = false, hexData, ...rest }: MapHexProps) => {
         <StyledHexagon {...rest}>
             <title>{`${hexData.state}, Area #${hexData.level}`}</title>
             {renderRoads()}
+
+            {role === Role.GM && !!hexData.reference && (
+                <text textAnchor="middle" strokeWidth={1}>{hexData.reference}</text>
+            )}
+
+            {role === Role.Player && !!hexData.playerRef && (
+                <text textAnchor="middle" strokeWidth={1}>{hexData.playerRef}</text>
+            )}
 
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
                 <FontAwesomeIcon
