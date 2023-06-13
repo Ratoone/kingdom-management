@@ -151,6 +151,14 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                             onChange={(e) => handleFormChange(e.target.name, e.target.value)}
                         />
 
+                        <TextField
+                            label="Player Reference"
+                            type="text"
+                            name="playerRef"
+                            value={formData.playerRef ?? ""}
+                            onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+                        />
+
                         <DialogActions sx={{ justifyContent: "center" }}>
                             <Button variant="outlined" type="submit">Save</Button>
                             <Button variant="outlined" onClick={onClose}>Cancel</Button>
