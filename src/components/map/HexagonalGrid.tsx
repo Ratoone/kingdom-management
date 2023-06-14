@@ -67,8 +67,8 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
     const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
         const boundingRect = event.currentTarget.getBoundingClientRect();
-        const scrollX = window.scrollX || window.pageXOffset;
-        const scrollY = window.scrollY || window.pageYOffset;
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
         setPartyPosition({ 
             x: boundingRect.x + scrollX + boundingRect.width / 2, 
             y: boundingRect.y + scrollY + boundingRect.height / 2 }
