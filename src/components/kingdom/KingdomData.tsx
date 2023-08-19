@@ -1,0 +1,79 @@
+import { Box, Paper, Tab, Tabs, Theme, Typography } from "@mui/material";
+import { Key, useEffect, useState } from "react";
+import { MapStats } from "../../features/map/MapStats";
+import { CommodityType } from "../../features/map/CommodityType";
+import { MapHexData } from "../map/MapHex";
+import { HexplorationState } from "../../features/map/HexplorationState";
+import { TerrainFeature } from "../../features/map/TerrainFeature";
+import TabPanel from "../utils/TabPanel";
+import { getResourceDie } from "../../features/tables/SizeTable";
+
+interface DataProps {
+    hexData: Record<string, MapHexData>
+}
+
+const KingdomData: React.FC<DataProps> = ({ hexData }) => {
+    const [tabValue, setTabValue] = useState(0);
+    const [level, setLevel] = useState(1);
+
+    const [mapStats, setMapStats] = useState<MapStats>({
+        size: 0, commodityProduction: {
+            [CommodityType.Food]: 0,
+            [CommodityType.Lumber]: 0,
+            [CommodityType.Luxuries]: 0,
+            [CommodityType.Ore]: 0,
+            [CommodityType.Stone]: 0
+        }, commodityStorage: {
+            [CommodityType.Food]: 0,
+            [CommodityType.Lumber]: 0,
+            [CommodityType.Luxuries]: 0,
+            [CommodityType.Ore]: 0,
+            [CommodityType.Stone]: 0
+        }
+    });
+    const [settlements, setSettlements] = useState<String[]>([]);
+
+
+    useEffect(() => {
+        const claimedHex = Object.entries(hexData).map(hex => hex[1])
+            .filter(hex => hex.state === HexplorationState.Claimed);
+
+        const emptyArray: String[] = [];
+        const settlements: String[] = claimedHex.reduce((cities, hex) => {
+            if (hex.feature === TerrainFeature.Settlement) {
+                cities.push(hex.playerRef ?? "");
+            }
+            return cities;
+        }, emptyArray);
+
+        const lumberProd = claimedHex.reduce((prod, hex) => {
+            return prod + (hex.feature !== TerrainFeature.WorkSite ? 0 : 1);
+        }, 0);
+
+        setMapStats((prevStats) => ({ ...prevStats, size: claimedHex.length, commodityProduction: { ...prevStats.commodityProduction, [CommodityType.Lumber]: lumberProd } }));
+        setSettlements(settlements);
+    }, [hexData]);
+
+    return (
+        <Box>
+            <Tabs value={tabValue} onChange={(_, value) => setTabValue(value)}>
+                <Tab label="Stats" />
+                <Tab label="Resources" />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+                <Typography>Kingdom Level: {level}</Typography>
+                <Typography>Kingdom Size: {mapStats.size}</Typography>
+                <Typography>Settlements: </Typography>
+                <ul>{settlements.map(city => <li key={city as Key}>{city}</li>)}</ul>
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+                <Typography>Base Resource Die: {level + 4}d{getResourceDie(mapStats.size)}</Typography>
+                <Typography>Lumber Production: {mapStats.commodityProduction[CommodityType.Lumber]}</Typography>
+                <Typography>Ore Production: {mapStats.commodityProduction[CommodityType.Ore]}</Typography>
+                <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
+            </TabPanel>
+        </Box>
+    );
+};
+
+export default KingdomData;

@@ -14,16 +14,17 @@ import { readMapData, updateMapData, updatePartyPosition } from "../../features/
 interface MapProps {
     role: Role;
     mapId: string;
+    hexData: Record<string, MapHexData>,
+    setHexData: React.Dispatch<React.SetStateAction<Record<string, MapHexData>>>
 }
 
-const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
+const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData }) => {
     const hexagonLayout = GridGenerator.rectangle(29, 12);
     const hexagonSize = 79.92;
 
     const [partyPosition, setPartyPosition] = useState({ x: 0, y: 0 });
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
-    const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -69,9 +70,10 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
-        setPartyPosition({ 
-            x: boundingRect.x + scrollX + boundingRect.width / 2, 
-            y: boundingRect.y + scrollY + boundingRect.height / 2 }
+        setPartyPosition({
+            x: boundingRect.x + scrollX + boundingRect.width / 2,
+            y: boundingRect.y + scrollY + boundingRect.height / 2
+        }
         );
 
         const hexData = hexToHexData(hex);
@@ -87,7 +89,7 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
             readMapData(mapId).then(result => {
                 const [data, pos] = result;
                 setHexData(data as Record<string, MapHexData> ?? {});
-                setPartyPosition(pos as {x: number, y: number});
+                setPartyPosition(pos as { x: number, y: number });
             });
         }
     }, []);
@@ -98,10 +100,10 @@ const HexagonalGrid: React.FC<MapProps> = ({role, mapId}) => {
         }
     }, [hexData]);
 
-    useEffect(() => {   
-        if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !==0){
+    useEffect(() => {
+        if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !== 0) {
             updatePartyPosition(mapId, partyPosition.x, partyPosition.y).catch(console.log);
-        }     
+        }
     }, [partyPosition]);
 
     return (

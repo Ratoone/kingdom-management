@@ -31,11 +31,23 @@ export class Settlement {
             return false;
         }
 
+        if (this.size == 4 && this.getTotalBlocks() < this.urbanGrids.length * 9) {
+            return false;
+        }
+
         if (this.size === 1) {
             return this.urbanGrids[0].getSmallestNonEmptyBlock().built.length === 4;
         }
 
         return this.urbanGrids.reduce((flag, grid) => flag && (grid.getSmallestNonEmptyBlock().built.length >= 2), true);
+    }
+
+    public getTotalBlocks(): number {
+        return this.urbanGrids.reduce((totalBlocks, grid) => totalBlocks + grid.getNonEmptyBlockCount(), 0);
+    }
+
+    public getLevel(): number {
+        return Math.min(this.getTotalBlocks(), 20);
     }
 
     public getConsumption() {
