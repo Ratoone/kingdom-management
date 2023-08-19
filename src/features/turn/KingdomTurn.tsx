@@ -1,8 +1,8 @@
 import { CommodityType } from "../map/CommodityType";
-import { KingdomMap } from "../map/KingdomMap";
 import { getBaseComodityStorage, getResourceDie } from "../tables/SizeTable";
 import { KingdomSheet } from "../sheet/KingdomSheet";
 import { rollDice } from "../tables/DiceRoller";
+import { MapStats } from "../map/MapStats";
 
 export class KingdomTurn {
     resourcePoints: number = 0;
@@ -22,9 +22,9 @@ export class KingdomTurn {
         return kingdom.unrest;
     }
 
-    public collectResources(kingdomMap: KingdomMap, kingdom: KingdomSheet, bonusDice: number, penaltyDice: number) {
-        const kingdomSize = kingdomMap.getSize();
-        const resourceDice = Math.max(kingdom.level + 4 + bonusDice - penaltyDice, 0);
+    public collectResources(level: number, kingdom: MapStats, bonusDice: number, penaltyDice: number) {
+        const kingdomSize = kingdom.size;
+        const resourceDice = Math.max(level + 4 + bonusDice - penaltyDice, 0);
         const resourceDie = getResourceDie(kingdomSize);
         this.resourcePoints = rollDice(resourceDice, resourceDie);
 
@@ -34,10 +34,10 @@ export class KingdomTurn {
                 continue;
             }
 
-            const production = kingdomMap.getCommodityProduction(commodity);
-            const maxStorage = getBaseComodityStorage(kingdomSize) + kingdomMap.getCommodityStorage(commodity);
+            const production = kingdom.commodityProduction[commodity];
+            const maxStorage = getBaseComodityStorage(kingdomSize) + (kingdom.commodityStorage[commodity] ?? 0);
 
-            this.commodities.set(commodity, Math.min(maxStorage, this.commodities.get(commodity) || 0 + production));
+            this.commodities.set(commodity, Math.min(maxStorage, this.commodities.get(commodity) || 0 + (production ?? 0)));
         }
     }
 }

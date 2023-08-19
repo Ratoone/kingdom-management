@@ -16,7 +16,8 @@ import {
     FormControlLabel,
     Checkbox,
     DialogActions,
-    Stack
+    Stack,
+    FormHelperText
 } from "@mui/material";
 
 
@@ -38,8 +39,18 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
     const handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        onSave(formData);
+        if (valid()) {
+            onSave(formData);
+        }
     };
+
+    const valid = (): boolean => {
+        return !invalidFeature;
+    };
+
+    const possibleWorkSite = [TerrainType.Forest, TerrainType.Hills, TerrainType.Mountains];
+
+    const invalidFeature = formData.feature === TerrainFeature.WorkSite && !possibleWorkSite.some(terrain => terrain === formData.terrainType);
 
     return (
         <Popover open={open} onClose={onClose}
@@ -89,6 +100,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                 name="feature"
                                 value={formData.feature}
                                 onChange={(e) => handleFormChange(e.target.name, e.target.value)}
+                                error={invalidFeature}
                             >
                                 {(Object.keys(TerrainFeature) as Array<keyof typeof TerrainFeature>)
                                     .filter(key => isNaN(Number(TerrainFeature[key])))
@@ -98,6 +110,7 @@ const EditHexDataDialog: React.FC<EditHexDataDialogProps> = ({ open, style, hexD
                                         </MenuItem >
                                     ))}
                             </Select>
+                            {invalidFeature && <FormHelperText>Can only build WorkSite on Forest, Hills or Mountain</FormHelperText>}
                         </FormControl>
 
                         <TextField
