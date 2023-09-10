@@ -25,6 +25,7 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
     const [partyPosition, setPartyPosition] = useState({ x: 0, y: 0 });
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
+    const [draggedHex, setDraggedHex] = useState<MapHexData | undefined>(undefined);
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -79,9 +80,10 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
         const hexData = hexToHexData(hex);
         if (hexData.state === HexplorationState.Unexplored) {
             hexData.state = HexplorationState.Travelled;
+            updateHexData(hex, hexData);
         }
 
-        updateHexData(hex, hexData);
+        setDraggedHex(hexData);
     };
 
     useEffect(() => {
@@ -144,7 +146,7 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
                     onSave={handleSave}
                 />
             )}
-            <PartyToken x={partyPosition.x} y={partyPosition.y} />
+            <PartyToken x={partyPosition.x} y={partyPosition.y} hexData={draggedHex} />
         </div>
     );
 };
