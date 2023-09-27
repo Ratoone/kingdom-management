@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import { HexGrid, Layout, GridGenerator, Hex } from "react-hexgrid";
 import "./HexagonalGrid.scss";
 import map from "../../assets/images/map_no_label.jpg";
@@ -26,6 +26,7 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
     const [draggedHex, setDraggedHex] = useState<MapHexData | undefined>(undefined);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -86,9 +87,9 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
         setDraggedHex(hexData);
     };
 
-    useEffect(() => {
+    const unsubscribe = useMemo(() => {
         if (Object.keys(hexData).length === 0) {
-            readMapData(mapId).then(result => {
+            return readMapData(mapId, result => {
                 const [data, pos] = result;
                 setHexData(data as Record<string, MapHexData> ?? {});
                 setPartyPosition(pos as { x: number, y: number });
@@ -98,12 +99,17 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
 
     useEffect(() => {
         if (role === Role.GM && Object.keys(hexData).length !== 0) {
-            updateMapData(mapId, hexData).catch(console.error);
+            if (unsubscribe !== undefined && loading) {
+                unsubscribe();
+                setLoading(false);
+            } else {
+                updateMapData(mapId, hexData).catch(console.error);
+            }
         }
     }, [hexData]);
 
     useEffect(() => {
-        if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !== 0) {
+        if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !== 0 && !loading) {
             updatePartyPosition(mapId, partyPosition.x, partyPosition.y).catch(console.log);
         }
     }, [partyPosition]);

@@ -1,20 +1,22 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from "firebase/firestore";
 import { db } from "./FirestoreDB";
 
 const updateMapData = async (documentId: string, mapData: object) => {
-    setDoc(doc(db, "mapData", documentId), {
+    await setDoc(doc(db, "mapData", documentId), {
         hexMapData: mapData
-    }, { merge: true }
+    }, {merge: true}
     );
 };
 
-const readMapData = async (documentId: string): Promise<Array<object>> => {
-    const mapDataSnap = await getDoc(doc(db, "mapData", documentId));
-    if (mapDataSnap.exists()) {
-        const data = mapDataSnap.data();
-        return [data.hexMapData, { x: data.x, y: data.y }];
-    }
-    return [{}, { x: 0, y: 0 }];
+const readMapData = (documentId: string, callback: (data: Array<object>) => void): Unsubscribe => {
+    return onSnapshot(doc(db, "mapData", documentId), snap => {
+        if (snap.exists()) {
+            const data = snap.data();
+            callback([data.hexMapData, { x: data.x, y: data.y }]);
+            return;
+        }
+        callback([{}, { x: 0, y: 0 }]);
+    });
 };
 
 const getPassword = async (documentId: string): Promise<String> => {
@@ -27,10 +29,10 @@ const getPassword = async (documentId: string): Promise<String> => {
 };
 
 const updatePartyPosition = async (documentId: string, x: number, y: number) => {
-    setDoc(doc(db, "mapData", documentId), {
+    await setDoc(doc(db, "mapData", documentId), {
         x,
         y
-    }, { merge: true }
+    }, {merge: true}
     );
 };
 
