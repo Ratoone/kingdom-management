@@ -16,14 +16,15 @@ class Army {
     _adjustment?: SpecializedArmyAdjustment;
 
     constructor(data: {name: string, armyType: ArmyType, highManeuver: boolean, level?: number, tactics?: string[],
-    adjustment?: SpecializedArmyAdjustment, currentHp: number}) {
+    adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[]}) {
         this.name = data.name;
         this.armyType = data.armyType;
         this.highManeuver = data.highManeuver;
         this.level = data.level ?? 1;
         this.tactics = data.tactics ?? [];
         this._adjustment = data.adjustment;
-        this.currentHp = data.currentHp;
+        this.currentHp = data.currentHp ?? this.hp;
+        this.conditions = data.conditions ?? [];
     }
 
     public get scouting(): number {
