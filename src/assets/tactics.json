@@ -1,0 +1,181 @@
+[
+  {
+    "name": "Ambush",
+    "level": 8,
+    "text": "Your skirmishers are experts at ambushing. On the first round of a war encounter, if your turn occurs before any enemy army turns, you can choose to start the encounter with your army already engaged with an enemy army whose initiative result is lower than yours. If you do so, your army gains a +2 status bonus on the first Attack war action they make against that army on the first round of the encounter.",
+    "units": [
+      "Skirmisher"
+    ]
+  },
+  {
+    "name": "Bloodied but Unbroken",
+    "level": 5,
+    "text": "The army is at its greatest during the most desperate times. When the army's hit points are at or below its Rout Threshold, it gains a +1 status bonus to its AC, Mobility, Morale, and attack rolls. At 10th level or higher, this bonus increases to +2.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Cavalry Experts",
+    "level": 6,
+    "text": "The army's expert training with mounts increases its status bonus from its Overrun ability to +2. At 12th level, the army ignores the status penalty to Maneuver and Morale saves from its Overrun ability.",
+    "units": [
+      "Cavalry"
+    ]
+  },
+  {
+    "name": "Darkvision",
+    "level": 1,
+    "text": "The army includes several spotters and scouts who have darkvision, and the rest of the soldiers have been trained to follow their lead so that the army itself functions as if it had darkvision.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Defensive Tactics",
+    "level": 3,
+    "text": "The army is especially good at enacting defensive tactics. The army gains a +1 status bonus on Maneuver checks made to Guard. This bonus increases to +2 at 9th level, and +3 at 17th level. The army can use the Defensive Stance tactical war action.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Explosive Shot",
+    "level": 11,
+    "text": "The army's ranged attacks explode and spray fire, shrapnel, or other damaging material in every direction. Whenever the army critically hits a non-distant army with a ranged Strike, inflict 1 point of additional damage to another non-distant enemy army of your choice. You can use the Overwhelming Bombardment tactical war action with the army",
+    "units": [
+      "Siege"
+    ]
+  },
+  {
+    "name": "Field Triage",
+    "level": 6,
+    "text": "The army's soldiers are adept at using emergency methods to treat wounds. The army gains the Battlefield Medicine tactical war action.",
+    "units": [
+      "Infantry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Flaming Shot",
+    "level": 9,
+    "text": "The army attacks with projectiles treated with alchemical or magical oils that ignite as they are fired. When your army succeeds at a ranged Strike, the target army must attempt a Maneuver check against your army's attack DC; if it fails, the Strike inflicts 1 additional point of damage.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Flexible Tactics",
+    "level": 5,
+    "text": "The army uses unconventional tactics. You can use the Dirty Fighting, False Retreat, and Feint tactical war actions, and the Counterattack tactical reaction with the army.",
+    "units": [
+      "Infantry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Focused Devotion",
+    "level": 3,
+    "text": "The army is particularly loyal to your cause. The army gains a +1 status bonus on Morale checks made to Rally. This bonus increases to +2 at 9th level, and +3 at 17th level. The army can use the Taunt tactical war action.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Hold the Line",
+    "level": 1,
+    "text": "The army has trained to maintain position even in the face of overwhelming opponents. The army gains a +1 status bonus on Morale checks made to resist rout, and its Rout Threshold is equal to 1/4 it's total Hit Points (rounded up).",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Increased Ammunition",
+    "level": 5,
+    "text": "You increase the number of times your army can use ranged Strikes in each war encounter by 2. This tactic can be taken multiple times; each time you do so, increase the army's maximum number of ranged Strikes by 2.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ],
+    "repeatable": true
+  },
+  {
+    "name": "Keen Eyed",
+    "level": 1,
+    "text": "The army includes several spotters and scouts who are particularly keen-eyed. The army gains a +2 status bonus on initiative checks.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Keep up the Pressure",
+    "level": 3,
+    "text": "The commander's swift, decisive directions help the army attack more accurately. If an army attacks the same target a second time in a round, its multiple attack penalty is –4 rather than –5, and if they attack that same army a third time in a round, its multiple attack penalty is –8 rather than –10.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Live off the Land",
+    "level": 1,
+    "text": "The army is trained to be self-sufficient and sustains itself via hunting and gathering when they're in the wild. If during a Kingdom turn's Upkeep phase this army is located in a hex that doesn't include a settlement, and if the army is not garrisoned, it reduces its Consumption by 1.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Low-Light Vision",
+    "level": 1,
+    "text": "The army includes several spotters and scouts who have low-light vision, and the rest of the soldiers have been trained to follow their lead so that the army itself functions as if it had low-light vision.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Merciless",
+    "level": 5,
+    "text": "This army is difficult to escape from. The army's Mobility DC gains a +2 status bonus when other armies attempt Mobility checks against it while attempting to Disengage. This army can use the All-Out Assault tactical war action.",
+    "units": [
+      "Cavalry", "Infantry"
+    ]
+  },
+  {
+    "name": "Opening Salvo",
+    "level": 8,
+    "text": "Your army has trained to take the first shot at distant foes. On the first round of a war encounter, if your turn occurs before any enemy army turns, you can choose to start the encounter with your army distant from all enemy armies.",
+    "units": [
+      "Cavalry", "Skirmisher", "Siege"
+    ]
+  },
+  {
+    "name": "Reckless Flankers",
+    "level": 5,
+    "text": "Your army is skilled at surrounding their foes and distracting them, at the cost of spreading out too much and being more vulnerable. When you use the Advance war action to successfully engage an army, you can choose to take a –2 circumstance penalty to your AC in order to gain a +1 circumstance bonus on attack rolls. If you do so, these modifiers remain in effect until you are no longer engaged. You can use the Outflank tactical war action.",
+    "units": [
+      "Cavalry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Sharpshooter",
+    "level": 5,
+    "text": "The commander drills the army in precision ranged attacks. You gain a +1 status bonus on attacks with ranged Strikes, but suffer a –2 status bonus on attacks with melee Strikes. At 9th level, the penalty to melee Strikes is reduced to –1, and at 15th level the penalty to melee Strikes is removed. The army can use the Covering Fire tactical war action.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher"
+    ]
+  },
+  {
+    "name": "Toughened Soldiers",
+    "level": 1,
+    "text": "The army is particularly hardy. Increase its maximum Hit Points by 1. You can take this tactic multiple times; each time you do, increase the army's maximum Hit Points by 1.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ],
+    "repeatable": true
+  },
+  {
+    "name": "Darkvision (unique)",
+    "unique": true,
+    "level": 1,
+    "text": "The army includes several spotters and scouts who have darkvision, and the rest of the soldiers have been trained to follow their lead so that the army itself functions as if it had darkvision.",
+    "units": [
+      "Cavalry", "Infantry", "Skirmisher", "Siege"
+    ]
+  }
+]
