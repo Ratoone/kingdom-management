@@ -1,14 +1,14 @@
-import {Army} from "../../features/warfare/Army";
+import { Army } from "../../features/warfare/Army";
 import React, { useState } from "react";
 import { Condition } from "../../features/warfare/conditions/Condition";
-import {Button, Card, CardContent, List, ListItem, ListItemText, TextField, Typography} from "@mui/material";
-import {Outflanked} from "../../features/warfare/conditions/Outflanked";
+import { Button, Card, CardContent, Divider, List, ListItem, ListItemText, TextField, Typography } from "@mui/material";
+import { Outflanked } from "../../features/warfare/conditions/Outflanked";
 
 interface ArmyEditProps {
     army: Army;
 }
 
-const ArmyEdit: React.FC<ArmyEditProps> = ({army}) => {
+const ArmyEdit: React.FC<ArmyEditProps> = ({ army }) => {
     const [newTactic, setNewTactic] = useState<string>("");
     const [newCondition, setNewCondition] = useState<string>("");
     const [newGear, setNewGear] = useState<string>("");
@@ -58,68 +58,45 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({army}) => {
     };
 
     return (
-        <Card>
-            <CardContent>
-                <Typography variant="h5" component="div">
-                    Army Properties
-                </Typography>
-                <Typography variant="body1">
-                    Name: {army.name}
-                </Typography>
-                <Typography variant="body1">
-                    Level: {army.level}
-                </Typography>
-                {/* Render other properties here using army.getter methods */}
-                <List>
-                    <ListItem>
-                        <ListItemText primary="Tactics" />
-                        <TextField
-                            value={newTactic}
-                            onChange={(e) => setNewTactic(e.target.value)}
-                        />
-                        <Button onClick={addTactic}>Add Tactic</Button>
-                    </ListItem>
-                    {army.tactics.map((tactic, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={tactic} />
-                            <Button onClick={() => removeTactic(tactic)}>Remove</Button>
-                        </ListItem>
-                    ))}
-                </List>
-                <List>
-                    <ListItem>
-                        <ListItemText primary="Conditions" />
-                        <TextField
-                            value={newCondition}
-                            onChange={(e) => setNewCondition(e.target.value)}
-                        />
-                        <Button onClick={addCondition}>Add Condition</Button>
-                    </ListItem>
-                    {army.conditions.map((condition, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={condition.name} />
-                            <Button onClick={() => removeCondition(condition)}>Remove</Button>
-                        </ListItem>
-                    ))}
-                </List>
-                <List>
-                    <ListItem>
-                        <ListItemText primary="Gear" />
-                        <TextField
-                            value={newGear}
-                            onChange={(e) => setNewGear(e.target.value)}
-                        />
-                        <Button onClick={addGear}>Add Gear</Button>
-                    </ListItem>
-                    {army.gear.map((gear, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={gear[0]} secondary={`Value: ${gear[1]}`} />
-                            <Button onClick={() => removeGear(gear)}>Remove</Button>
-                        </ListItem>
-                    ))}
-                </List>
-            </CardContent>
-        </Card>
+        <div style={{ padding: "15px" }}>
+            <Typography variant="h5" component="div">
+                Army Properties
+            </Typography>
+            <Typography variant="body1">
+                Type: {army.armyType}
+            </Typography>
+            <Typography variant="body1">
+                Name: {army.name}
+            </Typography>
+            <Typography variant="body1">
+                Level: {army.level}
+            </Typography>
+            <Typography variant="body1">
+                Scouting: +{army.scouting}
+            </Typography>
+            <Typography variant="body1">
+                Consumption: {army.consumption}
+            </Typography>
+            <Divider />
+            <Typography variant="body1">
+                AC: {army.ac}
+            </Typography>
+            <Typography variant="body1">
+                Maneuver: {army.maneuver}
+            </Typography>
+            <Typography variant="body1">
+                Morale: {army.morale}
+            </Typography>
+            <Typography variant="body1">
+                Health: {army.currentHp}/{army.hp}
+            </Typography>
+            <Typography variant="body1">
+                Melee: +{army.meleeAttack}
+            </Typography>
+            <Typography variant="body1">
+                Ranged: +{army.rangedAttack}, {army.ammo}/{army.ammo} ammo
+            </Typography>
+        </div>
     );
 };
 
