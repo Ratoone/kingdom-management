@@ -12,6 +12,7 @@ import { tileByRoadString } from "../../features/map/RoadConfiguration";
 
 import "./MapHex.scss";
 import { Role } from "../login/Role";
+import React from "react";
 
 interface MapHexData {
     level: number;

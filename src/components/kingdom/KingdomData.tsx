@@ -7,7 +7,7 @@ import { HexplorationState } from "../../features/map/HexplorationState";
 import { TerrainFeature } from "../../features/map/TerrainFeature";
 import TabPanel from "../utils/TabPanel";
 import { getResourceDie } from "../../features/tables/SizeTable";
-import {Warfare} from "../warfare/Warfare";
+import { Warfare } from "../warfare/Warfare";
 
 interface DataProps {
     hexData: Record<string, MapHexData>

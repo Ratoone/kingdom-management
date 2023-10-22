@@ -1,4 +1,4 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Engaged extends Condition {
     constructor() {
@@ -11,4 +11,4 @@ class Engaged extends Condition {
     }
 }
 
-export {Engaged}
+export { Engaged };

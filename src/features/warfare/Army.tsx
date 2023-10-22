@@ -1,8 +1,8 @@
-import {Condition} from "./conditions/Condition";
-import {ArmyType} from "./ArmyType";
-import {acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, scoutingByLevel} from "../tables/WarfareTable";
-import {getDcByLevel} from "../tables/DcByLevel";
-import {SpecializedArmyAdjustment} from "./SpecializedArmyAdjustment";
+import { Condition } from "./conditions/Condition";
+import { ArmyType } from "./ArmyType";
+import { acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, scoutingByLevel } from "../tables/WarfareTable";
+import { getDcByLevel } from "../tables/DcByLevel";
+import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
 
 class Army {
     name: string = "";
@@ -15,8 +15,10 @@ class Army {
     currentHp: number;
     _adjustment?: SpecializedArmyAdjustment;
 
-    constructor(data: {name: string, armyType: ArmyType, highManeuver: boolean, level?: number, tactics?: string[],
-    adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[]}) {
+    constructor(data: {
+        name: string, armyType: ArmyType, highManeuver: boolean, level?: number, tactics?: string[],
+        adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[]
+    }) {
         this.name = data.name;
         this.armyType = data.armyType;
         this.highManeuver = data.highManeuver;
@@ -47,24 +49,27 @@ class Army {
     }
 
     public get ac(): number {
+        const skirmisherMod = this.armyType === ArmyType.Skirmisher && this._adjustment === undefined ? -2 : 0;
         const armor = this.gear.find(([gear,]) => gear === "Magical Armor");
-        return acByLevel(this.level) + (armor ? armor[1] : 0) + (this._adjustment?.acAdjustment ?? 0);
+        return acByLevel(this.level) + (armor ? armor[1] : 0) + (this._adjustment?.acAdjustment ?? 0) + skirmisherMod;
     }
 
     public get maneuver(): number {
+        const skirmisherMod = this.armyType === ArmyType.Skirmisher && this._adjustment === undefined ? 2 : 0;
         if (this.highManeuver) {
-            return highSaveByLevel(this.level) + (this._adjustment?.maneuverAdjustment ?? 0);
+            return highSaveByLevel(this.level) + (this._adjustment?.maneuverAdjustment ?? 0) + skirmisherMod;
         }
 
-        return lowSaveByLevel(this.level) + (this._adjustment?.maneuverAdjustment ?? 0);
+        return lowSaveByLevel(this.level) + (this._adjustment?.maneuverAdjustment ?? 0) + skirmisherMod;
     }
 
     public get morale(): number {
+        const skirmisherMod = this.armyType === ArmyType.Skirmisher && this._adjustment === undefined ? 2 : 0;
         if (!this.highManeuver) {
-            return highSaveByLevel(this.level) + (this._adjustment?.moraleAdjustment ?? 0);
+            return highSaveByLevel(this.level) + (this._adjustment?.moraleAdjustment ?? 0) + skirmisherMod;
         }
 
-        return lowSaveByLevel(this.level) + (this._adjustment?.moraleAdjustment ?? 0);
+        return lowSaveByLevel(this.level) + (this._adjustment?.moraleAdjustment ?? 0) + skirmisherMod;
     }
 
     public get hp(): number {
@@ -90,8 +95,20 @@ class Army {
     }
 
     public get ammo(): number {
-        return 5 + this.tactics.reduce((count, tactic) => { return count + (tactic === "Increased Ammunition" ? 2: 0); }, 0);
+        return 5 + this.tactics.reduce((count, tactic) => { return count + (tactic === "Increased Ammunition" ? 2 : 0); }, 0);
+    }
+
+    public hasCondition(name: String): boolean {
+        return this.conditions.find(condition => condition.name === name) !== undefined;
+    }
+
+    public addCondition(condition: Condition) {
+        this.conditions.push(condition);
+    }
+
+    public removeCondition(condition: Condition) {
+        this.conditions.splice(this.conditions.indexOf(condition), 1);
     }
 }
 
-export {Army};
+export { Army };

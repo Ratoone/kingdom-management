@@ -7,10 +7,18 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import OverlayAccordion from "./utils/OverlayAccordion";
 import KingdomData from "./kingdom/KingdomData";
 import { MapHexData } from "./map/MapHex";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import React from "react";
 
 // @ts-ignore
 const ConditionalWrapper = ({ condition, wrapper, children }) =>
     condition ? wrapper(children) : children;
+
+const darkTheme = createTheme({
+    palette: {
+        mode: "dark",
+    },
+});
 
 const App: React.FC = () => {
     const [role, setRole] = useState(Role.Unauthenticated);
@@ -27,7 +35,8 @@ const App: React.FC = () => {
     }
 
     return (
-        <div>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
             <OverlayAccordion>
                 <KingdomData hexData={hexData} />
             </OverlayAccordion>
@@ -44,8 +53,7 @@ const App: React.FC = () => {
                 }>
                 <HexagonalGrid role={role} mapId={mapId} hexData={hexData} setHexData={setHexData} />
             </ConditionalWrapper>
-        </div>
-
+        </ThemeProvider>
     );
 };
 

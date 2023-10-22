@@ -1,17 +1,17 @@
-import {Condition} from "./Condition";
-import {Outflanked} from "./Outflanked";
-import {Efficient} from "./Efficient";
-import {Concealed} from "./Concealed";
-import {Defeated} from "./Defeated";
-import {Distant} from "./Distant";
-import {Engaged} from "./Engaged";
-import {Fortified} from "./Fortified";
-import {Lost} from "./Lost";
-import {Mired} from "./Mired";
-import {Pinned} from "./Pinned";
-import {Routed} from "./Routed";
-import {Shaken} from "./Shaken";
-import {Weary} from "./Weary";
+import { Condition } from "./Condition";
+import { Outflanked } from "./Outflanked";
+import { Efficient } from "./Efficient";
+import { Concealed } from "./Concealed";
+import { Defeated } from "./Defeated";
+import { Distant } from "./Distant";
+import { Engaged } from "./Engaged";
+import { Fortified } from "./Fortified";
+import { Lost } from "./Lost";
+import { Mired } from "./Mired";
+import { Pinned } from "./Pinned";
+import { Routed } from "./Routed";
+import { Shaken } from "./Shaken";
+import { Weary } from "./Weary";
 
 enum ConditionType {
     Concealed = "Concealed",
@@ -30,7 +30,7 @@ enum ConditionType {
 }
 
 const createCondition = (condition: ConditionType): Condition => {
-    switch (condition){
+    switch (condition) {
         case ConditionType.Concealed:
             return new Concealed();
         case ConditionType.Defeated:

@@ -6,6 +6,7 @@ import { randomEncounterDC, roadModifier } from "../../features/tables/RandomEnc
 import { MapHexData } from "./MapHex";
 import "./PartyToken.css";
 import { Box } from "@mui/material";
+import React from "react";
 
 interface PartyTokenProps {
     x: number;
