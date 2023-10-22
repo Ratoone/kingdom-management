@@ -1,9 +1,10 @@
-import {Drawer, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {Drawer, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import React, {useState} from "react";
 import {Army} from "../../features/warfare/Army";
 import {ArmyType} from "../../features/warfare/ArmyType";
 import {Outflanked} from "../../features/warfare/conditions/Outflanked";
 import {ArmyEdit} from "./ArmyEdit";
+import {Mired} from "../../features/warfare/conditions/Mired";
 
 const columns = [ "Name", "Health", "Conditions" ];
 
@@ -15,7 +16,7 @@ const Warfare: React.FC = () => {
         highManeuver: false,
         name: "BOYZZZ",
         level: 1,
-        conditions: [new Outflanked()]
+        conditions: [new Outflanked(), new Mired()]
     })]);
 
     return <div>
@@ -37,7 +38,15 @@ const Warfare: React.FC = () => {
                                 <TableRow hover tabIndex={-1} key={index} onClick={_ => setPreviewArmy(index)}>
                                     <TableCell>{army.name}</TableCell>
                                     <TableCell>{army.currentHp}/{army.hp}</TableCell>
-                                    <TableCell>{army.conditions.map(condition => condition.name)}</TableCell>
+                                    <TableCell>
+                                        <Grid container spacing={2}>
+                                            {army.conditions.map(condition => (
+                                                <Grid xs={4}>
+                                                    {condition.name} {condition.value ?? ""}
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}
