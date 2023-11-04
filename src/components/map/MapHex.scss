@@ -23,6 +23,6 @@
 
 @for $i from 0 through 5 {
     .hex-roads-#{$i} {
-        transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7%);
+        transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7.2%);
     }
 }

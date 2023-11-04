@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Additional Weapon",
+    "cost": 10,
+    "level": [1]
+  },
+  {
+    "name": "Healing Potions",
+    "cost": 15,
+    "level": [1, 1, 1]
+  },
+  {
+    "name": "Magical Armor",
+    "cost": 25,
+    "level": [5, 11, 18]
+  },
+  {
+    "name": "Magic Weapons (melee)",
+    "cost": 20,
+    "level": [2, 10, 16]
+  },
+  {
+    "name": "Magic Weapons (ranged)",
+    "cost": 20,
+    "level": [2, 10, 16]
+  }
+]

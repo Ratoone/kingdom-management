@@ -1,5 +1,5 @@
-import { Box, Paper, Tab, Tabs, Theme, Typography } from "@mui/material";
-import { Key, useEffect, useState } from "react";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
+import React, { Key, useEffect, useState } from "react";
 import { MapStats } from "../../features/map/MapStats";
 import { CommodityType } from "../../features/map/CommodityType";
 import { MapHexData } from "../map/MapHex";
@@ -7,6 +7,7 @@ import { HexplorationState } from "../../features/map/HexplorationState";
 import { TerrainFeature } from "../../features/map/TerrainFeature";
 import TabPanel from "../utils/TabPanel";
 import { getResourceDie } from "../../features/tables/SizeTable";
+import { Warfare } from "../warfare/Warfare";
 
 interface DataProps {
     hexData: Record<string, MapHexData>
@@ -59,6 +60,7 @@ const KingdomData: React.FC<DataProps> = ({ hexData }) => {
             <Tabs value={tabValue} onChange={(_, value) => setTabValue(value)}>
                 <Tab label="Stats" />
                 <Tab label="Resources" />
+                <Tab label="Warfare" />
             </Tabs>
             <TabPanel value={tabValue} index={0}>
                 <Typography>Kingdom Level: {level}</Typography>
@@ -71,6 +73,9 @@ const KingdomData: React.FC<DataProps> = ({ hexData }) => {
                 <Typography>Lumber Production: {mapStats.commodityProduction[CommodityType.Lumber]}</Typography>
                 <Typography>Ore Production: {mapStats.commodityProduction[CommodityType.Ore]}</Typography>
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
+            </TabPanel>
+            <TabPanel index={tabValue} value={2}>
+                <Warfare />
             </TabPanel>
         </Box>
     );

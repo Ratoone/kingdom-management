@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Cavalry",
+        "armyType": "Cavalry",
+        "minLevel": 3
+    },
+    {
+        "name": "Infantry",
+        "armyType": "Infantry",
+        "minLevel": 1
+    },
+    {
+        "name": "Siege Engines",
+        "armyType": "Siege",
+        "minLevel": 7
+    },
+    {
+        "name": "Skirmishers",
+        "armyType": "Skirmisher",
+        "minLevel": 5
+    }
+]

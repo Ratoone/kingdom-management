@@ -3,8 +3,7 @@
         "browser": true,
         "es2021": true
     },
-    "extends": [
-    ],
+    "extends": [],
     "parser": "@typescript-eslint/parser",
     "overrides": [],
     "parserOptions": {
@@ -19,7 +18,10 @@
     "rules": {
         "indent": [
             "error",
-            4
+            4,
+            {
+                "SwitchCase": 1
+            }
         ],
         "quotes": [
             "error",
