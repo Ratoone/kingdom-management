@@ -6,13 +6,14 @@ import styled from "@emotion/styled";
 import { TerrainType, terrainToIcon } from "../../features/map/TerrainType";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
+import { faSkullCrossbones, faUserSecret } from "@fortawesome/free-solid-svg-icons";
 
 import { tileByRoadString } from "../../features/map/RoadConfiguration";
 
 import "./MapHex.scss";
 import { Role } from "../login/Role";
 import React from "react";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 
 interface MapHexData {
     level: number;
@@ -49,7 +50,11 @@ const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) 
     };
 
     const shouldDisplayFeature = (state: HexplorationState, feature: TerrainFeature): boolean => {
-        if (state === HexplorationState.Unexplored && !debugging) {
+        if (role === Role.GM) {
+            return true;
+        }
+
+        if (state === HexplorationState.Unexplored || hexData.hidden) {
             return false;
         }
 
@@ -78,12 +83,24 @@ const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) 
             <title>{`${hexData.state}, Area #${hexData.level}`}</title>
             {renderRoads()}
 
-            {role === Role.GM && !!hexData.reference && (
-                <text textAnchor="middle" strokeWidth={1}>{hexData.reference}</text>
-            )}
+            <text textAnchor="middle" strokeWidth={1}>
+                {!!hexData.playerRef && (
+                    <tspan>{hexData.playerRef}</tspan>
+                )}
 
-            {role === Role.Player && !!hexData.playerRef && (
-                <text textAnchor="middle" strokeWidth={1}>{hexData.playerRef}</text>
+                {role === Role.GM && !!hexData.reference && (
+                    <tspan x="0" dy="50">{hexData.reference}</tspan>
+                )}
+            </text>
+
+            {hexData.hidden && role === Role.GM && (
+                <FontAwesomeIcon
+                    width={iconSize}
+                    height={iconSize}
+                    icon={faUserSecret}
+                    transform={{ x: -iconSize, y: -iconSize }}
+                    className="hex-icon"
+                />
             )}
 
             {shouldDisplayDanger(hexData.state, hexData.terrainType) && !hexData.hidden && !hexData.safe && (
@@ -96,7 +113,7 @@ const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) 
                     color="orangered" />
             )}
 
-            {shouldDisplayFeature(hexData.state, hexData.feature) && !hexData.hidden && hexData.feature !== TerrainFeature.None && (
+            {shouldDisplayFeature(hexData.state, hexData.feature) && hexData.feature !== TerrainFeature.None && (
                 <FontAwesomeIcon
                     width={iconSize}
                     height={iconSize}
