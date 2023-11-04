@@ -24,63 +24,63 @@ const findMissingValues = (input: string): string => {
 const tileByRoadString = (road: string): [string, number] => {
     const roadStringLength = road.length;
     switch (roadStringLength) {
-    case 1: {
-        return [tile_1, parseInt(road)];
-    }
-
-    case 2: {
-        const roadParsed = parseInt(road);
-        let direction = Math.floor(roadParsed / 10);
-        let difference = roadParsed % 10 - direction;
-        if (difference > 3) {
-            difference = 6 - difference;
-            direction = roadParsed % 10;
+        case 1: {
+            return [tile_1, parseInt(road)];
         }
-        return [length2Tiles[difference - 1], direction];
-    }
 
-    case 3: {
-        const parsedRoadDirections = road.split("").map(Number);
-        const difference1 = parsedRoadDirections[1] - parsedRoadDirections[0];
-        const difference2 = parsedRoadDirections[2] - parsedRoadDirections[1];
-        if (difference1 === difference2) {
-            if (difference1 === 1) {
-                return [tile_3_0, parsedRoadDirections[0]];
+        case 2: {
+            const roadParsed = parseInt(road);
+            let direction = Math.floor(roadParsed / 10);
+            let difference = roadParsed % 10 - direction;
+            if (difference > 3) {
+                difference = 6 - difference;
+                direction = roadParsed % 10;
             }
-            return [tile_3_3, parsedRoadDirections[0]];
+            return [length2Tiles[difference - 1], direction];
         }
 
-        if ((difference1 === 1 && difference2 === 3) || (difference1 - difference2 === 1)) {
-            return [tile_3_2, parsedRoadDirections[difference1 - 1]];
+        case 3: {
+            const parsedRoadDirections = road.split("").map(Number);
+            const difference1 = parsedRoadDirections[1] - parsedRoadDirections[0];
+            const difference2 = parsedRoadDirections[2] - parsedRoadDirections[1];
+            if (difference1 === difference2) {
+                if (difference1 === 1) {
+                    return [tile_3_0, parsedRoadDirections[0]];
+                }
+                return [tile_3_3, parsedRoadDirections[0]];
+            }
+
+            if ((difference1 === 1 && difference2 === 3) || (difference1 - difference2 === 1)) {
+                return [tile_3_2, parsedRoadDirections[difference1 - 1]];
+            }
+
+            return [tile_3_1, parsedRoadDirections[difference1 + difference2 - 3]];
         }
 
-        return [tile_3_1, parsedRoadDirections[difference1 + difference2 - 3]];
-    }
+        case 4: {
+            const missingRoadParsed = parseInt(findMissingValues(road));
+            let direction = Math.floor(missingRoadParsed % 10);
+            let difference = missingRoadParsed % 10 - Math.floor(missingRoadParsed / 10);
+            if (difference > 3) {
+                difference = 6 - difference;
+                direction = Math.floor(missingRoadParsed / 10);
+            }
 
-    case 4: {
-        const missingRoadParsed = parseInt(findMissingValues(road));
-        let direction = Math.floor(missingRoadParsed % 10);
-        let difference = missingRoadParsed % 10 - Math.floor(missingRoadParsed / 10);
-        if (difference > 3) {
-            difference = 6 - difference;
-            direction = Math.floor(missingRoadParsed / 10);
+            return [length4Tiles[difference - 1], (direction + 1) % 6];
         }
 
-        return [length4Tiles[difference - 1], (direction + 1) % 6];
-    }
+        case 5: {
+            const missingValue = findMissingValues(road);
+            return [tile_5, (parseInt(missingValue) + 1) % 6];
+        }
 
-    case 5: {
-        const missingValue = findMissingValues(road);
-        return [tile_5, (parseInt(missingValue) + 1) % 6];
-    }
+        case 6: {
+            return [tile_6, 0];
+        }
 
-    case 6: {
-        return [tile_6, 0];
-    }
-
-    default: {
-        throw new RangeError(`Road ${road} has an unexpected length!`);
-    }
+        default: {
+            throw new RangeError(`Road ${road} has an unexpected length!`);
+        }
     }
 };
 
