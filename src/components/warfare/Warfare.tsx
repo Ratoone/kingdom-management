@@ -10,10 +10,15 @@ import { Pinned } from "../../features/warfare/conditions/Pinned";
 import "./Warfare.css";
 import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
+import { CreateArmy } from "./CreateArmy";
 
 const columns = ["Name", "Health", "Conditions"];
 
-const Warfare: React.FC = () => {
+interface WarfareProps {
+    level: number;
+}
+
+const Warfare: React.FC<WarfareProps> = ({ level }) => {
     const [previewArmy, setPreviewArmy] = useState<number | undefined>(undefined);
     const [armies, setArmies] = useState<Army[]>([new Army({
         armyType: ArmyType.Infantry,
@@ -84,7 +89,7 @@ const Warfare: React.FC = () => {
 
     return <div>
         <Paper sx={{ overflow: "hidden" }}>
-            <Button>New Army</Button>
+            <CreateArmy level={level} />
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

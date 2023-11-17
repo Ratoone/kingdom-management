@@ -75,7 +75,7 @@ const KingdomData: React.FC<DataProps> = ({ hexData }) => {
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
             </TabPanel>
             <TabPanel index={tabValue} value={2}>
-                <Warfare />
+                <Warfare level={level} />
             </TabPanel>
         </Box>
     );
