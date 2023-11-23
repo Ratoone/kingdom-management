@@ -51,7 +51,7 @@ const Warfare: React.FC<WarfareProps> = ({ level }) => {
             }
         }
 
-        saveArmy(army);
+        editArmy(army);
     };
 
     const decreaseCondition = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, army: Army, condition: Condition): void => {
@@ -61,10 +61,10 @@ const Warfare: React.FC<WarfareProps> = ({ level }) => {
             army.removeCondition(condition);
         }
 
-        saveArmy(army);
+        editArmy(army);
     };
 
-    const saveArmy = (army: Army) => {
+    const editArmy = (army: Army) => {
         setArmies(armies.map(oldArmy => {
             if (oldArmy.name === army.name) {
                 return army;
@@ -73,23 +73,27 @@ const Warfare: React.FC<WarfareProps> = ({ level }) => {
         }));
     };
 
+    const saveArmy = (army: Army) => {
+        setArmies([...armies, army]);
+    };
+
     const updateHp = (e: Event, newValue: number, army: Army) => {
         e.preventDefault();
         e.stopPropagation();
 
         army.currentHp = newValue;
 
-        saveArmy(army);
+        editArmy(army);
     };
 
     const onCloseArmyEdit = () => {
-        saveArmy(armies[previewArmy as number]);
+        editArmy(armies[previewArmy as number]);
         setPreviewArmy(undefined);
     };
 
     return <div>
         <Paper sx={{ overflow: "hidden" }}>
-            <CreateArmy level={level} />
+            <CreateArmy level={level} saveArmy={saveArmy} />
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

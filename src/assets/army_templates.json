@@ -2,21 +2,25 @@
     {
         "name": "Cavalry",
         "armyType": "Cavalry",
-        "minLevel": 3
+        "minLevel": 3,
+        "highManeuver": true
     },
     {
         "name": "Infantry",
         "armyType": "Infantry",
-        "minLevel": 1
+        "minLevel": 1,
+        "highManeuver": false
     },
     {
         "name": "Siege Engines",
         "armyType": "Siege",
-        "minLevel": 7
+        "minLevel": 7,
+        "highManeuver": false
     },
     {
         "name": "Skirmishers",
         "armyType": "Skirmisher",
-        "minLevel": 5
+        "minLevel": 5,
+        "highManeuver": true
     }
 ]
