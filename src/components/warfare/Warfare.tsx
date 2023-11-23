@@ -1,33 +1,28 @@
-import { Button, Chip, Drawer, Paper, Slider, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Chip, Drawer, Paper, Slider, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Army } from "../../features/warfare/Army";
-import { ArmyType } from "../../features/warfare/ArmyType";
-import { Outflanked } from "../../features/warfare/conditions/Outflanked";
 import { ArmyEdit } from "./ArmyEdit";
-import { Mired } from "../../features/warfare/conditions/Mired";
-import { Pinned } from "../../features/warfare/conditions/Pinned";
 import "./Warfare.css";
 import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
 import { CreateArmy } from "./CreateArmy";
+import { getArmies } from "../../features/firestore/WarfareDao";
 
 const columns = ["Name", "Health", "Conditions"];
 
 interface WarfareProps {
+    mapId: string;
     level: number;
 }
 
-const Warfare: React.FC<WarfareProps> = ({ level }) => {
+const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
     const [previewArmy, setPreviewArmy] = useState<number | undefined>(undefined);
-    const [armies, setArmies] = useState<Army[]>([new Army({
-        armyType: ArmyType.Infantry,
-        currentHp: 0,
-        highManeuver: false,
-        name: "BOYZZZ",
-        level: 1,
-        conditions: [new Outflanked(), new Mired(), new Pinned()]
-    })]);
+    const [armies, setArmies] = useState<Army[]>([]);
+
+    useEffect(() => {
+        getArmies(mapId, level).then(armies => setArmies(armies));
+    }, []);
 
     const addCondition = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, army: Army) => {
         e.preventDefault();

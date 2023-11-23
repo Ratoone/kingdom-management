@@ -3,6 +3,7 @@ import { ArmyType } from "./ArmyType";
 import { acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, scoutingByLevel } from "../tables/WarfareTable";
 import { getDcByLevel } from "../tables/DcByLevel";
 import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
+import { FirestoreDataConverter } from "firebase/firestore";
 
 class Army {
     name: string = "";
@@ -111,4 +112,23 @@ class Army {
     }
 }
 
-export { Army };
+const armyConverter: FirestoreDataConverter<Army> = {
+    toFirestore: (army: Army) => {
+        return {
+            name: army.name,
+            armyType: army.armyType,
+            highManeuver: army.highManeuver
+        };
+    },
+
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new Army({
+            name: data.name,
+            armyType: data.armyType as ArmyType,
+            highManeuver: data.highManeuver
+        });
+    }
+};
+
+export { Army, armyConverter };

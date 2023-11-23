@@ -24,10 +24,12 @@ const App: React.FC = () => {
     const [role, setRole] = useState(Role.Unauthenticated);
     const [mapId, setMapId] = useState("");
     const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
+    const [level, setLevel] = useState<number>(0);
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
         setMapId(mapId);
+
     };
 
     if (role === Role.Unauthenticated) {
@@ -38,7 +40,7 @@ const App: React.FC = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <OverlayAccordion>
-                <KingdomData hexData={hexData} />
+                <KingdomData mapId={mapId} hexData={hexData} level={level} />
             </OverlayAccordion>
 
             <ConditionalWrapper
@@ -51,7 +53,7 @@ const App: React.FC = () => {
                         </TransformComponent>
                     </TransformWrapper>
                 }>
-                <HexagonalGrid role={role} mapId={mapId} hexData={hexData} setHexData={setHexData} />
+                <HexagonalGrid role={role} mapId={mapId} hexData={hexData} setHexData={setHexData} setLevel={setLevel} />
             </ConditionalWrapper>
         </ThemeProvider>
     );

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { HexGrid, Layout, GridGenerator, Hex } from "react-hexgrid";
 import "./HexagonalGrid.scss";
 import map from "../../assets/images/map_no_label.jpg";
@@ -16,9 +16,10 @@ interface MapProps {
     mapId: string;
     hexData: Record<string, MapHexData>,
     setHexData: React.Dispatch<React.SetStateAction<Record<string, MapHexData>>>
+    setLevel: React.Dispatch<React.SetStateAction<number>>
 }
 
-const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData }) => {
+const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, setLevel }) => {
     const hexagonLayout = GridGenerator.rectangle(29, 12);
     const hexagonSize = 79.92;
 
@@ -90,9 +91,10 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData })
     const unsubscribe = useMemo(() => {
         if (Object.keys(hexData).length === 0) {
             return readMapData(mapId, result => {
-                const [data, pos] = result;
+                const [data, pos, level] = result;
                 setHexData(data as Record<string, MapHexData> ?? {});
                 setPartyPosition(pos as { x: number, y: number });
+                setLevel(level as number);
             });
         }
     }, []);

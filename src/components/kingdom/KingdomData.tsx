@@ -10,12 +10,13 @@ import { getResourceDie } from "../../features/tables/SizeTable";
 import { Warfare } from "../warfare/Warfare";
 
 interface DataProps {
-    hexData: Record<string, MapHexData>
+    mapId: string;
+    hexData: Record<string, MapHexData>;
+    level: number;
 }
 
-const KingdomData: React.FC<DataProps> = ({ hexData }) => {
+const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData }) => {
     const [tabValue, setTabValue] = useState(0);
-    const [level, setLevel] = useState(1);
 
     const [mapStats, setMapStats] = useState<MapStats>({
         size: 0, commodityProduction: {
@@ -75,7 +76,7 @@ const KingdomData: React.FC<DataProps> = ({ hexData }) => {
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
             </TabPanel>
             <TabPanel index={tabValue} value={2}>
-                <Warfare level={level} />
+                <Warfare mapId={mapId} level={level} />
             </TabPanel>
         </Box>
     );

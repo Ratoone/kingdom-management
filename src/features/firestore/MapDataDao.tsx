@@ -4,15 +4,15 @@ import { db } from "./FirestoreDB";
 const updateMapData = async (documentId: string, mapData: object) => {
     await setDoc(doc(db, "mapData", documentId), {
         hexMapData: mapData
-    }, {merge: true}
+    }, { merge: true }
     );
 };
 
-const readMapData = (documentId: string, callback: (data: Array<object>) => void): Unsubscribe => {
+const readMapData = (documentId: string, callback: (data: Array<unknown>) => void): Unsubscribe => {
     return onSnapshot(doc(db, "mapData", documentId), snap => {
         if (snap.exists()) {
             const data = snap.data();
-            callback([data.hexMapData, { x: data.x, y: data.y }]);
+            callback([data.hexMapData, { x: data.x, y: data.y }, data.level]);
             return;
         }
         callback([{}, { x: 0, y: 0 }]);
@@ -32,7 +32,7 @@ const updatePartyPosition = async (documentId: string, x: number, y: number) => 
     await setDoc(doc(db, "mapData", documentId), {
         x,
         y
-    }, {merge: true}
+    }, { merge: true }
     );
 };
 
