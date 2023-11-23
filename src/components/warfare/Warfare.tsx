@@ -7,7 +7,7 @@ import "./Warfare.css";
 import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
 import { CreateArmy } from "./CreateArmy";
-import { getArmies } from "../../features/firestore/WarfareDao";
+import { addArmy, getArmies, updateArmy } from "../../features/firestore/WarfareDao";
 
 const columns = ["Name", "Health", "Conditions"];
 
@@ -60,16 +60,21 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
     };
 
     const editArmy = (army: Army) => {
-        setArmies(armies.map(oldArmy => {
-            if (oldArmy.name === army.name) {
-                return army;
-            }
-            return oldArmy;
-        }));
+        updateArmy(army).then(() => {
+            setArmies(armies.map(oldArmy => {
+                if (oldArmy.name === army.name) {
+                    return army;
+                }
+                return oldArmy;
+            }));
+        });
     };
 
     const saveArmy = (army: Army) => {
-        setArmies([...armies, army]);
+        addArmy(army).then(id => {
+            army.id = id;
+            setArmies([...armies, army]);
+        });
     };
 
     const updateHp = (e: Event, newValue: number, army: Army) => {

@@ -6,6 +6,7 @@ import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
 import { FirestoreDataConverter } from "firebase/firestore";
 
 class Army {
+    id: string = "";
     name: string = "";
     level: number = 1;
     armyType: ArmyType;
@@ -17,9 +18,10 @@ class Army {
     _adjustment?: SpecializedArmyAdjustment;
 
     constructor(data: {
-        name: string, armyType: ArmyType, highManeuver: boolean, level?: number, tactics?: string[],
+        id?: string, name: string, armyType: ArmyType, highManeuver: boolean, level?: number, tactics?: string[],
         adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[]
     }) {
+        this.id = data.id ?? "";
         this.name = data.name;
         this.armyType = data.armyType;
         this.highManeuver = data.highManeuver;
@@ -117,16 +119,19 @@ const armyConverter: FirestoreDataConverter<Army> = {
         return {
             name: army.name,
             armyType: army.armyType,
-            highManeuver: army.highManeuver
+            highManeuver: army.highManeuver,
+            currentHp: army.currentHp
         };
     },
 
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
         return new Army({
+            id: snapshot.id,
             name: data.name,
             armyType: data.armyType as ArmyType,
-            highManeuver: data.highManeuver
+            highManeuver: data.highManeuver,
+            currentHp: data.currentHp
         });
     }
 };
