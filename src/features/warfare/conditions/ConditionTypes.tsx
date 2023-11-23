@@ -29,7 +29,7 @@ enum ConditionType {
     Weary = "Weary"
 }
 
-const createCondition = (condition: ConditionType): Condition => {
+const createCondition = (condition: ConditionType, value?: number): Condition => {
     switch (condition) {
         case ConditionType.Concealed:
             return new Concealed();
@@ -46,7 +46,7 @@ const createCondition = (condition: ConditionType): Condition => {
         case ConditionType.Lost:
             return new Lost();
         case ConditionType.Mired:
-            return new Mired();
+            return new Mired(value);
         case ConditionType.Outflanked:
             return new Outflanked();
         case ConditionType.Pinned:
@@ -54,9 +54,9 @@ const createCondition = (condition: ConditionType): Condition => {
         case ConditionType.Routed:
             return new Routed();
         case ConditionType.Shaken:
-            return new Shaken();
+            return new Shaken(value);
         case ConditionType.Weary:
-            return new Weary();
+            return new Weary(value);
     }
 };
 

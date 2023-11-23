@@ -1,7 +1,7 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Weary extends Condition {
-    constructor() {
+    constructor(value?: number) {
         super({
             name: "Weary",
             description: "The army is exhausted. Weary always has a numerical value. A weary army takes a circumstance " +
@@ -9,7 +9,7 @@ class Weary extends Condition {
                 "it takes double this circumstance penalty on Deploy Army checks. An army reduces the value of this " +
                 "condition by 1 each Kingdom turn that passes during which it does not attempt an Army activity or " +
                 "engage in a war encounter.",
-            value: 1
+            value: value ?? 1
         });
     }
 
@@ -26,4 +26,4 @@ class Weary extends Condition {
     }
 }
 
-export {Weary};
+export { Weary };

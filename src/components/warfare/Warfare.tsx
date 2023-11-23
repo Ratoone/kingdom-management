@@ -8,6 +8,7 @@ import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
 import { CreateArmy } from "./CreateArmy";
 import { addArmy, getArmies, updateArmy } from "../../features/firestore/WarfareDao";
+import { AddArmyCondition } from "./AddArmyCondition";
 
 const columns = ["Name", "Health", "Conditions"];
 
@@ -17,7 +18,8 @@ interface WarfareProps {
 }
 
 const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
-    const [previewArmy, setPreviewArmy] = useState<number | undefined>(undefined);
+    const [previewArmy, setPreviewArmy] = useState<Army>();
+    const [conditionReceiverArmy, setConditionReceiverArmy] = useState<Army>();
     const [armies, setArmies] = useState<Army[]>([]);
 
     useEffect(() => {
@@ -27,6 +29,8 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
     const addCondition = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, army: Army) => {
         e.preventDefault();
         e.stopPropagation();
+
+        setConditionReceiverArmy(army);
     };
 
     const increaseCondition = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, army: Army, condition: Condition): void => {
@@ -71,6 +75,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
     };
 
     const saveArmy = (army: Army) => {
+        army.mapId = mapId;
         addArmy(army).then(id => {
             army.id = id;
             setArmies([...armies, army]);
@@ -87,13 +92,14 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
     };
 
     const onCloseArmyEdit = () => {
-        editArmy(armies[previewArmy as number]);
+        editArmy(previewArmy as Army);
         setPreviewArmy(undefined);
     };
 
     return <div>
         <Paper sx={{ overflow: "hidden" }}>
             <CreateArmy level={level} saveArmy={saveArmy} />
+            {conditionReceiverArmy && <AddArmyCondition army={conditionReceiverArmy} updateArmy={editArmy} onClose={() => setConditionReceiverArmy(undefined)} />}
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -109,7 +115,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
                         {armies.map((army, index) => {
                             return (
                                 <TableRow hover tabIndex={-1} key={index}>
-                                    <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(index)}>{army.name}</TableCell>
+                                    <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
                                     <TableCell width={"150px"}>
                                         <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
                                             marks={[
@@ -137,6 +143,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
                                             />
                                             {army.conditions.map(condition => (
                                                 <Chip
+                                                    key={condition.name}
                                                     label={`${condition.name} ${condition.value ?? ""}`}
                                                     onClick={(e) => increaseCondition(e, army, condition)}
                                                     onDelete={(e) => decreaseCondition(e, army, condition)}
@@ -152,7 +159,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
             </TableContainer>
         </Paper>
         <Drawer anchor="right" open={previewArmy !== undefined} onClose={_ => onCloseArmyEdit()}>
-            <ArmyEdit army={armies[previewArmy ?? 0]} />
+            {previewArmy && <ArmyEdit army={previewArmy} />}
         </Drawer>
     </div>;
 };

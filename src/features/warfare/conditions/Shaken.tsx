@@ -1,7 +1,7 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Shaken extends Condition {
-    constructor() {
+    constructor(value?: number) {
         super({
             name: "Shaken",
             description: "The army's morale has begun to falter, be it fear in the face of a powerful enemy, a " +
@@ -11,7 +11,7 @@ class Shaken extends Condition {
                 "check or its shaken value increases by 1. An army that becomes shaken 4 is automatically routed. An army " +
                 "reduces the value of this condition by 1 each Kingdom turn that passes during which it does not attempt " +
                 "an Army activity or engage in a war encounter.",
-            value: 1
+            value: value ?? 1
         });
     }
 
@@ -20,4 +20,4 @@ class Shaken extends Condition {
     }
 }
 
-export {Shaken};
+export { Shaken };
