@@ -36,7 +36,7 @@ interface MapHexProps extends HexagonProps {
 const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) => {
     const iconSize = 25;
     const StyledHexagon = styled(Hexagon)`
-        stroke: hsl(${180 + hexData.level * 9 * (hexData.level % 2 === 0 ? 1 : -1)}, 85%, 50%);
+        stroke: hsl(${180 + hexData.level * 18 * (hexData.level % 2 === 0 ? 1 : -1)}, ${60 + hexData.level * 2}%, 50%);
         fill-opacity: ${hexplorationStateOpacity[hexData.state]};
         fill: ${hexplorationStateColor[hexData.state]};
     `;
