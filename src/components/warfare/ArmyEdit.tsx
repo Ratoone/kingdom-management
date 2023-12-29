@@ -61,11 +61,11 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
             </Typography>
             <Divider />
             <div>
-                <Button onClick={() => setAddingTactic(true)} >
+                <Button onClick={() => setAddingTactic(true)} disabled={army.countNonUniqueTactics() >= army.tacticsLimit} >
                     New Tactic
                 </Button>
                 <Typography>
-                    Tactics:
+                    Tactics ({army.countNonUniqueTactics()} / {army.tacticsLimit}):
                 </Typography>
                 <List sx={{ listStyleType: "disc" }}>
                     {army.tactics.map(tactic =>

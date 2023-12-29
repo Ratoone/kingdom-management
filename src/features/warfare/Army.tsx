@@ -1,10 +1,11 @@
 import { Condition } from "./conditions/Condition";
 import { ArmyType } from "./ArmyType";
-import { acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, scoutingByLevel } from "../tables/WarfareTable";
+import { acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, maxTactics, scoutingByLevel } from "../tables/WarfareTable";
 import { getDcByLevel } from "../tables/DcByLevel";
 import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
 import { FirestoreDataConverter } from "firebase/firestore";
 import { ConditionType, createCondition } from "./conditions/ConditionTypes";
+import { tacticsMap } from "./TacticsDatabase";
 
 class Army {
     id: string = "";
@@ -114,6 +115,14 @@ class Army {
 
     public removeCondition(condition: Condition) {
         this.conditions.splice(this.conditions.indexOf(condition), 1);
+    }
+
+    public countNonUniqueTactics(): number {
+        return this.tactics.reduce((count, tactic) => count + (tacticsMap[tactic].unique ? 0 : 1), 0);
+    }
+
+    public get tacticsLimit(): number {
+        return maxTactics(this.level);
     }
 }
 

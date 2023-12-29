@@ -30,7 +30,7 @@ const AddArmyTactic: React.FC<AddArmyConditionProps> = ({ army, updateArmy, onCl
                                     key={tactic}
                                     value={tactic}
                                     onClick={() => addTactic(tactic)}
-                                    disabled={!!army.tactics.find(armyTactics => armyTactics === tactic)}>
+                                    disabled={!!army.tactics.find(armyTactics => armyTactics === tactic && !tacticsMap[tactic].repeatable)}>
                                     {tactic}
                                 </Button>
                             </Tooltip>
