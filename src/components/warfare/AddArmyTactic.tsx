@@ -22,21 +22,26 @@ const AddArmyTactic: React.FC<AddArmyConditionProps> = ({ army, updateArmy, onCl
     >
         <Paper style={{ maxHeight: 400, overflow: "auto" }}>
             <Stack>
-                {Object.keys(tacticsMap).map(
-                    (tactic) => {
-                        return (
-                            <Tooltip title={tacticsMap[tactic].text} placement="right">
-                                <Button
-                                    key={tactic}
-                                    value={tactic}
-                                    onClick={() => addTactic(tactic)}
-                                    disabled={!!army.tactics.find(armyTactics => armyTactics === tactic && !tacticsMap[tactic].repeatable)}>
-                                    {tactic}
-                                </Button>
-                            </Tooltip>
-                        );
-                    }
-                )}
+                {Object.keys(tacticsMap)
+                    .filter(tactic => tacticsMap[tactic].level <= army.level)
+                    .map(
+                        (tactic) => {
+                            return (
+                                <Tooltip title={tacticsMap[tactic].text} placement="right">
+                                    <Button
+                                        key={tactic}
+                                        value={tactic}
+                                        onClick={() => addTactic(tactic)}
+                                        disabled={!!army.tactics.find(armyTactics => armyTactics === tactic && !tacticsMap[tactic].repeatable)}>
+                                        <div style={{ display: "flex", width: "250px", justifyContent: "space-between" }}>
+                                            <div>{tactic}</div>
+                                            <div>{tacticsMap[tactic].level}</div>
+                                        </div>
+                                    </Button>
+                                </Tooltip>
+                            );
+                        }
+                    )}
             </Stack>
         </Paper>
     </Dialog>;
