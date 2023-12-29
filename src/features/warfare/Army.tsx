@@ -125,7 +125,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             armyType: army.armyType,
             highManeuver: army.highManeuver,
             currentHp: army.currentHp,
-            conditions: Object.fromEntries(army.conditions.map(condition => { return [condition.name, condition.value ?? 0]; }))
+            conditions: Object.fromEntries(army.conditions.map(condition => { return [condition.name, condition.value ?? 0]; })),
+            tactics: army.tactics
         };
     },
 
@@ -138,7 +139,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             armyType: data.armyType as ArmyType,
             highManeuver: data.highManeuver,
             currentHp: data.currentHp,
-            conditions: Object.entries(data.conditions).map(([condition, value]) => { return createCondition(condition as ConditionType, value as number); })
+            conditions: Object.entries(data.conditions).map(([condition, value]) => { return createCondition(condition as ConditionType, value as number); }),
+            tactics: data.tactics
         });
     }
 };

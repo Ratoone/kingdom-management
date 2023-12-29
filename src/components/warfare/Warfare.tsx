@@ -159,7 +159,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
             </TableContainer>
         </Paper>
         <Drawer anchor="right" open={previewArmy !== undefined} onClose={_ => onCloseArmyEdit()}>
-            {previewArmy && <ArmyEdit army={previewArmy} />}
+            {previewArmy && <ArmyEdit army={previewArmy} updateArmy={editArmy} />}
         </Drawer>
     </div>;
 };
