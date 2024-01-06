@@ -8,8 +8,8 @@
 }
 
 .hex-icon {
-    stroke-width: 4%;
-    stroke: black;
+    stroke-width: 2%;
+    stroke: darkgray;
     stroke-opacity: 0.6;
     fill-opacity: 1;
 }
@@ -25,4 +25,11 @@
     .hex-roads-#{$i} {
         transform: rotate(calc(30deg + $i*60deg)) translate(-2.8%, -7.2%);
     }
+}
+
+.hex-text {
+    stroke-width: 1;
+    stroke: beige;
+    fill: blanchedalmond;
+    fill-opacity: 1;
 }

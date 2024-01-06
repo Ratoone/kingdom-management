@@ -13,7 +13,6 @@ import { tileByRoadString } from "../../features/map/RoadConfiguration";
 import "./MapHex.scss";
 import { Role } from "../login/Role";
 import React from "react";
-import { icon } from "@fortawesome/fontawesome-svg-core";
 
 interface MapHexData {
     level: number;
@@ -83,7 +82,7 @@ const MapHexagon = ({ debugging = false, hexData, role, ...rest }: MapHexProps) 
             <title>{`${hexData.state}, Area #${hexData.level}`}</title>
             {renderRoads()}
 
-            <text textAnchor="middle" strokeWidth={1}>
+            <text textAnchor="middle" className="hex-text">
                 {!!hexData.playerRef && (
                     <tspan>{hexData.playerRef}</tspan>
                 )}
