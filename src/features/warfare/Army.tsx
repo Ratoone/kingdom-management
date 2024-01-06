@@ -1,11 +1,18 @@
-import { Condition } from "./conditions/Condition";
-import { ArmyType } from "./ArmyType";
-import { acByLevel, attackByLevel, highSaveByLevel, lowSaveByLevel, maxTactics, scoutingByLevel } from "../tables/WarfareTable";
-import { getDcByLevel } from "../tables/DcByLevel";
-import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
-import { FirestoreDataConverter } from "firebase/firestore";
-import { ConditionType, createCondition } from "./conditions/ConditionTypes";
-import { tacticsMap } from "./TacticsDatabase";
+import {Condition} from "./conditions/Condition";
+import {ArmyType} from "./ArmyType";
+import {
+    acByLevel,
+    attackByLevel,
+    highSaveByLevel,
+    lowSaveByLevel,
+    maxTactics,
+    scoutingByLevel
+} from "../tables/WarfareTable";
+import {getDcByLevel} from "../tables/DcByLevel";
+import {SpecializedArmyAdjustment} from "./SpecializedArmyAdjustment";
+import {FirestoreDataConverter} from "firebase/firestore";
+import {ConditionType, createCondition} from "./conditions/ConditionTypes";
+import {tacticsMap} from "./TacticsDatabase";
 
 class Army {
     id: string = "";
@@ -22,7 +29,8 @@ class Army {
 
     constructor(data: {
         id?: string, mapId?: string, name: string, armyType: ArmyType, highManeuver: boolean, level?: number,
-        tactics?: string[], adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[]
+        tactics?: string[], adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[],
+        gear?: [string, number][]
     }) {
         this.id = data.id ?? "";
         this.mapId = data.mapId ?? "";
@@ -34,14 +42,11 @@ class Army {
         this._adjustment = data.adjustment;
         this.currentHp = data.currentHp ?? this.hp;
         this.conditions = data.conditions ?? [];
+        this.gear = data.gear ?? [];
     }
 
     public get scouting(): number {
         return scoutingByLevel(this.level) + (this._adjustment?.scoutingAdjustment ?? 0);
-    }
-
-    public get recruitment(): number {
-        return getDcByLevel(this.level) + (this._adjustment?.recruitmentAdjustment ?? 0);
     }
 
     public get consumption(): number {
@@ -88,15 +93,21 @@ class Army {
             return 0;
         }
 
-        return this.tactics.includes("Hold the Line") ? Math.ceil(this.hp / 4) : Math.floor(this.hp / 2) + (this._adjustment?.routAdjustment ?? 0);
+        return this.tactics.includes("Hold the Line") ? Math.ceil(this.hp / 4) : (Math.floor(this.hp / 2) + (this._adjustment?.routAdjustment ?? 0));
     }
 
     public get meleeAttack(): number {
+        if (!this._adjustment && this.armyType === ArmyType.Siege && !this.gear.find(([gear,]) => gear === "Additional Weapon")) {
+            return NaN;
+        }
         const meleeWeapon = this.gear.find(([gear,]) => gear === "Magical Weapons (melee)");
         return attackByLevel(this.level) + (meleeWeapon ? meleeWeapon[1] : 0) + (this._adjustment?.meleeAdjustment ?? 0);
     }
 
     public get rangedAttack(): number {
+        if (!this._adjustment && this.armyType !== ArmyType.Siege && !this.gear.find(([gear,]) => gear === "Additional Weapon")) {
+            return NaN;
+        }
         const rangedWeapon = this.gear.find(([gear,]) => gear === "Magical Weapons (ranged)");
         return attackByLevel(this.level) + (rangedWeapon ? rangedWeapon[1] : 0);
     }
@@ -135,7 +146,13 @@ const armyConverter: FirestoreDataConverter<Army> = {
             highManeuver: army.highManeuver,
             currentHp: army.currentHp,
             conditions: Object.fromEntries(army.conditions.map(condition => { return [condition.name, condition.value ?? 0]; })),
-            tactics: army.tactics
+            tactics: army.tactics,
+            gear: army.gear.map(([gearName, gearValue]) => {
+                return {
+                    gear: gearName,
+                    value: gearValue
+                };
+            })
         };
     },
 
@@ -149,7 +166,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             highManeuver: data.highManeuver,
             currentHp: data.currentHp,
             conditions: Object.entries(data.conditions).map(([condition, value]) => { return createCondition(condition as ConditionType, value as number); }),
-            tactics: data.tactics
+            tactics: data.tactics,
+            gear: data.gear.map((gear: { gear: string; value: number; }) => [gear.gear, gear.value])
         });
     }
 };

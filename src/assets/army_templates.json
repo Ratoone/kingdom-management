@@ -22,5 +22,22 @@
         "armyType": "Skirmisher",
         "minLevel": 5,
         "highManeuver": true
+    },
+    {
+        "name": "Sootscale Warriors",
+        "armyType": "Infantry",
+        "minLevel": 3,
+        "highManeuver": true,
+        "adjustment": {
+            "recruitmentAdjustment": 2,
+            "acAdjustment": 1,
+            "maneuverAdjustment": 2,
+            "moraleAdjustment": -1,
+            "routAdjustment": 1
+        },
+        "uniqueTactics": [
+            "Darkvision (unique)",
+            "Accustomed to Panic"
+        ]
     }
 ]
