@@ -1,5 +1,5 @@
-import {Condition} from "./conditions/Condition";
-import {ArmyType} from "./ArmyType";
+import { Condition } from "./conditions/Condition";
+import { ArmyType } from "./ArmyType";
 import {
     acByLevel,
     attackByLevel,
@@ -8,11 +8,11 @@ import {
     maxTactics,
     scoutingByLevel
 } from "../tables/WarfareTable";
-import {getDcByLevel} from "../tables/DcByLevel";
-import {SpecializedArmyAdjustment} from "./SpecializedArmyAdjustment";
-import {FirestoreDataConverter} from "firebase/firestore";
-import {ConditionType, createCondition} from "./conditions/ConditionTypes";
-import {tacticsMap} from "./TacticsDatabase";
+import { getDcByLevel } from "../tables/DcByLevel";
+import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
+import { FirestoreDataConverter } from "firebase/firestore";
+import { ConditionType, createCondition } from "./conditions/ConditionTypes";
+import { tacticsMap } from "./TacticsDatabase";
 
 class Army {
     id: string = "";
@@ -26,11 +26,12 @@ class Army {
     gear: [string, number][] = [];
     currentHp: number;
     _adjustment?: SpecializedArmyAdjustment;
+    ally: boolean;
 
     constructor(data: {
         id?: string, mapId?: string, name: string, armyType: ArmyType, highManeuver: boolean, level?: number,
         tactics?: string[], adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[],
-        gear?: [string, number][]
+        gear?: [string, number][], ally?: boolean
     }) {
         this.id = data.id ?? "";
         this.mapId = data.mapId ?? "";
@@ -43,6 +44,7 @@ class Army {
         this.currentHp = data.currentHp ?? this.hp;
         this.conditions = data.conditions ?? [];
         this.gear = data.gear ?? [];
+        this.ally = data.ally ?? false;
     }
 
     public get scouting(): number {
@@ -152,7 +154,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
                     gear: gearName,
                     value: gearValue
                 };
-            })
+            }),
+            ally: army.ally
         };
     },
 
@@ -167,7 +170,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             currentHp: data.currentHp,
             conditions: Object.entries(data.conditions).map(([condition, value]) => { return createCondition(condition as ConditionType, value as number); }),
             tactics: data.tactics,
-            gear: data.gear.map((gear: { gear: string; value: number; }) => [gear.gear, gear.value])
+            gear: data.gear.map((gear: { gear: string; value: number; }) => [gear.gear, gear.value]),
+            ally: data.ally
         });
     }
 };

@@ -1,17 +1,19 @@
 import { Army } from "../../features/warfare/Army";
 import React, { useState } from "react";
-import { Button, Divider, IconButton, List, ListItem, ListItemText, Tooltip, Typography } from "@mui/material";
+import { Button, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, Tooltip, Typography } from "@mui/material";
 import { tacticsMap } from "../../features/warfare/TacticsDatabase";
 import { Delete } from "@mui/icons-material";
 import { AddArmyTactic } from "./AddArmyTactic";
-import {AddArmyGear} from "./AddArmyGear";
+import { AddArmyGear } from "./AddArmyGear";
+import { gearMap } from "../../features/warfare/Gear";
 
 interface ArmyEditProps {
     army: Army;
     updateArmy: (army: Army) => void;
+    gmView: boolean;
 }
 
-const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
+const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
     const [addingTactic, setAddingTactic] = useState<boolean>(false);
     const [addingGear, setAddingGear] = useState<boolean>(false);
 
@@ -33,11 +35,22 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
         updateArmy(army);
     };
 
+    const setAllegiance = (ally: boolean) => {
+        army.ally = ally;
+
+        updateArmy(army);
+    };
+
     return (
         <div style={{ padding: "15px" }}>
             <Typography variant="h5" component="div">
                 Army Properties
             </Typography>
+            {gmView &&
+                <FormControlLabel label={"Is ally?"} control={
+                    <Checkbox checked={army.ally} onChange={(e) => setAllegiance(e.target.checked)} />
+                } />
+            }
             <Typography variant="body1">
                 Type: {army.armyType}
             </Typography>
@@ -80,9 +93,11 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
             }
             <Divider />
             <div>
-                <Button onClick={() => setAddingTactic(true)} disabled={army.countNonUniqueTactics() >= army.tacticsLimit} >
-                    New Tactic
-                </Button>
+                {gmView &&
+                    <Button onClick={() => setAddingTactic(true)} disabled={army.countNonUniqueTactics() >= army.tacticsLimit} >
+                        New Tactic
+                    </Button>
+                }
                 <Typography>
                     Tactics ({army.countNonUniqueTactics()} / {army.tacticsLimit}):
                 </Typography>
@@ -104,9 +119,11 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
             </div>
             <Divider />
             <div>
-                <Button onClick={() => setAddingGear(true)}>
-                    Add Gear
-                </Button>
+                {gmView &&
+                    <Button onClick={() => setAddingGear(true)}>
+                        Add Gear
+                    </Button>
+                }
                 <Typography>
                     Gear:
                 </Typography>
@@ -117,9 +134,11 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy }) => {
                                 <Delete />
                             </IconButton>
                         }>
-                            <Typography>
-                                {gearName}: {gearValue}
-                            </Typography>
+                            <Tooltip title={gearMap[gearName].text} placement="left">
+                                <Typography>
+                                    {gearName}: {gearValue}
+                                </Typography>
+                            </Tooltip>
                         </ListItem>
                     )}
                 </List>

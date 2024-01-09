@@ -15,9 +15,10 @@ const columns = ["Name", "Health", "Conditions"];
 interface WarfareProps {
     mapId: string;
     level: number;
+    gmView: boolean
 }
 
-const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
+const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView }) => {
     const [previewArmy, setPreviewArmy] = useState<Army>();
     const [conditionReceiverArmy, setConditionReceiverArmy] = useState<Army>();
     const [armies, setArmies] = useState<Army[]>([]);
@@ -114,7 +115,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
                     <TableBody>
                         {armies.map((army, index) => {
                             return (
-                                <TableRow hover tabIndex={-1} key={index}>
+                                <TableRow hover tabIndex={-1} key={index} sx={{ bgcolor: !gmView ? undefined : army.ally ? "darkolivegreen" : "brown" }}>
                                     <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
                                     <TableCell width={"150px"}>
                                         <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
@@ -159,7 +160,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level }) => {
             </TableContainer>
         </Paper>
         <Drawer anchor="right" open={previewArmy !== undefined} onClose={_ => onCloseArmyEdit()}>
-            {previewArmy && <ArmyEdit army={previewArmy} updateArmy={editArmy} />}
+            {previewArmy && <ArmyEdit army={previewArmy} updateArmy={editArmy} gmView={gmView} />}
         </Drawer>
     </div>;
 };

@@ -13,9 +13,10 @@ interface DataProps {
     mapId: string;
     hexData: Record<string, MapHexData>;
     level: number;
+    gmView: boolean;
 }
 
-const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData }) => {
+const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView }) => {
     const [tabValue, setTabValue] = useState(0);
 
     const [mapStats, setMapStats] = useState<MapStats>({
@@ -76,7 +77,7 @@ const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData }) => {
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
             </TabPanel>
             <TabPanel index={tabValue} value={2}>
-                <Warfare mapId={mapId} level={level} />
+                <Warfare mapId={mapId} level={level} gmView={gmView} />
             </TabPanel>
         </Box>
     );

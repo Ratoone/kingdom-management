@@ -40,7 +40,7 @@ const App: React.FC = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <OverlayAccordion>
-                <KingdomData mapId={mapId} hexData={hexData} level={level} />
+                <KingdomData mapId={mapId} hexData={hexData} level={level} gmView={role === Role.GM} />
             </OverlayAccordion>
 
             <ConditionalWrapper
