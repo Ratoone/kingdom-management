@@ -10,6 +10,9 @@ import { TerrainType } from "../../features/map/TerrainType";
 import PartyToken from "./PartyToken";
 import { Role } from "../login/Role";
 import { readMapData, updateMapData, updatePartyPosition } from "../../features/firestore/MapDataDao";
+import { Box } from "@mui/material";
+import { rollDice } from "../../features/tables/DiceRoller";
+import { randomEncounterDC, roadModifier } from "../../features/tables/RandomEncounter";
 
 interface MapProps {
     role: Role;
@@ -26,8 +29,8 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, s
     const [partyPosition, setPartyPosition] = useState({ x: 0, y: 0 });
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
-    const [draggedHex, setDraggedHex] = useState<MapHexData | undefined>(undefined);
     const [loading, setLoading] = useState<boolean>(true);
+    const [encounterText, setEncounterText] = useState<String>("");
 
     const handleHexClick = (event: React.MouseEvent<SVGElement, MouseEvent>, hex: Hex) => {
         const boundingRect = event.currentTarget.getBoundingClientRect();
@@ -70,6 +73,11 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, s
 
     const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
+        const dragType = event.dataTransfer.getData("type");
+        if (dragType !== "party") {
+            return;
+        }
+
         const boundingRect = event.currentTarget.getBoundingClientRect();
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
@@ -85,7 +93,7 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, s
             updateHexData(hex, hexData);
         }
 
-        setDraggedHex(hexData);
+        handleDragEnd(hexData);
     };
 
     const unsubscribe = useMemo(() => {
@@ -98,6 +106,24 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, s
             });
         }
     }, []);
+
+    function handleDragEnd(hexData: MapHexData): void {
+        const encounterFlatCheck = rollDice(1, 20);
+        const difficultyClass: number = randomEncounterDC[hexData?.terrainType as TerrainType] + (hexData?.roads ? roadModifier : 0);
+        setEncounterText(`Rolled ${encounterFlatCheck}, DC is ${difficultyClass}. Encounter: ${(encounterFlatCheck >= difficultyClass ? "YES" : "NO")}`);
+    }
+
+    useEffect(() => {
+        if (encounterText.length > 0) {
+            const timeoutId = setTimeout(() => {
+                setEncounterText("");
+            }, 5000);
+
+            return () => {
+                clearTimeout(timeoutId);
+            };
+        }
+    }, [encounterText]);
 
     useEffect(() => {
         if (role === Role.GM && Object.keys(hexData).length !== 0) {
@@ -154,7 +180,14 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, mapId, hexData, setHexData, s
                     onSave={handleSave}
                 />
             )}
-            <PartyToken x={partyPosition.x} y={partyPosition.y} hexData={draggedHex} />
+            <div className="draggable-icon" style={{
+                left: partyPosition.x,
+                top: partyPosition.y,
+            }}>
+                <PartyToken />
+                <Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>
+            </div>
+
         </div>
     );
 };
