@@ -7,14 +7,12 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import OverlayAccordion from "./utils/OverlayAccordion";
 import KingdomData from "./kingdom/KingdomData";
 import { MapHexData } from "./map/MapHex";
-import {CssBaseline, ThemeProvider, createTheme, Box} from "@mui/material";
+import {CssBaseline, ThemeProvider, createTheme} from "@mui/material";
 import React from "react";
 import {readMapData, updateMapData, updatePartyPosition} from "../features/firestore/MapDataDao";
-import PartyToken from "./map/PartyToken";
 import {Hex} from "react-hexgrid";
-import {rollDice} from "../features/tables/DiceRoller";
-import {randomEncounterDC, roadModifier} from "../features/tables/RandomEncounter";
-import {TerrainType} from "../features/map/TerrainType";
+import {TokenOverlay} from "./map/TokenOverlay";
+import {TokenPosition} from "../features/map/TokenPosition";
 
 // @ts-ignore
 const ConditionalWrapper = ({ condition, wrapper, children }) =>
@@ -32,8 +30,7 @@ const App: React.FC = () => {
     const [hexData, setHexData] = useState<Record<string, MapHexData>>({});
     const [level, setLevel] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
-    const [partyPosition, setPartyPosition] = useState({ x: 0, y: 0 });
-    const [encounterText, setEncounterText] = useState<string>("");
+    const [partyPosition, setPartyPosition] = useState<TokenPosition>({ x: 0, y: 0, q: -1, r: -1 });
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
@@ -50,13 +47,13 @@ const App: React.FC = () => {
             return readMapData(mapId, result => {
                 const [data, pos, level] = result;
                 setHexData(data as Record<string, MapHexData> ?? {});
-                setPartyPosition(pos as { x: number, y: number });
+                setPartyPosition(pos as TokenPosition);
                 setLevel(level as number);
             });
         }
     }, [mapId]);
 
-    const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex, hexData: MapHexData) => {
+    const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
         const dragType = event.dataTransfer.getData("type");
         if (dragType !== "party") {
@@ -68,13 +65,11 @@ const App: React.FC = () => {
         const scrollY = window.scrollY;
         setPartyPosition({
             x: boundingRect.x + scrollX + boundingRect.width / 2,
-            y: boundingRect.y + scrollY + boundingRect.height / 2
+            y: boundingRect.y + scrollY + boundingRect.height / 2,
+            q: hex.q,
+            r: hex.r
         }
         );
-
-        const encounterFlatCheck = rollDice(1, 20);
-        const difficultyClass: number = randomEncounterDC[hexData?.terrainType as TerrainType] + (hexData?.roads ? roadModifier : 0);
-        setEncounterText(`Rolled ${encounterFlatCheck}, DC is ${difficultyClass}. Encounter: ${(encounterFlatCheck >= difficultyClass ? "YES" : "NO")}`);
     };
 
     useEffect(() => {
@@ -90,21 +85,9 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (role === Role.GM && partyPosition.x !== 0 && partyPosition.y !== 0 && !loading) {
-            updatePartyPosition(mapId, partyPosition.x, partyPosition.y).catch(console.log);
+            updatePartyPosition(mapId, partyPosition.x, partyPosition.y, partyPosition.q, partyPosition.r).catch(console.log);
         }
     }, [partyPosition]);
-
-    useEffect(() => {
-        if (encounterText.length > 0) {
-            const timeoutId = setTimeout(() => {
-                setEncounterText("");
-            }, 5000);
-
-            return () => {
-                clearTimeout(timeoutId);
-            };
-        }
-    }, [encounterText]);
 
     if (role === Role.Unauthenticated) {
         return <LoginRegister onLoadMap={handleLoadMap} />;
@@ -128,13 +111,9 @@ const App: React.FC = () => {
                     </TransformWrapper>
                 }>
                 <HexagonalGrid role={role} hexData={hexData} setHexData={setHexData} droppedToken={handleDrop} />
-                <div className="draggable-icon" style={{
-                    left: partyPosition.x,
-                    top: partyPosition.y,
-                }}>
-                    <PartyToken />
-                    <Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>
-                </div>
+                {!loading &&
+                    <TokenOverlay partyPosition={partyPosition} hexMapData={hexData} gmView={role === Role.GM} />
+                }
             </ConditionalWrapper>
         </ThemeProvider>
     );

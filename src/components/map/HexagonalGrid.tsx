@@ -13,7 +13,7 @@ interface MapProps {
     role: Role;
     hexData: Record<string, MapHexData>,
     setHexData: React.Dispatch<React.SetStateAction<Record<string, MapHexData>>>,
-    droppedToken: (event: React.DragEvent<HTMLElement>, hex: Hex, hexData: MapHexData) => void;
+    droppedToken: (event: React.DragEvent<HTMLElement>, hex: Hex) => void;
 }
 
 const HexagonalGrid: React.FC<MapProps> = ({ role, hexData, setHexData, droppedToken }) => {
@@ -69,7 +69,7 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, hexData, setHexData, droppedT
             updateHexData(hex, hexData);
         }
 
-        droppedToken(event, hex, hexData);
+        droppedToken(event, hex);
     };
 
     return (
