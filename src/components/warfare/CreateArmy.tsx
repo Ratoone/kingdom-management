@@ -12,12 +12,12 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import templates from "../../assets/army_templates.json";
 import { Army } from "../../features/warfare/Army";
 import { ArmyType } from "../../features/warfare/ArmyType";
-import {getDcByLevel} from "../../features/tables/DcByLevel";
-import {SpecializedArmyAdjustment} from "../../features/warfare/SpecializedArmyAdjustment";
+import { getDcByLevel } from "../../features/tables/DcByLevel";
+import { SpecializedArmyAdjustment } from "../../features/warfare/SpecializedArmyAdjustment";
 
 interface CreateArmyProps {
     level: number;
@@ -45,7 +45,13 @@ const CreateArmy: React.FC<CreateArmyProps> = ({ level, saveArmy }) => {
             name,
             level,
             armyType: (armyTemplate.armyType as ArmyType),
-            highManeuver: armyTemplate.highManeuver
+            highManeuver: armyTemplate.highManeuver,
+            position: {
+                x: 1000,
+                y: 1000,
+                q: -1,
+                r: -1
+            }
         });
 
         saveArmy(army);

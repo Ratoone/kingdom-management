@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Role } from "./login/Role";
 import HexagonalGrid from "./map/HexagonalGrid";
 import LoginRegister from "./login/LoginRegister";
@@ -7,12 +7,14 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import OverlayAccordion from "./utils/OverlayAccordion";
 import KingdomData from "./kingdom/KingdomData";
 import { MapHexData } from "./map/MapHex";
-import {CssBaseline, ThemeProvider, createTheme} from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import React from "react";
-import {readMapData, updateMapData, updatePartyPosition} from "../features/firestore/MapDataDao";
-import {Hex} from "react-hexgrid";
-import {TokenOverlay} from "./map/TokenOverlay";
-import {TokenPosition} from "../features/map/TokenPosition";
+import { readMapData, updateMapData, updatePartyPosition } from "../features/firestore/MapDataDao";
+import { Hex } from "react-hexgrid";
+import { TokenOverlay } from "./map/TokenOverlay";
+import { TokenPosition } from "../features/map/TokenPosition";
+import { Army } from "../features/warfare/Army";
+import { updateArmy } from "../features/firestore/WarfareDao";
 
 // @ts-ignore
 const ConditionalWrapper = ({ condition, wrapper, children }) =>
@@ -31,6 +33,7 @@ const App: React.FC = () => {
     const [level, setLevel] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [partyPosition, setPartyPosition] = useState<TokenPosition>({ x: 0, y: 0, q: -1, r: -1 });
+    const [armies, setArmies] = useState<Army[]>([]);
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
@@ -53,23 +56,43 @@ const App: React.FC = () => {
         }
     }, [mapId]);
 
+
+
     const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
         const dragType = event.dataTransfer.getData("type");
-        if (dragType !== "party") {
-            return;
-        }
-
         const boundingRect = event.currentTarget.getBoundingClientRect();
         const scrollX = window.scrollX;
         const scrollY = window.scrollY;
-        setPartyPosition({
+        const draggedLocation = {
             x: boundingRect.x + scrollX + boundingRect.width / 2,
             y: boundingRect.y + scrollY + boundingRect.height / 2,
             q: hex.q,
             r: hex.r
+        };
+
+        if (dragType === "party") {
+            setPartyPosition(draggedLocation);
         }
-        );
+
+        if (dragType === "army") {
+            const armyId = event.dataTransfer.getData("entityId");
+            const army = armies.find(armyIt => armyIt.id === armyId);
+            if (!army) {
+                return;
+            }
+
+            army.position = draggedLocation;
+
+            updateArmy(army).then(() => {
+                setArmies(armies.map(oldArmy => {
+                    if (oldArmy.id === army.id) {
+                        return army;
+                    }
+                    return oldArmy;
+                }));
+            });
+        }
     };
 
     useEffect(() => {
@@ -97,7 +120,7 @@ const App: React.FC = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <OverlayAccordion>
-                <KingdomData mapId={mapId} hexData={hexData} level={level} gmView={role === Role.GM} />
+                <KingdomData mapId={mapId} hexData={hexData} level={level} gmView={role === Role.GM} armies={armies} setArmies={setArmies} />
             </OverlayAccordion>
 
             <ConditionalWrapper
@@ -112,7 +135,7 @@ const App: React.FC = () => {
                 }>
                 <HexagonalGrid role={role} hexData={hexData} setHexData={setHexData} droppedToken={handleDrop} />
                 {!loading &&
-                    <TokenOverlay partyPosition={partyPosition} hexMapData={hexData} gmView={role === Role.GM} />
+                    <TokenOverlay armies={armies} partyPosition={partyPosition} hexMapData={hexData} gmView={role === Role.GM} />
                 }
             </ConditionalWrapper>
         </ThemeProvider>

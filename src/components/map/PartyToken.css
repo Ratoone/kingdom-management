@@ -1,5 +1,4 @@
-#party-token {
-    width: 150px;
+.party-token {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,6 +1,6 @@
 import { Chip, Drawer, Paper, Slider, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Army } from "../../features/warfare/Army";
 import { ArmyEdit } from "./ArmyEdit";
 import "./Warfare.css";
@@ -15,17 +15,20 @@ const columns = ["Name", "Health", "Conditions"];
 interface WarfareProps {
     mapId: string;
     level: number;
-    gmView: boolean
+    gmView: boolean;
+    armies: Array<Army>;
+    setArmies: React.Dispatch<React.SetStateAction<Array<Army>>>;
 }
 
-const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView }) => {
+const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmies }) => {
     const [previewArmy, setPreviewArmy] = useState<Army>();
     const [conditionReceiverArmy, setConditionReceiverArmy] = useState<Army>();
-    const [armies, setArmies] = useState<Army[]>([]);
 
-    useEffect(() => {
-        getArmies(mapId, level).then(armies => setArmies(armies));
-    }, []);
+    const unsubscribe = useMemo(() => {
+        if (armies.length === 0) {
+            return getArmies(mapId, level, setArmies);
+        }
+    }, [mapId]);
 
     const addCondition = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, army: Army) => {
         e.preventDefault();
@@ -96,6 +99,12 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView }) => {
         editArmy(previewArmy as Army);
         setPreviewArmy(undefined);
     };
+
+    useEffect(() => {
+        if (gmView && unsubscribe && armies.length > 0) {
+            unsubscribe();
+        }
+    }, [armies]);
 
     return <div>
         <Paper sx={{ overflow: "hidden" }}>

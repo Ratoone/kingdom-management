@@ -8,15 +8,18 @@ import { TerrainFeature } from "../../features/map/TerrainFeature";
 import TabPanel from "../utils/TabPanel";
 import { getResourceDie } from "../../features/tables/SizeTable";
 import { Warfare } from "../warfare/Warfare";
+import { Army } from "../../features/warfare/Army";
 
 interface DataProps {
     mapId: string;
     hexData: Record<string, MapHexData>;
     level: number;
     gmView: boolean;
+    armies: Array<Army>;
+    setArmies: React.Dispatch<React.SetStateAction<Array<Army>>>;
 }
 
-const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView }) => {
+const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView, armies, setArmies }) => {
     const [tabValue, setTabValue] = useState(0);
 
     const [mapStats, setMapStats] = useState<MapStats>({
@@ -77,7 +80,7 @@ const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView }) => 
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
             </TabPanel>
             <TabPanel index={tabValue} value={2}>
-                <Warfare mapId={mapId} level={level} gmView={gmView} />
+                <Warfare mapId={mapId} level={level} gmView={gmView} armies={armies} setArmies={setArmies} />
             </TabPanel>
         </Box>
     );

@@ -2,15 +2,21 @@ import token from "../../assets/images/party_token.png";
 import "./PartyToken.css";
 import React from "react";
 
-const PartyToken: React.FC = () => {
+interface DragableTokenProps {
+    type: string;
+    entityId: string;
+}
+
+const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId }) => {
     const handleDragStart = (event: React.DragEvent<HTMLElement>) => {
         event.dataTransfer.setData("hexagon", "{}");
-        event.dataTransfer.setData("type", "party");
+        event.dataTransfer.setData("type", type);
+        event.dataTransfer.setData("entityId", entityId);
     };
 
     return (
         <div
-            id="party-token"
+            className="party-token"
             draggable="true"
             onDragStart={handleDragStart}
         >
@@ -22,4 +28,4 @@ const PartyToken: React.FC = () => {
     );
 };
 
-export default PartyToken;
+export default DragableToken;

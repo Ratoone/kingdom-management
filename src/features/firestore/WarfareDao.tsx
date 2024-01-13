@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, query, setDoc, where } from "firebase/firestore";
+import { Unsubscribe, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { Army, armyConverter } from "../warfare/Army";
 import { db } from "./FirestoreDB";
 
@@ -17,12 +17,15 @@ const addArmy = async (army: Army): Promise<string> => {
     return (await addDoc(collection(db, "warfare").withConverter(armyConverter), army)).id;
 };
 
-const getArmies = async (mapId: string, level: number): Promise<Array<Army>> => {
+const getArmies = (mapId: string, level: number, callback: (data: Array<Army>) => void): Unsubscribe => {
     const armyQuery = query(collection(db, "warfare").withConverter(armyConverter), where("mapId", "==", mapId));
-    return (await getDocs(armyQuery)).docs.map(doc => {
-        const army = doc.data() as Army;
-        army.level = level;
-        return army;
+    return onSnapshot(armyQuery, snap => {
+        const armies = snap.docs.map(doc => {
+            const army = doc.data() as Army;
+            army.level = level;
+            return army;
+        });
+        callback(armies);
     });
 };
 

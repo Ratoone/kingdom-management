@@ -8,11 +8,11 @@ import {
     maxTactics,
     scoutingByLevel
 } from "../tables/WarfareTable";
-import { getDcByLevel } from "../tables/DcByLevel";
 import { SpecializedArmyAdjustment } from "./SpecializedArmyAdjustment";
 import { FirestoreDataConverter } from "firebase/firestore";
 import { ConditionType, createCondition } from "./conditions/ConditionTypes";
 import { tacticsMap } from "./TacticsDatabase";
+import { TokenPosition } from "../map/TokenPosition";
 
 class Army {
     id: string = "";
@@ -21,6 +21,7 @@ class Army {
     level: number = 1;
     armyType: ArmyType;
     highManeuver: boolean;
+    position: TokenPosition;
     tactics: string[] = [];
     conditions: Condition[] = [];
     gear: [string, number][] = [];
@@ -31,7 +32,7 @@ class Army {
     constructor(data: {
         id?: string, mapId?: string, name: string, armyType: ArmyType, highManeuver: boolean, level?: number,
         tactics?: string[], adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[],
-        gear?: [string, number][], ally?: boolean
+        gear?: [string, number][], ally?: boolean, position: TokenPosition
     }) {
         this.id = data.id ?? "";
         this.mapId = data.mapId ?? "";
@@ -45,6 +46,7 @@ class Army {
         this.conditions = data.conditions ?? [];
         this.gear = data.gear ?? [];
         this.ally = data.ally ?? false;
+        this.position = data.position;
     }
 
     public get scouting(): number {
@@ -155,7 +157,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
                     value: gearValue
                 };
             }),
-            ally: army.ally
+            ally: army.ally,
+            position: army.position
         };
     },
 
@@ -171,7 +174,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             conditions: Object.entries(data.conditions).map(([condition, value]) => { return createCondition(condition as ConditionType, value as number); }),
             tactics: data.tactics,
             gear: data.gear.map((gear: { gear: string; value: number; }) => [gear.gear, gear.value]),
-            ally: data.ally
+            ally: data.ally,
+            position: data.position
         });
     }
 };
