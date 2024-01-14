@@ -99,10 +99,12 @@ const App: React.FC = () => {
         if (role === Role.GM && Object.keys(hexData).length !== 0) {
             if (unsubscribe !== undefined && loading) {
                 unsubscribe();
-                setLoading(false);
             } else {
                 updateMapData(mapId, hexData).catch(console.error);
             }
+        }
+        if (loading && Object.keys(hexData).length !== 0) {
+            setLoading(false);
         }
     }, [hexData]);
 

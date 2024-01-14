@@ -122,9 +122,9 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {armies.map((army, index) => {
-                            return (
-                                <TableRow hover tabIndex={-1} key={index} sx={{ bgcolor: !gmView ? undefined : army.ally ? "darkolivegreen" : "brown" }}>
+                        {armies.map((army, index) =>
+                            (gmView || army.ally) ? (
+                                <TableRow hover tabIndex={-1} key={index} sx={{ bgcolor: army.ally ? "darkolivegreen" : "brown" }}>
                                     <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
                                     <TableCell width={"150px"}>
                                         <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
@@ -162,8 +162,7 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
                                         </Stack>
                                     </TableCell>
                                 </TableRow>
-                            );
-                        })}
+                            ) : "")}
                     </TableBody>
                 </Table>
             </TableContainer>

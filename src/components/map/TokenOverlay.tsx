@@ -7,6 +7,7 @@ import { TerrainType } from "../../features/map/TerrainType";
 import { TokenPosition } from "../../features/map/TokenPosition";
 import { MapHexData } from "./MapHex";
 import { Army } from "../../features/warfare/Army";
+import {HexplorationState} from "../../features/map/HexplorationState";
 
 interface TokenOverlayProps {
     partyPosition: TokenPosition;
@@ -15,7 +16,7 @@ interface TokenOverlayProps {
     armies: Array<Army>;
 }
 
-const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, armies }) => {
+const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, armies, gmView }) => {
     const [encounterText, setEncounterText] = useState<string>("");
 
     const armyLocations = armies.reduce((locations: Record<string, Array<Army>>, army) => {
@@ -27,6 +28,14 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
         locations[locationString].push(army);
         return locations;
     }, {});
+
+    const armyVisible = (army: Army, armyLocation: Array<Army>): boolean => {
+        const currentHex = hexMapData[army.position.q + "," + army.position.r];
+        return gmView ||
+            army.ally ||
+            (!!currentHex && currentHex.state === HexplorationState.Claimed) ||
+            !!armyLocation.find(army => army.ally);
+    };
 
     useEffect(() => {
         if (encounterText.length > 0) {
@@ -59,13 +68,16 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
                     left: armyLocation[0].position.x,
                     top: armyLocation[0].position.y
                 }}>
-                    {armyLocation.map(army => (
-                        <div key={army.id} style={{
-                            filter: "grayscale(100%)",
-                        }}>
-                            <DragableToken type="army" entityId={army.id} />
-                        </div>
-                    ))}
+                    {armyLocation.map(army =>
+                        armyVisible(army, armyLocation) ?
+                            (
+                                <div key={army.id} style={{
+                                    filter: `grayscale(100%) sepia(100%) hue-rotate(${army.ally ? 90 : 270}deg)`,
+                                }}>
+                                    <DragableToken type="army" entityId={army.id} />
+                                </div>
+                            ) : "")
+                    }
                 </div>
 
             ))}
@@ -75,7 +87,7 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
                 width: "150px"
             }}>
                 <DragableToken type="party" entityId="" />
-                <Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>
+                {gmView && (<Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>)}
             </div>
         </>
     );
