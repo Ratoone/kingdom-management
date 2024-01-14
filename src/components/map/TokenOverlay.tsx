@@ -74,7 +74,7 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
                                 <div key={army.id} style={{
                                     filter: `grayscale(100%) sepia(100%) hue-rotate(${army.ally ? 90 : 270}deg)`,
                                 }}>
-                                    <DragableToken type="army" entityId={army.id} />
+                                    <DragableToken type="army" entityId={army.id} token={army.armyType} />
                                 </div>
                             ) : "")
                     }
@@ -86,7 +86,7 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
                 top: partyPosition.y,
                 width: "150px"
             }}>
-                <DragableToken type="party" entityId="" />
+                <DragableToken type="party" entityId="" token="party" />
                 {gmView && (<Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>)}
             </div>
         </>

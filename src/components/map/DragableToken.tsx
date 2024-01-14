@@ -1,17 +1,38 @@
-import token from "../../assets/images/party_token.png";
+import party from "../../assets/images/party_token.png";
+import skirmisher from "../../assets/images/skirmisher.png";
+import infantry from "../../assets/images/infantry.png";
+import cavalry from "../../assets/images/cavalry.png";
+import siege from "../../assets/images/siege.png";
 import "./PartyToken.css";
 import React from "react";
 
 interface DragableTokenProps {
     type: string;
     entityId: string;
+    token: string
 }
 
-const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId }) => {
+const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId, token }) => {
     const handleDragStart = (event: React.DragEvent<HTMLElement>) => {
         event.dataTransfer.setData("hexagon", "{}");
         event.dataTransfer.setData("type", type);
         event.dataTransfer.setData("entityId", entityId);
+    };
+
+    const pickToken = () => {
+        console.log(token);
+        switch (token) {
+            case "Skirmisher":
+                return skirmisher;
+            case "Infantry":
+                return infantry;
+            case "Cavalry":
+                return cavalry;
+            case "Siege":
+                return siege;
+            default:
+                return party;
+        }
     };
 
     return (
@@ -20,7 +41,7 @@ const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId }) => {
             draggable="true"
             onDragStart={handleDragStart}
         >
-            <img src={token} style={{
+            <img src={pickToken()} style={{
                 width: "50%",
                 cursor: "move",
             }} />
