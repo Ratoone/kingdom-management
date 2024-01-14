@@ -1,4 +1,17 @@
-import { Chip, Drawer, Paper, Slider, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+    Chip,
+    Drawer,
+    IconButton,
+    Paper,
+    Slider,
+    Stack,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useEffect, useMemo, useState } from "react";
 import { Army } from "../../features/warfare/Army";
@@ -7,8 +20,9 @@ import "./Warfare.css";
 import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
 import { CreateArmy } from "./CreateArmy";
-import { addArmy, getArmies, updateArmy } from "../../features/firestore/WarfareDao";
+import {addArmy, deleteArmy, getArmies, updateArmy} from "../../features/firestore/WarfareDao";
 import { AddArmyCondition } from "./AddArmyCondition";
+import {Delete} from "@mui/icons-material";
 
 const columns = ["Name", "Health", "Conditions"];
 
@@ -86,6 +100,14 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
         });
     };
 
+    const removeArmy = (army: Army) => {
+        deleteArmy(army.id).then(() => {
+            const index = armies.indexOf(army);
+            armies.splice(index, 1);
+            setArmies(armies);
+        });
+    };
+
     const updateHp = (e: Event, newValue: number, army: Army) => {
         e.preventDefault();
         e.stopPropagation();
@@ -119,6 +141,11 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
                                     {column}
                                 </TableCell>
                             ))}
+                            {gmView && (
+                                <TableCell>
+                                    Delete
+                                </TableCell>
+                            )}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -161,6 +188,13 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
                                             ))}
                                         </Stack>
                                     </TableCell>
+                                    {gmView && (
+                                        <TableCell>
+                                            <IconButton edge="end" onClick={() => removeArmy(army)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             ) : "")}
                     </TableBody>
