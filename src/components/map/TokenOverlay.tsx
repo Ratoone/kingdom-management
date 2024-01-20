@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DragableToken from "./DragableToken";
+import "./PartyToken.css";
 import { Box } from "@mui/material";
 import { rollDice } from "../../features/tables/DiceRoller";
 import { randomEncounterDC, roadModifier } from "../../features/tables/RandomEncounter";
@@ -14,9 +15,18 @@ interface TokenOverlayProps {
     hexMapData: Record<string, MapHexData>;
     gmView: boolean;
     armies: Array<Army>;
+    hoveredArmy: Army | undefined;
+    setHoveredArmy: React.Dispatch<React.SetStateAction<Army | undefined>>;
 }
 
-const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, armies, gmView }) => {
+const TokenOverlay: React.FC<TokenOverlayProps> = ({ 
+    partyPosition, 
+    hexMapData, 
+    armies, 
+    gmView,
+    hoveredArmy,
+    setHoveredArmy 
+}) => {
     const [encounterText, setEncounterText] = useState<string>("");
 
     const armyLocations = armies.reduce((locations: Record<string, Array<Army>>, army) => {
@@ -72,8 +82,8 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({ partyPosition, hexMapData, 
                         armyVisible(army, armyLocation) ?
                             (
                                 <div key={army.id} style={{
-                                    filter: `grayscale(100%) sepia(100%) hue-rotate(${army.ally ? 90 : 270}deg)`,
-                                }}>
+                                    filter: `grayscale(100%) sepia(100%) hue-rotate(${army.ally ? 90 : 270}deg) brightness(${army === hoveredArmy ? "0.4" : "1"})`,
+                                }} onMouseEnter={() => setHoveredArmy(army)} onMouseLeave={() => setHoveredArmy(undefined)}>
                                     <DragableToken type="army" entityId={army.id} token={army.armyType} />
                                 </div>
                             ) : "")

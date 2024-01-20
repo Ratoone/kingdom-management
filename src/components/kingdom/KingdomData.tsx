@@ -17,9 +17,20 @@ interface DataProps {
     gmView: boolean;
     armies: Array<Army>;
     setArmies: React.Dispatch<React.SetStateAction<Array<Army>>>;
+    hoveredArmy: Army | undefined;
+    setHoveredArmy: React.Dispatch<React.SetStateAction<Army | undefined>>;
 }
 
-const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView, armies, setArmies }) => {
+const KingdomData: React.FC<DataProps> = ({ 
+    mapId, 
+    level, 
+    hexData, 
+    gmView, 
+    armies, 
+    setArmies,
+    hoveredArmy,
+    setHoveredArmy
+}) => {
     const [tabValue, setTabValue] = useState(0);
 
     const [mapStats, setMapStats] = useState<MapStats>({
@@ -80,7 +91,15 @@ const KingdomData: React.FC<DataProps> = ({ mapId, level, hexData, gmView, armie
                 <Typography>Stone Production: {mapStats.commodityProduction[CommodityType.Stone]}</Typography>
             </TabPanel>
             <TabPanel index={tabValue} value={2}>
-                <Warfare mapId={mapId} level={level} gmView={gmView} armies={armies} setArmies={setArmies} />
+                <Warfare
+                    mapId={mapId}
+                    level={level}
+                    gmView={gmView}
+                    armies={armies}
+                    setArmies={setArmies}
+                    hoveredArmy={hoveredArmy}
+                    setHoveredArmy={setHoveredArmy}
+                />
             </TabPanel>
         </Box>
     );

@@ -34,6 +34,7 @@ const App: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [partyPosition, setPartyPosition] = useState<TokenPosition>({ x: 0, y: 0, q: -1, r: -1 });
     const [armies, setArmies] = useState<Army[]>([]);
+    const [hoveredArmy, setHoveredArmy] = useState<Army>();
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
@@ -55,8 +56,6 @@ const App: React.FC = () => {
             });
         }
     }, [mapId]);
-
-
 
     const handleDrop = (event: React.DragEvent<HTMLElement>, hex: Hex) => {
         event.preventDefault();
@@ -122,7 +121,16 @@ const App: React.FC = () => {
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <OverlayAccordion>
-                <KingdomData mapId={mapId} hexData={hexData} level={level} gmView={role === Role.GM} armies={armies} setArmies={setArmies} />
+                <KingdomData
+                    mapId={mapId}
+                    hexData={hexData}
+                    level={level}
+                    gmView={role === Role.GM}
+                    armies={armies}
+                    setArmies={setArmies}
+                    hoveredArmy={hoveredArmy}
+                    setHoveredArmy={setHoveredArmy}
+                />
             </OverlayAccordion>
 
             <ConditionalWrapper
@@ -137,7 +145,14 @@ const App: React.FC = () => {
                 }>
                 <HexagonalGrid role={role} hexData={hexData} setHexData={setHexData} droppedToken={handleDrop} />
                 {!loading &&
-                    <TokenOverlay armies={armies} partyPosition={partyPosition} hexMapData={hexData} gmView={role === Role.GM} />
+                    <TokenOverlay
+                        armies={armies}
+                        partyPosition={partyPosition}
+                        hexMapData={hexData}
+                        gmView={role === Role.GM}
+                        setHoveredArmy={setHoveredArmy}
+                        hoveredArmy={hoveredArmy}
+                    />
                 }
             </ConditionalWrapper>
         </ThemeProvider>

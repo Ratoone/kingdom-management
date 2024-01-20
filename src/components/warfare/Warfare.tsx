@@ -32,9 +32,19 @@ interface WarfareProps {
     gmView: boolean;
     armies: Array<Army>;
     setArmies: React.Dispatch<React.SetStateAction<Array<Army>>>;
+    hoveredArmy: Army | undefined;
+    setHoveredArmy: React.Dispatch<React.SetStateAction<Army | undefined>>;
 }
 
-const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmies }) => {
+const Warfare: React.FC<WarfareProps> = ({ 
+    mapId, 
+    level, 
+    gmView, 
+    armies, 
+    setArmies,
+    hoveredArmy,
+    setHoveredArmy
+}) => {
     const [previewArmy, setPreviewArmy] = useState<Army>();
     const [conditionReceiverArmy, setConditionReceiverArmy] = useState<Army>();
 
@@ -128,6 +138,10 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
         }
     }, [armies]);
 
+    useEffect(() => {
+        setHoveredArmy(previewArmy);
+    }, [previewArmy]);
+
     return <div>
         <Paper sx={{ overflow: "hidden" }}>
             <CreateArmy level={level} saveArmy={saveArmy} />
@@ -151,7 +165,17 @@ const Warfare: React.FC<WarfareProps> = ({ mapId, level, gmView, armies, setArmi
                     <TableBody>
                         {armies.map((army, index) =>
                             (gmView || army.ally) ? (
-                                <TableRow hover tabIndex={-1} key={index} sx={{ bgcolor: army.ally ? "darkolivegreen" : "brown" }}>
+                                <TableRow
+                                    hover={true}
+                                    tabIndex={-1}
+                                    key={index}
+                                    sx={{
+                                        bgcolor: army.ally ? "darkolivegreen" : "brown",
+                                        filter: `brightness(${army === hoveredArmy ? "0.4" : "1"})`
+                                    }}
+                                    onMouseEnter={_ => setHoveredArmy(army)}
+                                    onMouseLeave={_ => setHoveredArmy(previewArmy)}
+                                >
                                     <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
                                     <TableCell width={"150px"}>
                                         <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
