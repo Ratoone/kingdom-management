@@ -51,7 +51,9 @@ const CreateArmy: React.FC<CreateArmyProps> = ({ level, saveArmy }) => {
                 y: 1000,
                 q: -1,
                 r: -1
-            }
+            },
+            adjustment: armyTemplate.adjustment,
+            tactics: armyTemplate.uniqueTactics
         });
 
         saveArmy(army);

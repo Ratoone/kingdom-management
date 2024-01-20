@@ -158,7 +158,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
                 };
             }),
             ally: army.ally,
-            position: army.position
+            position: army.position,
+            adjustment: army._adjustment ?? {}
         };
     },
 
@@ -175,7 +176,8 @@ const armyConverter: FirestoreDataConverter<Army> = {
             tactics: data.tactics,
             gear: data.gear.map((gear: { gear: string; value: number; }) => [gear.gear, gear.value]),
             ally: data.ally,
-            position: data.position
+            position: data.position,
+            adjustment: data.adjustment
         });
     }
 };

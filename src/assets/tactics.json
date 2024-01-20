@@ -177,5 +177,11 @@
     "units": [
       "Cavalry", "Infantry", "Skirmisher", "Siege"
     ]
+  },
+  {
+    "name": "Accustomed to Panic",
+    "unique": true,
+    "level": 1,
+    "text": "Reaction. Trigger The Sootscale Warriors' shaken condition increases while they are not routed. Effect The Sootscales take comfort in their fear and channel the panic into energy. Rather than increase their shaken condition, they reduce their weary condition value by 1. Additionally, when the Sootscales use the Disengage action, the result is improved one degree."
   }
 ]

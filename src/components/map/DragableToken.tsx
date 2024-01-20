@@ -20,7 +20,6 @@ const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId, token }) 
     };
 
     const pickToken = () => {
-        console.log(token);
         switch (token) {
             case "Skirmisher":
                 return skirmisher;

@@ -24,13 +24,16 @@ const AddArmyTactic: React.FC<AddArmyTacticProps> = ({ army, updateArmy, onClose
             <Stack>
                 {Object.keys(tacticsMap)
                     .filter(tactic => tacticsMap[tactic].level <= army.level)
+                    .filter(tactic => !tacticsMap[tactic].unique)
+                    .filter(tactic => !!tacticsMap[tactic].units.find(unitType => unitType === army.armyType))
                     .map(
                         (tactic) => {
                             return (
                                 <Tooltip key={tactic} title={tacticsMap[tactic].text} placement="right">
                                     <Button
                                         value={tactic}
-                                        onClick={() => addTactic(tactic)}
+                                        onClick={() =>
+                                            addTactic(tactic)}
                                         disabled={!!army.tactics.find(armyTactics => armyTactics === tactic && !tacticsMap[tactic].repeatable)}>
                                         <div style={{ display: "flex", width: "250px", justifyContent: "space-between" }}>
                                             <div>{tactic}</div>
