@@ -1,0 +1,207 @@
+[
+  {
+    "name": "Advance",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "tags": [
+      "Maneuver"
+    ],
+    "text": "Your army attempts to close the distance with a target enemy army it is not engaged with by attempting a Maneuver check.\n<b>Critical Success</b> The enemy army becomes engaged with your army, even if it previously had the distant condition (in which case it loses that condition and becomes engaged).\n<b>Success</b> If the target army is distant, it loses that condition; otherwise, it becomes engaged.\n<b>Failure</b> Your army's attempt to advance fails.\n<b>Critical Failure</b> Your army's attempt to advance fails, and it becomes disorganized, becoming mired 1 until the start of its next turn."
+  },
+  {
+    "name": "Battle",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your army attacks an enemy army with a Strike against the enemy army's AC. You can do so with a melee Strike only if you are engaged with the target army. Otherwise, you must use a ranged Strike. An army can attempt a maximum of 5 ranged Strikes per war encounter (unless it has the Increased Ammunition tactic). As with any attack, multiple Strikes in a single round suffer a multiple attack penalty.\n\nA siege engine can use the Battle action to attack and damage a fortification.\n\n<b>Critical Success</b> You deal 2 points of damage to the army.\n<b>Success</b> You deal 1 point of damage to the army."
+  },
+  {
+    "name": "Disengage",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "tags": [
+      "Maneuver"
+    ],
+    "text": "Your army attempts to disengage from enemy armies to put some distance between itself and the enemy. Attempt a Maneuver check against each army your army is engaged with.\n\nCritical Success Your army is no longer engaged with the target army. In addition, your army is automatically no longer engaged with any armies you haven't yet rolled a Maneuver check against during this war action.\nSuccess Your army breaks free and is no longer engaged with the target army.\nFailure Your army remains engaged with the target army.\nCritical Failure Your army remains engaged with the target army and, for the remainder of this turn, your army cannot attempt to disengage from any army with which it is still engaged."
+  },
+  {
+    "name": "Guard",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "tags": [
+      "Maneuver"
+    ],
+    "text": "Your army spends a war action to adopt a defensive pose— raising shields, focusing on parrying attacks, or seeking cover. Attempt a Maneuver check against a target army.\n\nCritical Success Your army gains a +2 item bonus to its AC until the start of your next turn; this bonus applies to all attacks against this army, not just from the targeted army.\nSuccess Your army gains a +2 item bonus to its AC until the start of your next turn against attacks from the target army.\nFailure Your army fails to guard against the target army.\nCritical Failure Your army fails spectacularly to guard against the target army and becomes mired 1."
+  },
+  {
+    "name": "Rally",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "tags": [
+      "Morale"
+    ],
+    "text": "Your army's leaders attempt to bolster the soldiers' morale and fight back the effects of fear and panic. Attempt a Morale check against a target enemy army of your choice.\n\nCritical Success If your army is routed, it loses the routed condition. Reduce your army's shaken condition by 2.\nSuccess Reduce your army's shaken condition by 1.\nCritical Failure Your attempt to rally backfires—increase your army's shaken condition by 1."
+  },
+  {
+    "name": "Retreat",
+    "cost": {
+      "type": "action",
+      "value": 3
+    },
+    "tags": [
+      "Morale"
+    ],
+    "text": "Your army tries to escape from the battlefield. If your army is already distant, it flees the battlefield, is no longer part of the war encounter, and becomes routed. Otherwise, your army gains the distant condition."
+  },
+  {
+    "name": "All-Out Assault",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "requirement": "Merciless",
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your army attacks with frightening vigor. Attempt a melee Strike against an enemy army's AC.\n\nCritical Success Your army inflicts 3 points of damage to the target army. If your army's next war action this turn is an attack war action against a different target army, you gain a +1 circumstance bonus to the Strike as your fury continues to the new target.\nSuccess Your army deals 2 points of damage to the target army.\nFailure Your army falters, but still deals 1 point of damage to the target army.\nCritical Failure Your army deals no damage to the target army and becomes outflanked until the start of its next turn."
+  },
+  {
+    "name": "Battlefield Medicine",
+    "cost": {
+      "type": "action",
+      "value": 3
+    },
+    "requirement": "Field Triage",
+    "text": "Your army attempts to patch up an allied army's wounds during battle. Once you attempt this war action on an army, that army is temporarily immune to Battlefield Medicine for the remainder of the war encounter. Attempt a DC 25 Scouting check to successfully sort the army's wounded and provide swift aid.\n\nCritical Success You restore 2 HP to the target army.\nSuccess You restore 1 HP to the target army.\nCritical Failure Your attempt to heal the army fails, and that army's weary condition value increases by 1."
+  },
+  {
+    "name": "Counterattack",
+    "cost": {
+      "type": "reaction",
+      "value": 1,
+      "condition": "An army you are engaged with attempts a maneuver war action."
+    },
+    "requirement": "Flexible Tactics",
+    "text": "Your army lashes out at the foe as they attempt to perform a maneuver. Attempt a melee Strike against the triggering army's AC. Counterattack doesn't count toward your multiple attack penalty, and your multiple attack penalty doesn't apply to this Strike.\n\nCritical Success You inflict 1 point of damage on the army and increase its shaken condition value by 1.\nSuccess You inflict 1 point of damage on the army."
+  },
+  {
+    "name": "Covering Fire",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "requirement": "Sharpshooter",
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your army's ranged fire provides cover and protection for an allied army to maneuver. Attempt a ranged Strike against a target army's AC.\n\nCritical Success You inflict 2 points of damage to the target army, and it cannot take reactions triggered by maneuver war actions from any army until the start of your next turn.\nSuccess You inflict 1 point of damage to the target army, and it can't take reactions triggered by maneuver war actions from any army until the start of your next turn.\nFailure Your attack fails to provide covering fire, but you inflict 1 point of damage to the target army.\nCritical Failure Your attempt fails."
+  },
+  {
+    "name": "Defensive Stance",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "requirement": "Defensive Tactics",
+    "tags": [
+      "Maneuver"
+    ],
+    "text": "Your army hunkers down behind its shields, presents pole arms in a wall of blades, or moves into position to protect a target allied army that is outflanked. Attempt a Maneuver check against an enemy army.\n\nCritical Success The target allied army is no longer outflanked by any army.\nSuccess The target allied army is no longer outflanked by the target army.\nCritical Failure Your defensive stance fails, and your army is now outflanked by the target enemy army."
+  },
+  {
+    "name": "Dirty Fighting",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "requirement": "Flexible Tactics",
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your army uses trickery, deception, and unfair tactics to attempt a devastating attack against an outflanked army. Attempt a melee Strike or a ranged Strike against the AC of a target outflanked army that is not distant.\n\nCritical Success The target army becomes weary 2 until the start of your next turn.\nSuccess The target army becomes weary 1 until the start of your next turn.\nCritical Failure Your attack deals no damage to the target army, which is emboldened by your failed attempt at dirty fighting. This reduces the target army's weary value by 1."
+  },
+  {
+    "name": "False Retreat",
+    "cost": {
+      "type": "reaction",
+      "value": 1,
+      "condition": "Your army succeeds at a morale check."
+    },
+    "requirement": "Flexible Tactics",
+    "tags": [
+      "Morale"
+    ],
+    "text": "Your army feigns defeat to trick an enemy army. Attempt a Morale check against a target army.\n\nCritical Success The target army is caught off guard by your army's deception. It becomes outflanked and is unable to take reactions until the start of your next turn.\nSuccess The target army is caught off guard by your army's deception and is outflanked until the start of its next turn.\nCritical Failure The enemy anticipated your tactic and moves to take advantage of the situation. Your army becomes outflanked until the start of your next turn."
+  },
+  {
+    "name": "Feint",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "requirement": "Flexible Tactics",
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your army launches a probing attack meant to trick the enemy into thinking you are attacking from one quarter while your real thrust comes elsewhere.\n\nCritical Success The target army's defenses are thrown off; it is outflanked until the end of your turn.\nSuccess The target army is fooled, but only momentarily. It is outflanked against the next melee Strike your army attempts against it before the end of your current turn.\nCritical Failure The enemy anticipates your feint and presses the advantage. You are outflanked by the target army until the end of your next turn."
+  },
+  {
+    "name": "Outflank",
+    "cost": {
+      "type": "action",
+      "value": 2,
+      "condition": "The army isn't engaged"
+    },
+    "requirement": "Reckless Flankers",
+    "tags": [
+      "Maneuver"
+    ],
+    "text": "You send your army around an enemy's flank to get a better attacking position and to push your enemy into disorder. Attempt a Maneuver check against the target army.\n\nCritical Success The target army becomes outflanked until the start of your next turn. You can choose to become engaged with that army or not.\nSuccess The target army is outflanked until the start of your next turn. You are now engaged with that army.\nCritical Failure You underestimate the target army's position, and the blunder causes your army to become outflanked until the start of your next turn."
+  },
+  {
+    "name": "Overwhelming Bombardment",
+    "cost": {
+      "type": "action",
+      "value": 2
+    },
+    "requirement": "Explosive Shot",
+    "tags": [
+      "Attack"
+    ],
+    "text": "Your siege engines focus all their fire on a fortification. This war action counts as using two ranged Strikes for the purposes of depleting an army's shots. Attempt a ranged Strike against the target fortification's AC.\n\nCritical Success You deal 2 points of damage to the fortification. You also deal 1 point of damage to up to two armies of your choice that are within the fortification.\nSuccess You deal 1 point of damage to the fortification, and an additional 1 point of damage either to the fortification or to an army within the fortification (your choice of which).\nFailure You deal 1 damage to the fortification.\nCritical Failure You deal no damage, and your army becomes outflanked until the start of its next turn."
+  },
+  {
+    "name": "Taunt",
+    "cost": {
+      "type": "action",
+      "value": 1
+    },
+    "requirement": "Focused Devotion",
+    "tags": [
+      "Morale"
+    ],
+    "text": "Your army attempts to frighten and cow an enemy army. Attempt a Morale check against the target army.\n\nCritical Success The target army becomes shaken 2 until the start of your next turn.\nSuccess The target army becomes shaken 1 until the start of your next turn.\nCritical Failure Your failed attempt bolsters the enemy's spirits. This reduces the target army's shaken value by 1."
+  },
+  {
+    "name": "Accustomed to Panic",
+    "cost": {
+      "type": "reaction",
+      "value": 1,
+      "condition": "The Sootscale Warriors' shaken condition increases while they are not routed."
+    },
+    "requirement": "Accustomed to Panic",
+    "text": "The Sootscales take comfort in their fear and channel the panic into energy. Rather than increase their shaken condition, they reduce their weary condition value by 1."
+  }
+]
