@@ -6,6 +6,7 @@ import { Delete } from "@mui/icons-material";
 import { AddArmyTactic } from "./AddArmyTactic";
 import { AddArmyGear } from "./AddArmyGear";
 import { gearMap } from "../../features/warfare/Gear";
+import {warActions} from "../../features/warfare/WarAction";
 
 interface ArmyEditProps {
     army: Army;
@@ -103,7 +104,7 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
                 </Typography>
                 <List sx={{ listStyleType: "disc" }}>
                     {army.tactics.map(tactic =>
-                        <ListItem key={tactic} sx={{ display: "list-item" }} secondaryAction={
+                        <ListItem key={tactic} sx={{ display: "list-item" }} secondaryAction={!tacticsMap[tactic].unique &&
                             <IconButton edge="end" onClick={() => removeTactic(tactic)}>
                                 <Delete />
                             </IconButton>
@@ -142,6 +143,16 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
                         </ListItem>
                     )}
                 </List>
+            </div>
+            <Divider />
+            <div>
+                {warActions.map(action => (!action.requirement || !!army.tactics.find(tactic => tactic === action.requirement)) && (
+                    <Tooltip title={action.text} key={action.name} placement="left">
+                        <Typography>
+                            {action.name} {action.cost.type === "action" ? "\u2B25".repeat(action.cost.value) : "\u293E"}
+                        </Typography>
+                    </Tooltip>
+                ))}
             </div>
             {addingTactic && <AddArmyTactic army={army} updateArmy={updateArmy} onClose={() => setAddingTactic(false)} />}
             {addingGear && <AddArmyGear army={army} updateArmy={updateArmy} onClose={() => setAddingGear(false)} />}
