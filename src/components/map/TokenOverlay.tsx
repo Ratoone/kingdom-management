@@ -39,12 +39,15 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({
         return locations;
     }, {});
 
+    const partyIsolated = !armies.find(army => army.position.q === partyPosition.q && army.position.r === partyPosition.r);
+
     const armyVisible = (army: Army, armyLocation: Array<Army>): boolean => {
         const currentHex = hexMapData[army.position.q + "," + army.position.r];
         return gmView ||
             army.ally ||
             (!!currentHex && currentHex.state === HexplorationState.Claimed) ||
-            !!armyLocation.find(army => army.ally);
+            !!armyLocation.find(army => army.ally) ||
+            (partyPosition.q === army.position.q && partyPosition.r === army.position.r);
     };
 
     useEffect(() => {
@@ -71,9 +74,9 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({
             {Object.values(armyLocations).map(armyLocation => (
                 <div key={armyLocation[0].id} className="draggable-icon" style={{
                     display: "grid",
-                    maxWidth: "150px",
-                    maxHeight: "75px",
-                    gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(armyLocation.length))}, 1fr)`,
+                    width: "150px",
+                    height: "75px",
+                    gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(armyLocation.length + (armyLocation[0].position.q === partyPosition.q && armyLocation[0].position.r === partyPosition.r ? 1 : 0)))}, 1fr)`,
                     alignContent: "space-evenly",
                     left: armyLocation[0].position.x,
                     top: armyLocation[0].position.y
@@ -88,17 +91,24 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({
                                 </div>
                             ) : "")
                     }
+                    {armyLocation[0].position.q === partyPosition.q && armyLocation[0].position.r === partyPosition.r &&
+                        // <div>
+                        <DragableToken type="party" entityId="" token="party" />
+                            
+                    }
                 </div>
 
             ))}
-            <div className="draggable-icon" style={{
-                left: partyPosition.x,
-                top: partyPosition.y,
-                width: "150px"
-            }}>
-                <DragableToken type="party" entityId="" token="party" />
-                {gmView && (<Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>)}
-            </div>
+            {partyIsolated &&
+                <div className="draggable-icon" style={{
+                    left: partyPosition.x,
+                    top: partyPosition.y,
+                    width: "150px"
+                }}>
+                    <DragableToken type="party" entityId="" token="party" />
+                    {gmView && (<Box style={{ position: "absolute", backgroundColor: "black" }}>{encounterText}</Box>)}
+                </div>
+            }
         </>
     );
 };
