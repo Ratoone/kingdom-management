@@ -9,10 +9,11 @@ import React from "react";
 interface DragableTokenProps {
     type: string;
     entityId: string;
-    token: string
+    token: string;
+    name?: string;
 }
 
-const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId, token }) => {
+const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId, token, name }) => {
     const handleDragStart = (event: React.DragEvent<HTMLElement>) => {
         event.dataTransfer.setData("hexagon", "{}");
         event.dataTransfer.setData("type", type);
@@ -40,8 +41,10 @@ const DragableToken: React.FC<DragableTokenProps> = ({ type, entityId, token }) 
             draggable="true"
             onDragStart={handleDragStart}
         >
+            <div style={{position: "absolute", backgroundColor: "black", opacity: 0.5}}>{name}</div>
             <img src={pickToken()} style={{
-                width: "50%",
+                width: "100%",
+                maxWidth: "75px",
                 cursor: "move",
             }} />
         </div>

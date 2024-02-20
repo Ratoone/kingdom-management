@@ -77,6 +77,8 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({
                     width: "150px",
                     height: "75px",
                     gridTemplateColumns: `repeat(${Math.ceil(Math.sqrt(armyLocation.length + (armyLocation[0].position.q === partyPosition.q && armyLocation[0].position.r === partyPosition.r ? 1 : 0)))}, 1fr)`,
+                    gridTemplateRows: "1fr",
+                    alignItems: "center",
                     alignContent: "space-evenly",
                     left: armyLocation[0].position.x,
                     top: armyLocation[0].position.y
@@ -87,7 +89,7 @@ const TokenOverlay: React.FC<TokenOverlayProps> = ({
                                 <div key={army.id} style={{
                                     filter: `grayscale(100%) sepia(100%) hue-rotate(${army.ally ? 90 : 270}deg) brightness(${army === hoveredArmy ? "0.4" : "1"})`,
                                 }} onMouseEnter={() => setHoveredArmy(army)} onMouseLeave={() => setHoveredArmy(undefined)}>
-                                    <DragableToken type="army" entityId={army.id} token={army.armyType} />
+                                    <DragableToken type="army" name={army.name} entityId={army.id} token={army.armyType} />
                                 </div>
                             ) : "")
                     }
