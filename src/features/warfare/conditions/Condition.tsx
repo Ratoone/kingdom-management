@@ -1,6 +1,7 @@
 class Condition {
     name: string = "";
     description: string = "";
+    circumstance: boolean;
     value?: number;
     _acBonus?: number;
     _moraleBonus?: number;
@@ -8,7 +9,7 @@ class Condition {
     _deployBonus?: number;
 
     constructor(
-        { name, description, value, acBonus, moraleBonus, maneuverBonus, deployBonus }:
+        { name, description, value, acBonus, moraleBonus, maneuverBonus, deployBonus, circumstance }:
             {
                 name: string,
                 description: string,
@@ -16,12 +17,14 @@ class Condition {
                 acBonus?: number,
                 moraleBonus?: number,
                 maneuverBonus?: number,
-                deployBonus?: number
+                deployBonus?: number,
+                circumstance?: boolean
             }
     ) {
         this.name = name;
         this.description = description;
         this.value = value;
+        this.circumstance = circumstance ?? false;
         this._acBonus = acBonus;
         this._moraleBonus = moraleBonus;
         this._maneuverBonus = maneuverBonus;

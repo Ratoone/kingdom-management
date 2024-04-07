@@ -1,4 +1,4 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Routed extends Condition {
     constructor() {
@@ -9,9 +9,10 @@ class Routed extends Condition {
                 "to Morale checks. This condition ends automatically once a war encounter is resolved, but the routed " +
                 "army increases its shaken value by 1 in this case. If all armies on one side of a battle are routed " +
                 "simultaneously, the battle ends and the other army is victorious.",
-            moraleBonus: -2
+            moraleBonus: -2,
+            circumstance: true,
         });
     }
 }
 
-export {Routed};
+export { Routed };

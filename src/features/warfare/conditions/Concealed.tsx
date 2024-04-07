@@ -1,4 +1,4 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Concealed extends Condition {
     constructor() {
@@ -8,9 +8,10 @@ class Concealed extends Condition {
                 "Attacks against it take a –2 circumstance penalty. This condition lasts as long as the event granting the " +
                 "concealment persists.",
             acBonus: 2,
-            maneuverBonus: 2
+            maneuverBonus: 2,
+            circumstance: true,
         });
     }
 }
 
-export {Concealed};
+export { Concealed };

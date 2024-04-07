@@ -1,4 +1,4 @@
-import {Condition} from "./Condition";
+import { Condition } from "./Condition";
 
 class Outflanked extends Condition {
     constructor() {
@@ -6,9 +6,10 @@ class Outflanked extends Condition {
             name: "Outflanked",
             description: "The army has enemies coming at it from many directions and must split its forces to deal " +
                 "with threats on every side. The army takes a –2 circumstance penalty to its AC.",
-            acBonus: -2
+            acBonus: -2,
+            circumstance: true,
         });
     }
 }
 
-export {Outflanked};
+export { Outflanked };

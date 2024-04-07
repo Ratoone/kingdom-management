@@ -137,6 +137,23 @@ class Army {
         return this.tactics.reduce((count, tactic) => count + (tacticsMap[tactic].unique ? 0 : 1), 0);
     }
 
+    public modifierFromCondition(stat: string): number {
+        let bonus = 0;
+        let circumstanceBonus = 0;
+        let circumstancePenalty = 0;
+        for (const condition of this.conditions) {
+            const conditionBonus: number = Reflect.get(condition, stat);
+            if (condition.circumstance) {
+                circumstanceBonus = Math.max(conditionBonus, circumstanceBonus);
+                circumstancePenalty = Math.min(conditionBonus, circumstancePenalty);
+            } else {
+                bonus += conditionBonus;
+            }
+        }
+
+        return bonus + circumstanceBonus + circumstancePenalty;
+    }
+
     public get tacticsLimit(): number {
         return maxTactics(this.level);
     }

@@ -8,7 +8,8 @@ class Mired extends Condition {
                 "or similar terrain, encumbered by carrying heavy burdens, or any other reason. Mired always has a value. " +
                 "A mired army takes a circumstance penalty on all maneuvers equal to its mired value and to Deploy Army " +
                 "checks. If an army ever becomes mired 4, it becomes pinned.",
-            value: value ?? 1
+            value: value ?? 1,
+            circumstance: true,
         });
     }
 

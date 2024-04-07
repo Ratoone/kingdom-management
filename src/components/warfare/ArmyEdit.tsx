@@ -69,13 +69,13 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
             </Typography>
             <Divider />
             <Typography variant="body1">
-                AC: {army.ac}
+                AC: {army.ac} + {army.modifierFromCondition("acBonus")}
             </Typography>
             <Typography variant="body1">
-                Maneuver: +{army.maneuver}
+                Maneuver: +{army.maneuver} + {army.modifierFromCondition("maneuverBonus")}
             </Typography>
             <Typography variant="body1">
-                Morale: +{army.morale}
+                Morale: +{army.morale} + {army.modifierFromCondition("moraleBonus")}
             </Typography>
             <Typography variant="body1">
                 Health: {army.currentHp}/{army.hp}

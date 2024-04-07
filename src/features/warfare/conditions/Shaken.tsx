@@ -11,7 +11,8 @@ class Shaken extends Condition {
                 "check or its shaken value increases by 1. An army that becomes shaken 4 is automatically routed. An army " +
                 "reduces the value of this condition by 1 each Kingdom turn that passes during which it does not attempt " +
                 "an Army activity or engage in a war encounter.",
-            value: value ?? 1
+            value: value ?? 1,
+            circumstance: true,
         });
     }
 
