@@ -89,7 +89,8 @@ class Army {
     }
 
     public get hp(): number {
-        return this.armyType === ArmyType.Siege ? 6 : 4 + (this._adjustment?.hpAdjustment ?? 0);
+        const hpBonus = this.tactics.reduce((count, tactic) => count + (tactic === "Toughened Soldiers" ? 1 : 0), 0);
+        return this.armyType === ArmyType.Siege ? 6 : 4 + (this._adjustment?.hpAdjustment ?? 0) + hpBonus;
     }
 
     public get routThreshold(): number {

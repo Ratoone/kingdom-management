@@ -14,4 +14,4 @@ interface WarAction {
 
 const warActions: WarAction[] = actionsData.map(data => data as WarAction);
 
-export {type WarAction, warActions};
+export { type WarAction, warActions };

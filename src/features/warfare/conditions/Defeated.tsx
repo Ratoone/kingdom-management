@@ -4,7 +4,7 @@ class Defeated extends Condition {
     constructor() {
         super({
             name: "Defeated",
-            description: "hen an army has zero Hit Points, it becomes defeated. A defeated army cannot take war actions. " +
+            description: "When an army has zero Hit Points, it becomes defeated. A defeated army cannot take war actions. " +
                 "A defeated army can be restored to 1 Hit Point with the Recover Army activity (although the basic DC is " +
                 "increased by 5 for this check). Any effect that restores a defeated army to at least 1 Hit Point removes " +
                 "the defeated condition. A defeated army can only be moved one hex at a time with the Deploy Army activity. " +

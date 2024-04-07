@@ -10,7 +10,8 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow,
+    Tooltip
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import React, { useEffect, useMemo, useState } from "react";
@@ -20,9 +21,9 @@ import "./Warfare.css";
 import { Condition } from "../../features/warfare/conditions/Condition";
 import { ConditionType, createCondition } from "../../features/warfare/conditions/ConditionTypes";
 import { CreateArmy } from "./CreateArmy";
-import {addArmy, deleteArmy, getArmies, updateArmy} from "../../features/firestore/WarfareDao";
+import { addArmy, deleteArmy, getArmies, updateArmy } from "../../features/firestore/WarfareDao";
 import { AddArmyCondition } from "./AddArmyCondition";
-import {Delete} from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 
 const columns = ["Name", "Health", "Conditions"];
 
@@ -36,11 +37,11 @@ interface WarfareProps {
     setHoveredArmy: React.Dispatch<React.SetStateAction<Army | undefined>>;
 }
 
-const Warfare: React.FC<WarfareProps> = ({ 
-    mapId, 
-    level, 
-    gmView, 
-    armies, 
+const Warfare: React.FC<WarfareProps> = ({
+    mapId,
+    level,
+    gmView,
+    armies,
     setArmies,
     hoveredArmy,
     setHoveredArmy
@@ -203,12 +204,14 @@ const Warfare: React.FC<WarfareProps> = ({
                                                 onClick={e => addCondition(e, army)}
                                             />
                                             {army.conditions.map(condition => (
-                                                <Chip
-                                                    key={condition.name}
-                                                    label={`${condition.name} ${condition.value ?? ""}`}
-                                                    onClick={(e) => increaseCondition(e, army, condition)}
-                                                    onDelete={(e) => decreaseCondition(e, army, condition)}
-                                                />
+                                                <Tooltip title={condition.description}>
+                                                    <Chip
+                                                        key={condition.name}
+                                                        label={`${condition.name} ${condition.value ?? ""}`}
+                                                        onClick={(e) => increaseCondition(e, army, condition)}
+                                                        onDelete={(e) => decreaseCondition(e, army, condition)}
+                                                    />
+                                                </Tooltip>
                                             ))}
                                         </Stack>
                                     </TableCell>

@@ -6,7 +6,7 @@ import { Delete } from "@mui/icons-material";
 import { AddArmyTactic } from "./AddArmyTactic";
 import { AddArmyGear } from "./AddArmyGear";
 import { gearMap } from "../../features/warfare/Gear";
-import {warActions} from "../../features/warfare/WarAction";
+import { warActions } from "../../features/warfare/WarAction";
 
 interface ArmyEditProps {
     army: Army;
@@ -147,9 +147,10 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
             <Divider />
             <div>
                 {warActions.map(action => (!action.requirement || !!army.tactics.find(tactic => tactic === action.requirement)) && (
-                    <Tooltip title={action.text} key={action.name} placement="left">
+                    <Tooltip title={<div dangerouslySetInnerHTML={{ __html: action.text }} />} key={action.name} placement="left">
                         <Typography>
                             {action.name} {action.cost.type === "action" ? "\u2B25".repeat(action.cost.value) : "\u293E"}
+                            <i style={{ fontSize: "0.75rem" }}>{action.tags}</i>
                         </Typography>
                     </Tooltip>
                 ))}
