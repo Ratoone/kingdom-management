@@ -25,7 +25,7 @@ import { addArmy, deleteArmy, getArmies, updateArmy } from "../../features/fires
 import { AddArmyCondition } from "./AddArmyCondition";
 import { Delete } from "@mui/icons-material";
 
-const columns = ["Name", "Health", "Conditions"];
+const columns = ["Name", "Level", "Health", "Conditions"];
 
 interface WarfareProps {
     mapId: string;
@@ -178,6 +178,7 @@ const Warfare: React.FC<WarfareProps> = ({
                                     onMouseLeave={_ => setHoveredArmy(previewArmy)}
                                 >
                                     <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
+                                    <TableCell>{army.level}</TableCell>
                                     <TableCell width={"150px"}>
                                         <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
                                             marks={[

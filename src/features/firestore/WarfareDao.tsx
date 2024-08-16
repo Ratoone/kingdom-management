@@ -22,7 +22,7 @@ const getArmies = (mapId: string, level: number, callback: (data: Array<Army>) =
     return onSnapshot(armyQuery, snap => {
         const armies = snap.docs.map(doc => {
             const army = doc.data() as Army;
-            army.level = level;
+            army.level = doc.data().level ?? level;
             return army;
         });
         callback(armies);

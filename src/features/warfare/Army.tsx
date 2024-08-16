@@ -18,7 +18,7 @@ class Army {
     id: string = "";
     mapId: string = "";
     name: string = "";
-    level: number = 1;
+    level: number;
     armyType: ArmyType;
     highManeuver: boolean;
     position: TokenPosition;
@@ -30,7 +30,7 @@ class Army {
     ally: boolean;
 
     constructor(data: {
-        id?: string, mapId?: string, name: string, armyType: ArmyType, highManeuver: boolean, level?: number,
+        id?: string, mapId?: string, name: string, armyType: ArmyType, highManeuver: boolean, level: number,
         tactics?: string[], adjustment?: SpecializedArmyAdjustment, currentHp?: number, conditions?: Condition[],
         gear?: [string, number][], ally?: boolean, position: TokenPosition
     }) {
@@ -39,7 +39,7 @@ class Army {
         this.name = data.name;
         this.armyType = data.armyType;
         this.highManeuver = data.highManeuver;
-        this.level = data.level ?? 1;
+        this.level = data.level;
         this.tactics = data.tactics ?? [];
         this._adjustment = data.adjustment;
         this.currentHp = data.currentHp ?? this.hp;
@@ -163,6 +163,7 @@ const armyConverter: FirestoreDataConverter<Army> = {
     toFirestore: (army: Army) => {
         return {
             mapId: army.mapId,
+            level: army.level,
             name: army.name,
             armyType: army.armyType,
             highManeuver: army.highManeuver,
@@ -185,6 +186,7 @@ const armyConverter: FirestoreDataConverter<Army> = {
         const data = snapshot.data(options);
         return new Army({
             id: snapshot.id,
+            level: data.level,
             mapId: data.mapId,
             name: data.name,
             armyType: data.armyType as ArmyType,

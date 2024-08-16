@@ -1,6 +1,6 @@
 import { Army } from "../../features/warfare/Army";
 import React, { useState } from "react";
-import { Button, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, Tooltip, Typography } from "@mui/material";
+import { Button, Checkbox, Divider, FormControlLabel, IconButton, List, ListItem, TextField, Tooltip, Typography } from "@mui/material";
 import { tacticsMap } from "../../features/warfare/TacticsDatabase";
 import { Delete } from "@mui/icons-material";
 import { AddArmyTactic } from "./AddArmyTactic";
@@ -59,7 +59,9 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
                 Name: {army.name}
             </Typography>
             <Typography variant="body1">
-                Level: {army.level}
+                Level: {gmView ?
+                    (<TextField value={army.level} size="small" type="number" onChange={(e) => { army.level = parseInt(e.target.value); updateArmy(army); }} />) :
+                    army.level}
             </Typography>
             <Typography variant="body1">
                 Scouting: +{army.scouting}
