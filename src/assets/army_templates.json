@@ -39,5 +39,36 @@
             "Darkvision (unique)",
             "Accustomed to Panic"
         ]
+    },
+    {
+        "name": "Lizardfolk Defenders",
+        "armyType": "Skirmisher",
+        "minLevel": 5,
+        "highManeuver": false,
+        "adjustment": {
+            "recruitmentAdjustment": 2,
+            "scoutingAdjustment": 2,
+            "acAdjustment": 1
+        },
+        "uniqueTactics": [
+            "Swamp Dwellers"
+        ]
+    },
+    {
+        "name": "Nomen Scouts",
+        "armyType": "Cavalry",
+        "minLevel": 8,
+        "highManeuver": false,
+        "adjustment": {
+            "recruitmentAdjustment": 2,
+            "scoutingAdjustment": 2,
+            "maneuverAdjustment": 1
+        },
+        "uniqueTactics": [
+            "Darkvision (unique)",
+            "Brave",
+            "Self-Sufficient",
+            "Trample"
+        ]
     }
 ]

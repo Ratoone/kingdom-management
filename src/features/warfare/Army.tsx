@@ -54,7 +54,7 @@ class Army {
     }
 
     public get consumption(): number {
-        if (this.tactics.includes("Self Sufficient")) {
+        if (this.tactics.includes("Self-Sufficient")) {
             return this.conditions.filter((condition) => condition.name === "Defeated").length === 0 ? -1 : 0;
         }
 
