@@ -105,7 +105,7 @@ class Army {
         if (!this._adjustment && this.armyType === ArmyType.Siege && !this.gear.find(([gear,]) => gear === "Additional Weapon")) {
             return NaN;
         }
-        const meleeWeapon = this.gear.find(([gear,]) => gear === "Magical Weapons (melee)");
+        const meleeWeapon = this.gear.find(([gear,]) => gear === "Magic Weapons (melee)");
         return attackByLevel(this.level) + (meleeWeapon ? meleeWeapon[1] : 0) + (this._adjustment?.meleeAdjustment ?? 0);
     }
 
@@ -113,7 +113,7 @@ class Army {
         if (!this._adjustment && this.armyType !== ArmyType.Siege && !this.gear.find(([gear,]) => gear === "Additional Weapon")) {
             return NaN;
         }
-        const rangedWeapon = this.gear.find(([gear,]) => gear === "Magical Weapons (ranged)");
+        const rangedWeapon = this.gear.find(([gear,]) => gear === "Magic Weapons (ranged)");
         return attackByLevel(this.level) + (rangedWeapon ? rangedWeapon[1] : 0);
     }
 

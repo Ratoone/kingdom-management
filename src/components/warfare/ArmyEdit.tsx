@@ -148,7 +148,7 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
             </div>
             <Divider />
             <div>
-                {warActions.map(action => (!action.requirement || !!army.tactics.find(tactic => tactic === action.requirement)) && (
+                {warActions.map(action => (!action.requirement || !!army.tactics.find(tactic => tactic === action.requirement || !!tacticsMap[tactic]?.unlocks?.includes(action.name))) && (
                     <Tooltip title={<div dangerouslySetInnerHTML={{ __html: action.text }} />} key={action.name} placement="left">
                         <Typography>
                             {action.name} {action.cost.type === "action" ? "\u2B25".repeat(action.cost.value) : "\u293E"}

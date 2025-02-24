@@ -96,7 +96,6 @@ const CreateArmy: React.FC<CreateArmyProps> = ({ level, saveArmy }) => {
                                 onChange={(e) => setTemplate(e.target.value as string)}
                             >
                                 {templates
-                                    .filter(template => template.minLevel <= level)
                                     .map((template) => (
                                         <MenuItem key={template.name} value={template.name}>
                                             {template.name}

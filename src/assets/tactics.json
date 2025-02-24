@@ -252,5 +252,35 @@
     "unique": true,
     "level": 1,
     "text": "Nomen Scouts can attempt to trample an engaged enemy army by attempting a melee Strike against the army's AC. On a hit, they inflict 1 point of damage (2 points on a critical hit) and automatically move away from the army—they are no longer engaged with that army."
+  },
+  {
+    "name": "Furious Charge",
+    "unique": true,
+    "level": 1,
+    "text": "The Tiger Lord Berserkers charge at an enemy army, taking an Advance action to attempt to engage. If the Tiger Lords manage to engage successfully, they can attempt a melee Strike against the army as a reaction."
+  },
+  {
+    "name": "Reactive Rally",
+    "unique": true,
+    "level": 1,
+    "text": "Requirement The Tiger Lords are routed; Effect Instead of taking a Retreat action, the Tiger Lord Berserkers can attempt to Rally."
+  },
+  {
+    "name": "Revel in Battle",
+    "unique": true,
+    "level": 1,
+    "text": "Trigger The Tiger Lord Berserkers score a critical hit with a melee Strike. Effect The barbarians are infused with vigor and furious passion at their devastating blow. The army restores 1 hit point."
+  },
+  {
+    "name": "Warmongers",
+    "unique": true,
+    "level": 1,
+    "text": "The Tiger Lord Berserkers can use the following Tactical Actions without needing to meet additional requirements: All-Out Assault, Counterattack, and Taunt.",
+    "unlocks": [
+      "All-Out Assault",
+      "Counterattack",
+      "Taunt"
+    ]
   }
+  
 ]

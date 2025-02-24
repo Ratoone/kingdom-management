@@ -6,5 +6,6 @@ export interface Tactic {
     text: string,
     units: ArmyType[],
     repeatable?: boolean,
-    unique?: boolean
+    unique?: boolean,
+    unlocks?: string[]
 }

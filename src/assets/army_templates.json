@@ -70,5 +70,25 @@
             "Self-Sufficient",
             "Trample"
         ]
+    },
+    {
+        "name": "Tiger Lord Berserkers",
+        "armyType": "Infantry",
+        "minLevel": 12,
+        "highManeuver": false,
+        "adjustment": {
+            "scoutingAdjustment": 1,
+            "recruitmentAdjustment": 2,
+            "acAdjustment": -1,
+            "meleeAdjustment": 2,
+            "routAdjustment": -1,
+            "hpAdjustment": 2
+        },
+        "uniqueTactics": [
+            "Furious Charge",
+            "Reactive Rally",
+            "Revel in Battle",
+            "Warmongers"
+        ]
     }
 ]
