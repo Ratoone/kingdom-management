@@ -281,6 +281,59 @@
       "Counterattack",
       "Taunt"
     ]
+  },
+  {
+    "name": "Pitaxian Training",
+    "unique": true,
+    "level": 1,
+    "text": "The Pitaxian Raiders can use the Counterattack, Dirty Fighting, and Feint tactical actions.",
+    "unlocks": [
+      "Counterattack",
+      "Dirty Fighting",
+      "Feint"
+    ]
+  },
+  {
+    "name": "Tuskar Training",
+    "unique": true,
+    "level": 1,
+    "text": "The Tusker Riders can use the All-Out Assault, Covering Fire, and Taunt tactical actions.",
+    "unlocks": [
+      "All-Out Assault",
+      "Covering Fire",
+      "Taunt"
+    ]
+  },
+  {
+    "name": "Trampling Charge",
+    "unique": true,
+    "level": 1,
+    "text": "The Riders trample an enemy army. They attempt a Maneuver check against a target non-engaged army’s Maneuver DC. Trampling Charge does not trigger Counterattack reactions.",
+    "unlocks": [
+      "Trampling Charge"
+    ]
+  },
+  {
+    "name": "Flight",
+    "unique": true,
+    "level": 1,
+    "text": "The Wyvern Flight ignores all ground-based difficult terrain and cannot become mired by effects that can be escaped by flight. When they use the Disengage action against armies that can’t fly, their check result is improved one degree. Armies that lack the ability to fly suffer a –2 circumstance penalty on Advance actions against a Wyvern Flight."
+  },
+  {
+    "name": "Wyvern Venom",
+    "unique": true,
+    "level": 1,
+    "text": "An army that takes damage from a Wyvern Flight’s melee strike increases its weary condition value by 1. If this would cause an army to increase its weary condition above 4, it instead takes 1 point of damage. Each time an army regains Hit Points during a battle, it can attempt a DC 11 flat check; on a success, it no longer suffers the ongoing effects of Wyvern Venom (but can still be affected by it later from a future attack, and does not reset its weary condition). The effects of Wyvern Venom also end as soon as an army escapes the battlefield or once the battle ends."
+  },
+  {
+    "name": "Wyvern Tactics",
+    "unique": true,
+    "level": 1,
+    "text": "The Wyvern Flight can use the All-Out Assault and Counterattack tactical actions.",
+    "unlocks": [
+      "All-Out Assault",
+      "Counterattack"
+    ]
   }
   
 ]

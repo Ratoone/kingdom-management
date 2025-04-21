@@ -164,67 +164,69 @@ const Warfare: React.FC<WarfareProps> = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {armies.map((army, index) =>
-                            (gmView || army.ally) ? (
-                                <TableRow
-                                    hover={true}
-                                    tabIndex={-1}
-                                    key={index}
-                                    sx={{
-                                        bgcolor: army.ally ? "darkolivegreen" : "brown",
-                                        filter: `brightness(${army === hoveredArmy ? "0.4" : "1"})`
-                                    }}
-                                    onMouseEnter={_ => setHoveredArmy(army)}
-                                    onMouseLeave={_ => setHoveredArmy(previewArmy)}
-                                >
-                                    <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
-                                    <TableCell>{army.level}</TableCell>
-                                    <TableCell width={"150px"}>
-                                        <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
-                                            marks={[
-                                                {
-                                                    value: 0,
-                                                    label: 0
-                                                },
-                                                {
-                                                    value: army.routThreshold,
-                                                    label: `${army.routThreshold} (RT)`
-                                                },
-                                                {
-                                                    value: army.hp,
-                                                    label: army.hp
-                                                }
-                                            ]} valueLabelDisplay="on" />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Stack direction={"row"} spacing={1}>
-                                            <Chip
-                                                sx={{ "& .MuiChip-icon": { marginRight: "-20px" } }}
-                                                icon={<AddIcon />}
-                                                variant="outlined"
-                                                onClick={e => addCondition(e, army)}
-                                            />
-                                            {army.conditions.map(condition => (
-                                                <Tooltip title={condition.description}>
-                                                    <Chip
-                                                        key={condition.name}
-                                                        label={`${condition.name} ${condition.value ?? ""}`}
-                                                        onClick={(e) => increaseCondition(e, army, condition)}
-                                                        onDelete={(e) => decreaseCondition(e, army, condition)}
-                                                    />
-                                                </Tooltip>
-                                            ))}
-                                        </Stack>
-                                    </TableCell>
-                                    {gmView && (
-                                        <TableCell>
-                                            <IconButton edge="end" onClick={() => removeArmy(army)}>
-                                                <Delete />
-                                            </IconButton>
+                        {armies
+                            .sort((army1, army2) => army1.name > army2.name ? 1 : -1)
+                            .map((army, index) =>
+                                (gmView || army.ally) ? (
+                                    <TableRow
+                                        hover={true}
+                                        tabIndex={-1}
+                                        key={index}
+                                        sx={{
+                                            bgcolor: army.ally ? "darkolivegreen" : "brown",
+                                            filter: `brightness(${army === hoveredArmy ? "0.4" : "1"})`
+                                        }}
+                                        onMouseEnter={_ => setHoveredArmy(army)}
+                                        onMouseLeave={_ => setHoveredArmy(previewArmy)}
+                                    >
+                                        <TableCell sx={{ cursor: "pointer" }} onClick={_ => setPreviewArmy(army)}>{army.name}</TableCell>
+                                        <TableCell>{army.level}</TableCell>
+                                        <TableCell width={"150px"}>
+                                            <Slider sx={{ marginTop: "15px" }} step={1} min={0} max={army.hp} value={army.currentHp} onChange={(e, newValue) => updateHp(e, newValue as number, army)}
+                                                marks={[
+                                                    {
+                                                        value: 0,
+                                                        label: 0
+                                                    },
+                                                    {
+                                                        value: army.routThreshold,
+                                                        label: `${army.routThreshold} (RT)`
+                                                    },
+                                                    {
+                                                        value: army.hp,
+                                                        label: army.hp
+                                                    }
+                                                ]} valueLabelDisplay="on" />
                                         </TableCell>
-                                    )}
-                                </TableRow>
-                            ) : "")}
+                                        <TableCell>
+                                            <Stack direction={"row"} spacing={1}>
+                                                <Chip
+                                                    sx={{ "& .MuiChip-icon": { marginRight: "-20px" } }}
+                                                    icon={<AddIcon />}
+                                                    variant="outlined"
+                                                    onClick={e => addCondition(e, army)}
+                                                />
+                                                {army.conditions.map(condition => (
+                                                    <Tooltip title={condition.description}>
+                                                        <Chip
+                                                            key={condition.name}
+                                                            label={`${condition.name} ${condition.value ?? ""}`}
+                                                            onClick={(e) => increaseCondition(e, army, condition)}
+                                                            onDelete={(e) => decreaseCondition(e, army, condition)}
+                                                        />
+                                                    </Tooltip>
+                                                ))}
+                                            </Stack>
+                                        </TableCell>
+                                        {gmView && (
+                                            <TableCell>
+                                                <IconButton edge="end" onClick={() => removeArmy(army)}>
+                                                    <Delete />
+                                                </IconButton>
+                                            </TableCell>
+                                        )}
+                                    </TableRow>
+                                ) : "")}
                     </TableBody>
                 </Table>
             </TableContainer>

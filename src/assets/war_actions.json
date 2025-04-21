@@ -243,5 +243,17 @@
     },
     "requirement": "Revel in Battle",
     "text": "Trigger The Tiger Lord Berserkers score a critical hit with a melee Strike. Effect The barbarians are infused with vigor and furious passion at their devastating blow. The army restores 1 hit point."
+  },
+  {
+    "name": "Trampling Charge",
+    "cost": {
+      "type": "action",
+      "value": 3
+    },
+    "requirement": "Trampling Charge",
+    "tags": [
+      "Attack"
+    ],
+    "text": "The Riders trample an enemy army. They attempt a Maneuver check against a target non-engaged army’s Maneuver DC. Trampling Charge does not trigger Counterattack reactions. <br><b>Critical Success</b> The target army takes 2 points of damage and increases their Shaken value by 1. <br><b>Success</b> The target army takes 1 point of damage. <br><b>Failure</b> The target army takes 1 point of damage. The Tusker Riders are now engaged with the target army. <br><b>Critical Failure</b> The Tusker Riders are now engaged with the target army and are flat-footed until the start of their next turn."
   }
 ]

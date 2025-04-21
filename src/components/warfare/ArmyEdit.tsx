@@ -106,7 +106,7 @@ const ArmyEdit: React.FC<ArmyEditProps> = ({ army, updateArmy, gmView }) => {
                 </Typography>
                 <List sx={{ listStyleType: "disc" }}>
                     {army.tactics.map(tactic =>
-                        <ListItem key={tactic} sx={{ display: "list-item" }} secondaryAction={!tacticsMap[tactic].unique &&
+                        <ListItem key={tactic} sx={{ display: "list-item" }} secondaryAction={gmView &&
                             <IconButton edge="end" onClick={() => removeTactic(tactic)}>
                                 <Delete />
                             </IconButton>

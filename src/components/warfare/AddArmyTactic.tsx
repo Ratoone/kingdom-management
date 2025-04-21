@@ -24,8 +24,8 @@ const AddArmyTactic: React.FC<AddArmyTacticProps> = ({ army, updateArmy, onClose
             <Stack>
                 {Object.keys(tacticsMap)
                     .filter(tactic => tacticsMap[tactic].level <= army.level)
-                    .filter(tactic => !tacticsMap[tactic].unique)
-                    .filter(tactic => !!tacticsMap[tactic].units.find(unitType => unitType === army.armyType))
+                    // .filter(tactic => !tacticsMap[tactic].unique)
+                    .filter(tactic => tacticsMap[tactic].units === undefined || !!tacticsMap[tactic].units.find(unitType => unitType === army.armyType))
                     .map(
                         (tactic) => {
                             return (
