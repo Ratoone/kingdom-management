@@ -334,6 +334,24 @@
       "All-Out Assault",
       "Counterattack"
     ]
+  },
+  {
+    "name": "Amphibious",
+    "unique": true,
+    "level": 1,
+    "text": "Frog Riders ignore difficult terrain caused by swamps or water and gain a +2 circumstance bonus on Maneuver checks while fighting on a battlefield that features either of these terrains."
+  },
+  {
+    "name": "Chorus of Croaks",
+    "unique": true,
+    "level": 1,
+    "text": "The terrifying croaking that constantly issues from this army of boggards causes all engaged enemy armies to suffer a –2 status penalty on Morale checks. The M'botuu Frog Riders can use the Taunt tactical action. If they know the Focused Devotion tactic, they treat critical failures made when attempting to Taunt as failures instead."
+  },
+  {
+    "name": "Swamp Charge",
+    "unique": true,
+    "level": 1,
+    "text": "If the battlefield includes swamp or water, the M'botuu Frog Riders can start the encounter engaged with a target enemy army. If they do so, they gain a +1 circumstance bonus on melee Strikes against that army on the first turn of the encounter."
   }
   
 ]

@@ -90,5 +90,23 @@
             "Revel in Battle",
             "Warmongers"
         ]
+    },
+    {
+        "name": "M'Botuu Frog Riders",
+        "armyType": "Cavalry",
+        "minLevel": 10,
+        "highManeuver": false,
+        "adjustment": {
+            "recruitmentAdjustment": 5,
+            "moraleAdjustment": 2,
+            "hpAdjustment": 2,
+            "meleeAdjustment": 2
+        },
+        "uniqueTactics": [
+            "Darkvision (unique)",
+            "Amphibious",
+            "Chorus of Croaks",
+            "Swamp Charge"
+        ]
     }
 ]
