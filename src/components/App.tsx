@@ -39,7 +39,6 @@ const App: React.FC = () => {
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
         setMapId(mapId);
-
     };
 
     const unsubscribe = useMemo(() => {
@@ -120,6 +119,7 @@ const App: React.FC = () => {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
+            {mapId === "S7FVbPdByRIKQzggDFDb" &&
             <OverlayAccordion>
                 <KingdomData
                     mapId={mapId}
@@ -132,6 +132,7 @@ const App: React.FC = () => {
                     setHoveredArmy={setHoveredArmy}
                 />
             </OverlayAccordion>
+            }
 
             <ConditionalWrapper
                 condition={role === Role.Player}

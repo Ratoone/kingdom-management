@@ -1,5 +1,6 @@
-import { doc, getDoc, setDoc, onSnapshot, Unsubscribe } from "firebase/firestore";
+import { doc, getDoc, setDoc, onSnapshot, Unsubscribe, collection, getDocs } from "firebase/firestore";
 import { db } from "./FirestoreDB";
+import { Campaign } from "../campaign/Campaign";
 
 const updateMapData = async (documentId: string, mapData: object) => {
     await setDoc(doc(db, "mapData", documentId), {
@@ -28,6 +29,14 @@ const getPassword = async (documentId: string): Promise<String> => {
     return "";
 };
 
+const getAllCampaigns = async (): Promise<Campaign[]> => {
+    var result: Campaign[] = [];
+    (await getDocs(collection(db, "mapData"))).forEach(doc => {
+        result.push({id: doc.id, name: doc.data().name});
+    });
+    return result;
+};
+
 const updatePartyPosition = async (documentId: string, x: number, y: number, q: number, r: number) => {
     await setDoc(doc(db, "mapData", documentId), {
         x,
@@ -38,4 +47,4 @@ const updatePartyPosition = async (documentId: string, x: number, y: number, q: 
     );
 };
 
-export { updateMapData, readMapData, updatePartyPosition, getPassword };
+export { updateMapData, readMapData, updatePartyPosition, getPassword, getAllCampaigns };

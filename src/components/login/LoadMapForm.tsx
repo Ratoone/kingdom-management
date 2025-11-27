@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Button,
     Checkbox,
     FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
     TextField,
 } from "@mui/material";
 
 import "./LoadMapForm.css";
-import {getPassword} from "../../features/firestore/MapDataDao";
+import {getAllCampaigns, getPassword} from "../../features/firestore/MapDataDao";
+import { Campaign } from "../../features/campaign/Campaign";
 
 interface LoadMapProps {
   onSubmit: (mapId: string, playerLogin: boolean) => void
@@ -18,6 +22,11 @@ const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
     const [mapId, setMapId] = useState("S7FVbPdByRIKQzggDFDb");
     const [password, setPassword] = useState("");
     const [playerLogin, setPlayerLogin] = useState(false);
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+
+    useEffect(() => {
+        getAllCampaigns().then(data => setCampaigns(data));
+    });
 
     const handleLoad = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,14 +39,17 @@ const LoadMapForm: React.FC<LoadMapProps> = ({ onSubmit }) => {
     return (
         <div className="login-container">
             <Box component="form" onSubmit={handleLoad} className="login-form">
-                <TextField
-                    label="Game ID"
+                <InputLabel>Campaign Name</InputLabel>
+                <Select
                     variant="outlined"
                     required
-                    disabled
                     value={mapId}
                     onChange={(e) => setMapId(e.target.value)}
-                />
+                >
+                    {campaigns.map(campaign => (
+                        <MenuItem value={campaign.id}>{campaign.name}</MenuItem>
+                    ))}
+                </Select>
                 <br />
                 <FormControlLabel
                     control={
