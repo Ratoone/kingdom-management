@@ -15,6 +15,7 @@ import { TokenOverlay } from "./map/TokenOverlay";
 import { TokenPosition } from "../features/map/TokenPosition";
 import { Army } from "../features/warfare/Army";
 import { updateArmy } from "../features/firestore/WarfareDao";
+import { MapInfo } from "../features/map/MapInfo";
 
 // @ts-ignore
 const ConditionalWrapper = ({ condition, wrapper, children }) =>
@@ -35,6 +36,7 @@ const App: React.FC = () => {
     const [partyPosition, setPartyPosition] = useState<TokenPosition>({ x: 0, y: 0, q: -1, r: -1 });
     const [armies, setArmies] = useState<Army[]>([]);
     const [hoveredArmy, setHoveredArmy] = useState<Army>();
+    const [mapInfo, setMapInfo] = useState<MapInfo>();
 
     const handleLoadMap = (mapId: string, playerLogin: boolean) => {
         setRole(!playerLogin ? Role.GM : Role.Player);
@@ -48,10 +50,11 @@ const App: React.FC = () => {
 
         if (Object.keys(hexData).length === 0) {
             return readMapData(mapId, result => {
-                const [data, pos, level] = result;
+                const [data, pos, level, mapInfo] = result;
                 setHexData(data as Record<string, MapHexData> ?? {});
                 setPartyPosition(pos as TokenPosition);
                 setLevel(level as number);
+                setMapInfo(mapInfo as MapInfo);
             });
         }
     }, [mapId]);
@@ -144,7 +147,9 @@ const App: React.FC = () => {
                         </TransformComponent>
                     </TransformWrapper>
                 }>
-                <HexagonalGrid role={role} hexData={hexData} setHexData={setHexData} droppedToken={handleDrop} />
+                {!!mapInfo && 
+                    <HexagonalGrid role={role} hexData={hexData} setHexData={setHexData} droppedToken={handleDrop} mapInfo={mapInfo}/>
+                }
                 {!loading &&
                     <TokenOverlay
                         armies={armies}

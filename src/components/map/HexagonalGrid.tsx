@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 import { HexGrid, Layout, GridGenerator, Hex } from "react-hexgrid";
 import "./HexagonalGrid.scss";
-import map from "../../assets/images/map_no_label.jpg";
 import { MapHexData, MapHexagon } from "./MapHex";
 import EditHexDataDialog from "./HexEdit";
 import { HexplorationState } from "../../features/map/HexplorationState";
 import { TerrainFeature } from "../../features/map/TerrainFeature";
 import { TerrainType } from "../../features/map/TerrainType";
 import { Role } from "../login/Role";
+import { MapInfo } from "../../features/map/MapInfo";
 
 interface MapProps {
     role: Role;
     hexData: Record<string, MapHexData>,
     setHexData: React.Dispatch<React.SetStateAction<Record<string, MapHexData>>>,
     droppedToken: (event: React.DragEvent<HTMLElement>, hex: Hex) => void;
+    mapInfo: MapInfo;
 }
 
-const HexagonalGrid: React.FC<MapProps> = ({ role, hexData, setHexData, droppedToken }) => {
-    const hexagonLayout = GridGenerator.rectangle(29, 12);
-    const hexagonSize = 79.92;
+const HexagonalGrid: React.FC<MapProps> = ({ role, hexData, setHexData, droppedToken, mapInfo }) => {
+    const hexagonLayout = GridGenerator.rectangle(mapInfo.hexWidth, mapInfo.hexHeight);
 
     const [dialogPosition, setDialogPosition] = useState({ top: 0, left: 0 });
     const [selectedHex, setSelectedHex] = useState<Hex | null>(null);
@@ -72,12 +72,16 @@ const HexagonalGrid: React.FC<MapProps> = ({ role, hexData, setHexData, droppedT
         droppedToken(event, hex);
     };
 
+    if (!mapInfo) {
+        return <div></div>;
+    }
+
     return (
         <div className='map-container'>
-            <img src={map} alt="Kingdom Map" className='kingdom-image' />
+            <img src={require(`../../assets/images/maps/${mapInfo.background}`)} alt="Kingdom Map" className='kingdom-image' />
             <HexGrid width="100%" height="100%" viewBox='-23.6 -87 4096 1447' className='kingdom-map'>
                 <Layout
-                    size={{ x: hexagonSize, y: hexagonSize }}
+                    size={{ x: mapInfo.hexSize, y: mapInfo.hexSize }}
                     flat={false}
                     spacing={1.01}>
                     {hexagonLayout.map((hex, index) => {

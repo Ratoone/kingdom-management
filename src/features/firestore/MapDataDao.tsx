@@ -13,10 +13,10 @@ const readMapData = (documentId: string, callback: (data: Array<unknown>) => voi
     return onSnapshot(doc(db, "mapData", documentId), snap => {
         if (snap.exists()) {
             const data = snap.data();
-            callback([data.hexMapData, { x: data.x, y: data.y, q: data.q, r: data.r }, data.level]);
+            callback([data.hexMapData, { x: data.x, y: data.y, q: data.q, r: data.r }, data.level, data.mapInfo]);
             return;
         }
-        callback([{}, { x: 0, y: 0, q: -1, r: -1 }]);
+        callback([{}, { x: 0, y: 0, q: -1, r: -1 }, 0, {}]);
     });
 };
 
